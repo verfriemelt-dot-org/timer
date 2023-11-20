@@ -26,7 +26,7 @@ class ExportCsv extends Controller
             $entries = $this->entryRepository->getDay($d);
 
             foreach ($entries->entries as $dto) {
-                echo "{$dto->type};{$dto->date->day};{$dto->workTime?->from};{$dto->workTime?->from}";
+                echo "{$dto->type};{$dto->date->day};{$dto->workTime?->from};{$dto->workTime?->till}";
                 echo \PHP_EOL;
             }
 
