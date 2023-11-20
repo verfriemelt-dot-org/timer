@@ -1,0 +1,33 @@
+includes:
+    - vendor/phpstan/phpstan-phpunit/extension.neon
+    - vendor/phpstan/phpstan-strict-rules/rules.neon
+    - vendor/phpstan/phpstan/conf/bleedingEdge.neon
+    - vendor/tomasvotruba/type-coverage/config/extension.neon
+    - vendor/tomasvotruba/cognitive-complexity/config/extension.neon
+    - vendor/phpstan/phpstan-deprecation-rules/rules.neon
+
+parameters:
+
+  level: max
+
+  reportUnmatchedIgnoredErrors: false
+  reportWrongPhpDocTypeInVarTag: true
+  treatPhpDocTypesAsCertain: false
+  checkMissingCallableSignature: true
+
+  type_coverage:
+      param_type: 100
+      return_type: 100
+      property_type: 100
+      print_suggestions: true
+
+  cognitive_complexity:
+      class: 50
+      function: 8
+
+  paths:
+    - src
+    - tests
+
+  parallel:
+    processTimeout: 30.0

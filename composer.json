@@ -1,0 +1,35 @@
+
+{
+    "name": "verfriemelt/timer",
+    "type": "project",
+    "require": {
+        "php": "~8.2",
+        "verfriemelt/wrapped": "@dev"
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^1.10.41",
+        "phpstan/phpstan-strict-rules": "^1.5.2",
+        "phpstan/phpstan-phpunit": "^1.3.15",
+        "phpunit/phpunit": "^10.4.2",
+        "tomasvotruba/type-coverage": "^0.2.1",
+        "tomasvotruba/cognitive-complexity": "^0.2.2",
+        "friendsofphp/php-cs-fixer": "^3.38.2",
+        "rector/rector": "^0.18.8",
+        "phpstan/phpstan-deprecation-rules": "^1.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "timer\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "timer\\tests\\": "tests"
+        }
+    },
+    "config": {
+        "preferred-install": {
+            "verfriemelt/wrapped": "source"
+        }
+    }
+}
