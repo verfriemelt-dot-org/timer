@@ -42,7 +42,7 @@ $routes[] = Route::create('import')->call(function (
 
         if ($amount <= 6) {
             $start = $date->setTime(8, 30, 0, 0)->modify('+' . \mt_rand(-1800, 1800) . 'seconds');
-            $end = $date->setTime(8, 30, 0, 0)->modify("+{$amount}hours");
+            $end = $date->setTime(8, 30, 0, 0)->modify('+' . \mt_rand(-900, 900) . 'seconds')->modify("+{$amount}hours");
 
             $slices[] = new EntryDto(
                 new DateDto($date->format('Y-m-d')),
