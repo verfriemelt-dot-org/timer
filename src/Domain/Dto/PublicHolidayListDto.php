@@ -1,13 +1,17 @@
-<?php namespace timer\Domain\Dto;
+<?php
 
-    class PublicHolidayListDto {
+declare(strict_types=1);
 
-        /** @var PublicHoliday[] */
-        public array $holidays;
+namespace timer\Domain\Dto;
 
-        public function __construct(
-            PublicHoliday ... $holidays
-        ) {
-            $this->holidays = $holidays;
-        }
+class PublicHolidayListDto
+{
+    /** @var PublicHoliday[] */
+    public array $holidays;
+
+    public function __construct(
+        PublicHoliday ...$holidays
+    ) {
+        $this->holidays = $holidays;
     }
+}

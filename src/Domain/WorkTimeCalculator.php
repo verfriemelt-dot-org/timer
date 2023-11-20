@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace timer\Domain;
 
 use DateTime;
@@ -10,12 +12,10 @@ use timer\Domain\Repository\HolidayRepository;
 
 class WorkTimeCalculator
 {
-
     public function __construct(
         private readonly HolidayRepository $holidayRepository,
         private readonly EntryRepository $entryRepository,
-    ) {
-    }
+    ) {}
 
     public function getTotalWorkHours(EntryListDto $entryListDto): float
     {
@@ -65,7 +65,7 @@ class WorkTimeCalculator
     public function expectedHours(DateTime $day): float
     {
         // weekend
-        if (in_array($day->format("N"), ["6", "7"])) {
+        if (in_array($day->format('N'), ['6', '7'])) {
             return 0;
         }
 

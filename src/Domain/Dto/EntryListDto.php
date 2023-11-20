@@ -1,12 +1,16 @@
-<?php namespace timer\Domain\Dto;
+<?php
 
-class EntryListDto {
+declare(strict_types=1);
 
+namespace timer\Domain\Dto;
+
+class EntryListDto
+{
     /** @var EntryDto[] */
     public array $entries;
 
     public function __construct(
-        EntryDto ... $entries
+        EntryDto ...$entries
     ) {
         $this->entries = $entries;
     }
