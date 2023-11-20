@@ -22,7 +22,7 @@ class PrintYear extends Controller
         Request $request
     ): Response {
         $d = new DateTime('2023-01-01');
-        $till = (clone $d)->modify('2023-10-31');
+        $till = (clone $d)->modify('2023-11-31');
 
         $total = 0;
         $totalRequired = 0;

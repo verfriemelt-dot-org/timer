@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace timer;
 
+use timer\Controller\ExportCsv;
 use timer\Controller\PrintMonth;
 use timer\Controller\PrintYear;
 use timer\Domain\Dto\DateDto;
@@ -87,6 +88,7 @@ $routes[] = Route::create('import')->call(function (
         }
     }
 });
+$routes[] = Route::create('export')->call(ExportCsv::class);
 $routes[] = Route::create('print year')->call(PrintYear::class);
 $routes[] = Route::create('print ?(?<month>[0-9]{1,2})?')->call(PrintMonth::class);
 $routes[] = Route::create('.*')->call(function (
