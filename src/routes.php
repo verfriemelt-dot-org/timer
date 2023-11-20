@@ -55,7 +55,7 @@ $routes[] = Route::create('import')->call(function (
         } else {
             $firstHalf = (4.5 * 3600 + \mt_rand(-1800, 1800));
             $break = \mt_rand(25 * 60, 66 * 60);
-            $secondHalf = $amount * 3600 - 4.5 * 3600 - \mt_rand(-900, 900) - 1800;
+            $secondHalf = $amount * 3600 - 4.5 * 3600 - \mt_rand(-900, 900) - 900;
 
             $start = $date->setTime(8, 30, 0, 0)->modify('+' . \mt_rand(-600, 900) . 'seconds');
             $end = $date->setTime(8, 30, 0, 0)->modify("+{$firstHalf}seconds");
