@@ -11,6 +11,6 @@ class EntryDto
         public ?WorkTimeDto $workTime = null,
         public string $type = 'work',
     ) {
-        \assert(\in_array($this->type, ['vacation', 'work', 'sick']));
+        \assert(\in_array($this->type, ['vacation', 'work', 'sick'], true));
     }
 }

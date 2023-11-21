@@ -8,7 +8,6 @@ use DateTime;
 use timer\Domain\Dto\PublicHoliday;
 use timer\Domain\Dto\PublicHolidayListDto;
 use verfriemelt\wrapped\_\Serializer\Encoder\JsonEncoder;
-use RuntimeException;
 
 class HolidayRepository extends AbstractRepository
 {
@@ -24,7 +23,8 @@ class HolidayRepository extends AbstractRepository
         if (!\file_exists($this->path)) {
             $json = '[]';
         } else {
-            $json = \file_get_contents($this->path) ?: throw new RuntimeException("cant read {$this->path}");
+            $json = \file_get_contents($this->path);
+            assert(\is_string($json), "cant read {$this->path}");
         }
 
         return (new JsonEncoder())->deserialize($json, PublicHolidayListDto::class);
@@ -35,7 +35,7 @@ class HolidayRepository extends AbstractRepository
         \file_put_contents($this->path, '[]');
     }
 
-    public function add(PublicHoliday $publicHoliday)
+    public function add(PublicHoliday $publicHoliday): void
     {
         $newList = new PublicHolidayListDto(
             $publicHoliday,
@@ -45,7 +45,7 @@ class HolidayRepository extends AbstractRepository
         $this->write($newList);
     }
 
-    public function write(PublicHolidayListDto $dto)
+    private function write(PublicHolidayListDto $dto): void
     {
         \file_put_contents($this->path, (new JsonEncoder())->serialize($dto->holidays, true));
     }
@@ -54,6 +54,6 @@ class HolidayRepository extends AbstractRepository
     {
         $holidays = array_map(fn (PublicHoliday $holiday): string => $holiday->date->day, $this->all()->holidays);
 
-        return in_array($day->format('Y-m-d'), $holidays);
+        return in_array($day->format('Y-m-d'), $holidays, true);
     }
 }

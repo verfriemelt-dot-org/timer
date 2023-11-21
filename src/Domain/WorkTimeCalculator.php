@@ -7,14 +7,12 @@ namespace timer\Domain;
 use DateTime;
 use DateTimeImmutable;
 use timer\Domain\Dto\EntryListDto;
-use timer\Domain\Repository\EntryRepository;
 use timer\Domain\Repository\HolidayRepository;
 
 class WorkTimeCalculator
 {
     public function __construct(
         private readonly HolidayRepository $holidayRepository,
-        private readonly EntryRepository $entryRepository,
     ) {}
 
     public function getTotalWorkHours(EntryListDto $entryListDto): float
@@ -25,6 +23,8 @@ class WorkTimeCalculator
             if ($entry->type !== 'work') {
                 continue;
             }
+
+            assert(isset($entry->workTime->from, $entry->workTime->till));
 
             $from = new DateTimeImmutable($entry->workTime->from);
             $to = new DateTimeImmutable($entry->workTime->till);
@@ -65,7 +65,7 @@ class WorkTimeCalculator
     public function expectedHours(DateTime $day): float
     {
         // weekend
-        if (in_array($day->format('N'), ['6', '7'])) {
+        if (in_array($day->format('N'), ['6', '7'], true)) {
             return 0;
         }
 

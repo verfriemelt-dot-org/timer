@@ -51,7 +51,7 @@ class PrintYear extends Controller
                     continue;
                 }
 
-                echo ": {$dto->workTime->from} - {$dto->workTime->till}" . \PHP_EOL;
+                echo ": {$dto->workTime?->from} - {$dto->workTime?->till}" . \PHP_EOL;
             }
 
             $d->modify('+1 day');
