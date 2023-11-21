@@ -13,6 +13,8 @@ define('_', true);
 
 require __DIR__ . '/../vendor/autoload.php';
 
+date_default_timezone_set('Europe/Berlin');
+
 $kernel = new class () extends Kernel {
     public function getProjectPath(): string
     {
