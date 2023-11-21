@@ -23,9 +23,21 @@ $routes[] = Route::create('print ?(?<month>[0-9]{1,2})?')->call(PrintMonth::clas
 $routes[] = Route::create('reset')->call(function () {
     $path = \dirname(__FILE__, 2) . '/data/current.json';
     if (!\file_exists($path)) {
+        echo 'not started' . PHP_EOL;
         return;
     }
+    var_dump(\file_get_contents($path));
+    echo 'deleted' . PHP_EOL;
+
     unlink($path);
+});
+$routes[] = Route::create('cat')->call(function () {
+    $path = \dirname(__FILE__, 2) . '/data/current.json';
+    if (!\file_exists($path)) {
+        echo 'not started' . PHP_EOL;
+        return;
+    }
+    var_dump(\file_get_contents($path));
 });
 $routes[] = Route::create('.*')->call(function (EntryRepository $entryRepository) {
     $path = \dirname(__FILE__, 2) . '/data/current.json';
@@ -38,7 +50,10 @@ $routes[] = Route::create('.*')->call(function (EntryRepository $entryRepository
         return;
     }
 
-    $dto = (new JsonEncoder())->deserialize(\file_get_contents($path), WorkTimeDto::class);
+    $json = \file_get_contents($path);
+    assert(\is_string($json));
+
+    $dto = (new JsonEncoder())->deserialize($json, WorkTimeDto::class);
     $dto = $dto->till((new DateTime())->format('Y-m-d H:i:s'));
 
     $work = new EntryDto(
