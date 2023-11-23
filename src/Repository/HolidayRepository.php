@@ -7,12 +7,11 @@ namespace timer\Repository;
 use DateTime;
 use timer\Domain\Dto\PublicHoliday;
 use timer\Domain\Dto\PublicHolidayListDto;
-use timer\Domain\Repository\AbstractRepository;
 use timer\Domain\Repository\HolidayRepositoryInterface;
 use verfriemelt\wrapped\_\Serializer\Encoder\JsonEncoder;
 use RuntimeException;
 
-class HolidayRepository extends AbstractRepository implements HolidayRepositoryInterface
+class HolidayRepository implements HolidayRepositoryInterface
 {
     private readonly string $path;
 

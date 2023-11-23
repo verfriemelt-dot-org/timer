@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace timer\Domain;
 
 use DateTime;
-use DateTimeImmutable;
 use timer\Domain\Dto\EntryListDto;
 use timer\Domain\Repository\HolidayRepositoryInterface;
 
@@ -13,6 +12,7 @@ class WorkTimeCalculator
 {
     public function __construct(
         private readonly HolidayRepositoryInterface $holidayRepository,
+        private readonly TimeDiff $timeDiff,
     ) {}
 
     public function getTotalWorkHours(EntryListDto $entryListDto): float
@@ -24,14 +24,9 @@ class WorkTimeCalculator
                 continue;
             }
 
-            assert(isset($entry->workTime->from, $entry->workTime->till));
+            assert($entry->workTime !== null);
 
-            $from = new DateTimeImmutable($entry->workTime->from);
-            $to = new DateTimeImmutable($entry->workTime->till);
-
-            $diff = $from->diff($to);
-
-            $total += $diff->h * 3600 + $diff->i * 60 + $diff->s;
+            $total += $this->timeDiff->getInSeconds($entry->workTime);
         }
 
         return $total / 3600;

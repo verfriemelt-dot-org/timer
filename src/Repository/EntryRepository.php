@@ -7,11 +7,10 @@ namespace timer\Repository;
 use DateTime;
 use timer\Domain\Dto\EntryDto;
 use timer\Domain\Dto\EntryListDto;
-use timer\Domain\Repository\AbstractRepository;
 use timer\Domain\Repository\EntryRepositoryInterface;
 use verfriemelt\wrapped\_\Serializer\Encoder\JsonEncoder;
 
-class EntryRepository extends AbstractRepository implements EntryRepositoryInterface
+class EntryRepository implements EntryRepositoryInterface
 {
     private readonly string $path;
     private EntryListDto $list;

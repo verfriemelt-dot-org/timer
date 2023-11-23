@@ -6,6 +6,7 @@ namespace timer;
 
 use timer\Domain\Repository\EntryRepositoryInterface;
 use timer\Domain\Repository\HolidayRepositoryInterface;
+use timer\Repository\CurrentWorkRepository;
 use timer\Repository\EntryRepository;
 use timer\Repository\HolidayRepository;
 use verfriemelt\wrapped\_\Cli\Console;
@@ -27,6 +28,7 @@ $kernel = new class () extends Kernel {
 
 $kernel->getContainer()->register(HolidayRepositoryInterface::class, new HolidayRepository());
 $kernel->getContainer()->register(EntryRepositoryInterface::class, new EntryRepository());
+$kernel->getContainer()->register(CurrentWorkRepository::class, new CurrentWorkRepository());
 
 $kernel->loadRoutes(require_once __DIR__ . '/routes.php');
 $request = Request::createFromGlobals();

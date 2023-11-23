@@ -7,18 +7,22 @@ namespace timer\Controller;
 use DateTime;
 use timer\Domain\Dto\DateDto;
 use timer\Domain\Dto\EntryDto;
-use timer\Domain\Dto\WorkTimeDto;
 use timer\Domain\EntryType;
-use timer\Repository\EntryRepository;
+use timer\Domain\Repository\CurrentWorkRepositoryInterface;
+use timer\Domain\Repository\EntryRepositoryInterface;
+use timer\Domain\TimeDiff;
+use timer\Domain\WorkTimeCalculator;
 use verfriemelt\wrapped\_\Cli\Console;
 use verfriemelt\wrapped\_\Controller\Controller;
 use verfriemelt\wrapped\_\Http\Response\Response;
-use verfriemelt\wrapped\_\Serializer\Encoder\JsonEncoder;
 
 class EntryController extends Controller
 {
     public function __construct(
-        private readonly EntryRepository $entryRepository,
+        private readonly EntryRepositoryInterface $entryRepository,
+        private readonly WorkTimeCalculator $workTimeCalculator,
+        private readonly CurrentWorkRepositoryInterface $currentWorkRepository,
+        private readonly TimeDiff $timeDiff,
         private readonly Console $console,
     ) {}
 
@@ -76,31 +80,42 @@ class EntryController extends Controller
 
     public function handle_index(): Response
     {
-        $path = \dirname(__FILE__, 3) . '/data/current.json';
-
-        if (!\file_exists($path)) {
-            $json = (new JsonEncoder())->serialize(new WorkTimeDto((new DateTime())->format('Y-m-d H:i:s')));
-            \file_put_contents($path, $json);
-
-            \var_dump($json);
+        if (!$this->currentWorkRepository->has()) {
+            \var_dump($this->currentWorkRepository->toggle());
             return new Response();
         }
 
-        $json = \file_get_contents($path);
-        \assert(\is_string($json));
-
-        $dto = (new JsonEncoder())->deserialize($json, WorkTimeDto::class);
-        $dto = $dto->till((new DateTime())->format('Y-m-d H:i:s'));
+        $workTimeDto = $this->currentWorkRepository->toggle();
 
         $work = new EntryDto(
             new DateDto((new DateTime())->format('Y-m-d')),
-            $dto
+            $workTimeDto
         );
 
         \var_dump($work);
 
         $this->entryRepository->add($work);
-        \unlink($path);
+
+        return new Response();
+    }
+
+    public function handle_clock(): Response
+    {
+        $today = new DateTime();
+
+        $entries = $this->entryRepository->getDay($today);
+        $hours = $this->workTimeCalculator->getTotalWorkHours($entries)
+            + $this->workTimeCalculator->getVacationHours($entries)
+            + $this->workTimeCalculator->getSickHours($entries)
+        ;
+
+        $expected = $this->workTimeCalculator->expectedHours($today);
+
+        if ($this->currentWorkRepository->has()) {
+            $hours += $this->timeDiff->getInHours($this->currentWorkRepository->get()->till((new DateTime())->format('Y-m-d H:i:s')));
+        }
+
+        $this->console->writeLn("{$hours} // {$expected}", ($hours >= $expected) ? Console::STYLE_GREEN : Console::STYLE_RED);
 
         return new Response();
     }

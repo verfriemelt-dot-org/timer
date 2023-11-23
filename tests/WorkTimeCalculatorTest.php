@@ -9,6 +9,7 @@ use PHPUnit\Framework\TestCase;
 use timer\Domain\Dto\PublicHoliday;
 use timer\Domain\Dto\PublicHolidayListDto;
 use timer\Domain\Repository\HolidayRepositoryInterface;
+use timer\Domain\TimeDiff;
 use timer\Domain\WorkTimeCalculator;
 
 class WorkTimeCalculatorTest extends TestCase
@@ -33,7 +34,8 @@ class WorkTimeCalculatorTest extends TestCase
                 {
                     return $day < new DateTime('2000-01-01');
                 }
-            }
+            },
+            new TimeDiff()
         );
     }
 
