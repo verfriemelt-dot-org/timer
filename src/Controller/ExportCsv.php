@@ -12,7 +12,7 @@ use verfriemelt\wrapped\_\Http\Response\Response;
 class ExportCsv extends Controller
 {
     public function __construct(
-        private EntryRepository $entryRepository
+        private readonly EntryRepository $entryRepository
     ) {}
 
     public function handle_index(): Response

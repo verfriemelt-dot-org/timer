@@ -15,8 +15,8 @@ use verfriemelt\wrapped\_\Http\Response\Response;
 class PrintMonth extends Controller
 {
     public function __construct(
-        private EntryRepositoryInterface $entryRepository,
-        private WorkTimeCalculator $workTimeCalculator,
+        private readonly EntryRepositoryInterface $entryRepository,
+        private readonly WorkTimeCalculator $workTimeCalculator,
     ) {}
 
     public function handle_index(

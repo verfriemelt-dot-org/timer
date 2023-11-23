@@ -13,7 +13,7 @@ use verfriemelt\wrapped\_\Serializer\Encoder\JsonEncoder;
 
 class EntryRepository extends AbstractRepository implements EntryRepositoryInterface
 {
-    private string $path;
+    private readonly string $path;
     private EntryListDto $list;
 
     public function __construct()

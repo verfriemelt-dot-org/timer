@@ -15,7 +15,7 @@ final readonly class DateDto
     ) {
         try {
             new DateTime($day);
-        } catch (Exception $e) {
+        } catch (Exception) {
             throw new RuntimeException('illegal date provided: ' . $this->day);
         }
     }

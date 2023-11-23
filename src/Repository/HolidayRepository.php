@@ -13,7 +13,7 @@ use verfriemelt\wrapped\_\Serializer\Encoder\JsonEncoder;
 
 class HolidayRepository extends AbstractRepository implements HolidayRepositoryInterface
 {
-    private string $path;
+    private readonly string $path;
 
     public function __construct()
     {
