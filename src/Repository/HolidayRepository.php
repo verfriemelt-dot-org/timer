@@ -2,14 +2,16 @@
 
 declare(strict_types=1);
 
-namespace timer\Domain\Repository;
+namespace timer\Repository;
 
 use DateTime;
 use timer\Domain\Dto\PublicHoliday;
 use timer\Domain\Dto\PublicHolidayListDto;
+use timer\Domain\Repository\AbstractRepository;
+use timer\Domain\Repository\HolidayRepositoryInterface;
 use verfriemelt\wrapped\_\Serializer\Encoder\JsonEncoder;
 
-class HolidayRepository extends AbstractRepository
+class HolidayRepository extends AbstractRepository implements HolidayRepositoryInterface
 {
     private string $path;
 
@@ -30,11 +32,6 @@ class HolidayRepository extends AbstractRepository
         return (new JsonEncoder())->deserialize($json, PublicHolidayListDto::class);
     }
 
-    public function truncate(): void
-    {
-        \file_put_contents($this->path, '[]');
-    }
-
     public function add(PublicHoliday $publicHoliday): void
     {
         $newList = new PublicHolidayListDto(
@@ -45,15 +42,15 @@ class HolidayRepository extends AbstractRepository
         $this->write($newList);
     }
 
+    public function isHoliday(DateTime $day): bool
+    {
+        $holidays = \array_map(fn (PublicHoliday $holiday): string => $holiday->date->day, $this->all()->holidays);
+
+        return \in_array($day->format('Y-m-d'), $holidays, true);
+    }
+
     private function write(PublicHolidayListDto $dto): void
     {
         \file_put_contents($this->path, (new JsonEncoder())->serialize($dto->holidays, true));
-    }
-
-    public function isHoliday(DateTime $day): bool
-    {
-        $holidays = array_map(fn (PublicHoliday $holiday): string => $holiday->date->day, $this->all()->holidays);
-
-        return in_array($day->format('Y-m-d'), $holidays, true);
     }
 }

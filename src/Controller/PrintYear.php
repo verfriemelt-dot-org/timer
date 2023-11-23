@@ -6,7 +6,7 @@ namespace timer\Controller;
 
 use DateTime;
 use timer\Domain\EntryType;
-use timer\Domain\Repository\EntryRepository;
+use timer\Domain\Repository\EntryRepositoryInterface;
 use timer\Domain\WorkTimeCalculator;
 use verfriemelt\wrapped\_\Controller\Controller;
 use verfriemelt\wrapped\_\Http\Request\Request;
@@ -15,7 +15,7 @@ use verfriemelt\wrapped\_\Http\Response\Response;
 class PrintYear extends Controller
 {
     public function __construct(
-        private EntryRepository $entryRepository,
+        private EntryRepositoryInterface $entryRepository,
         private WorkTimeCalculator $workTimeCalculator,
     ) {}
 

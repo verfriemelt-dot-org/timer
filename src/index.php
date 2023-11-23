@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace timer;
 
+use timer\Domain\Repository\EntryRepositoryInterface;
+use timer\Domain\Repository\HolidayRepositoryInterface;
+use timer\Repository\EntryRepository;
+use timer\Repository\HolidayRepository;
 use verfriemelt\wrapped\_\Cli\Console;
 use verfriemelt\wrapped\_\Http\Request\Request;
 use verfriemelt\wrapped\_\Kernel;
-use verfriemelt\wrapped\_\View\View;
 
 define('_', true);
 
@@ -22,8 +25,8 @@ $kernel = new class () extends Kernel {
     }
 };
 
-// this needs to be dropped
-View::setContainer($kernel->getContainer());
+$kernel->getContainer()->register(HolidayRepositoryInterface::class, new HolidayRepository());
+$kernel->getContainer()->register(EntryRepositoryInterface::class, new EntryRepository());
 
 $kernel->loadRoutes(require_once __DIR__ . '/routes.php');
 $request = Request::createFromGlobals();

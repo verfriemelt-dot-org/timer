@@ -12,7 +12,7 @@ use timer\Domain\Dto\DateDto;
 use timer\Domain\Dto\EntryDto;
 use timer\Domain\Dto\WorkTimeDto;
 use timer\Domain\EntryType;
-use timer\Domain\Repository\EntryRepository;
+use timer\Domain\Repository\EntryRepositoryInterface;
 use verfriemelt\wrapped\_\Router\Route;
 use verfriemelt\wrapped\_\Serializer\Encoder\JsonEncoder;
 
@@ -40,7 +40,7 @@ $routes[] = Route::create('cat')->call(function () {
     }
     var_dump(\file_get_contents($path));
 });
-$routes[] = Route::create('sick')->call(function (EntryRepository $entryRepository) {
+$routes[] = Route::create('sick')->call(function (EntryRepositoryInterface $entryRepository) {
     $entryRepository->add(
         new EntryDto(
             new DateDto((new DateTime())->format('Y-m-d')),
@@ -48,7 +48,7 @@ $routes[] = Route::create('sick')->call(function (EntryRepository $entryReposito
         )
     );
 });
-$routes[] = Route::create('vacation')->call(function (EntryRepository $entryRepository) {
+$routes[] = Route::create('vacation')->call(function (EntryRepositoryInterface $entryRepository) {
     $entryRepository->add(
         new EntryDto(
             new DateDto((new DateTime())->format('Y-m-d')),
@@ -56,7 +56,7 @@ $routes[] = Route::create('vacation')->call(function (EntryRepository $entryRepo
         )
     );
 });
-$routes[] = Route::create('.*')->call(function (EntryRepository $entryRepository) {
+$routes[] = Route::create('.*')->call(function (EntryRepositoryInterface $entryRepository) {
     $path = \dirname(__FILE__, 2) . '/data/current.json';
 
     if (!\file_exists($path)) {

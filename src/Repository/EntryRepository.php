@@ -2,20 +2,23 @@
 
 declare(strict_types=1);
 
-namespace timer\Domain\Repository;
+namespace timer\Repository;
 
 use DateTime;
 use timer\Domain\Dto\EntryDto;
 use timer\Domain\Dto\EntryListDto;
+use timer\Domain\Repository\AbstractRepository;
+use timer\Domain\Repository\EntryRepositoryInterface;
 use verfriemelt\wrapped\_\Serializer\Encoder\JsonEncoder;
 
-class EntryRepository extends AbstractRepository
+class EntryRepository extends AbstractRepository implements EntryRepositoryInterface
 {
     private string $path;
+    private EntryListDto $list;
 
     public function __construct()
     {
-        $this->path = \dirname(__FILE__, 4) . '/data/entries.json';
+        $this->path = \dirname(__FILE__, 3) . '/data/entries.json';
     }
 
     public function all(): EntryListDto
@@ -27,22 +30,17 @@ class EntryRepository extends AbstractRepository
             assert(is_string($json), "cant read {$this->path}");
         }
 
-        return (new JsonEncoder())->deserialize($json, EntryListDto::class);
-    }
-
-    public function truncate(): void
-    {
-        \file_put_contents($this->path, '[]');
+        return $this->list ??= (new JsonEncoder())->deserialize($json, EntryListDto::class);
     }
 
     public function add(EntryDto $entry): void
     {
-        $newList = new EntryListDto(
+        $this->list = new EntryListDto(
             ...array_values($this->all()->entries),
             ...[$entry],
         );
 
-        $this->write($newList);
+        $this->write($this->list);
     }
 
     private function write(EntryListDto $dto): void

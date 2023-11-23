@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace timer\Controller;
 
 use DateTime;
-use timer\Domain\Repository\EntryRepository;
+use timer\Repository\EntryRepository;
 use verfriemelt\wrapped\_\Controller\Controller;
-use verfriemelt\wrapped\_\Http\Request\Request;
 use verfriemelt\wrapped\_\Http\Response\Response;
 
 class ExportCsv extends Controller
@@ -16,9 +15,8 @@ class ExportCsv extends Controller
         private EntryRepository $entryRepository
     ) {}
 
-    public function handle_index(
-        Request $request
-    ): Response {
+    public function handle_index(): Response
+    {
         $d = new DateTime('2023-01-01');
         $till = new DateTime('Today');
 

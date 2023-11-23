@@ -7,12 +7,12 @@ namespace timer\Domain;
 use DateTime;
 use DateTimeImmutable;
 use timer\Domain\Dto\EntryListDto;
-use timer\Domain\Repository\HolidayRepository;
+use timer\Domain\Repository\HolidayRepositoryInterface;
 
 class WorkTimeCalculator
 {
     public function __construct(
-        private readonly HolidayRepository $holidayRepository,
+        private readonly HolidayRepositoryInterface $holidayRepository,
     ) {}
 
     public function getTotalWorkHours(EntryListDto $entryListDto): float
