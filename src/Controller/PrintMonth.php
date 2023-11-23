@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace timer\Controller;
 
 use DateTime;
+use timer\Domain\EntryType;
 use timer\Domain\Repository\EntryRepository;
 use timer\Domain\WorkTimeCalculator;
 use verfriemelt\wrapped\_\Controller\Controller;
@@ -45,9 +46,9 @@ class PrintMonth extends Controller
 
             foreach ($entries->entries as $dto) {
                 echo "\t";
-                echo "{$dto->type}";
+                echo "{$dto->type->value}";
 
-                if ($dto->type !== 'work') {
+                if ($dto->type !== EntryType::Work) {
                     echo \PHP_EOL;
                     continue;
                 }

@@ -20,7 +20,7 @@ class WorkTimeCalculator
         $total = 0;
 
         foreach ($entryListDto->entries as $entry) {
-            if ($entry->type !== 'work') {
+            if ($entry->type !== EntryType::Work) {
                 continue;
             }
 
@@ -41,7 +41,7 @@ class WorkTimeCalculator
     {
         $total = 0;
         foreach ($entryListDto->entries as $entry) {
-            if ($entry->type === 'vacation') {
+            if ($entry->type === EntryType::Vacation) {
                 $total += 8;
             }
         }
@@ -54,7 +54,7 @@ class WorkTimeCalculator
         $total = 0;
 
         foreach ($entryListDto->entries as $entry) {
-            if ($entry->type === 'sick') {
+            if ($entry->type === EntryType::Sick) {
                 $total += 8;
             }
         }

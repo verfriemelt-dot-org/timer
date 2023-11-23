@@ -11,6 +11,7 @@ use timer\Controller\PrintYear;
 use timer\Domain\Dto\DateDto;
 use timer\Domain\Dto\EntryDto;
 use timer\Domain\Dto\WorkTimeDto;
+use timer\Domain\EntryType;
 use timer\Domain\Repository\EntryRepository;
 use verfriemelt\wrapped\_\Router\Route;
 use verfriemelt\wrapped\_\Serializer\Encoder\JsonEncoder;
@@ -38,6 +39,22 @@ $routes[] = Route::create('cat')->call(function () {
         return;
     }
     var_dump(\file_get_contents($path));
+});
+$routes[] = Route::create('sick')->call(function (EntryRepository $entryRepository) {
+    $entryRepository->add(
+        new EntryDto(
+            new DateDto((new DateTime())->format('Y-m-d')),
+            type: EntryType::Sick,
+        )
+    );
+});
+$routes[] = Route::create('vacation')->call(function (EntryRepository $entryRepository) {
+    $entryRepository->add(
+        new EntryDto(
+            new DateDto((new DateTime())->format('Y-m-d')),
+            type: EntryType::Sick,
+        )
+    );
 });
 $routes[] = Route::create('.*')->call(function (EntryRepository $entryRepository) {
     $path = \dirname(__FILE__, 2) . '/data/current.json';
