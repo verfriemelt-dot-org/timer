@@ -10,6 +10,7 @@ use timer\Domain\Dto\PublicHolidayListDto;
 use timer\Domain\Repository\AbstractRepository;
 use timer\Domain\Repository\HolidayRepositoryInterface;
 use verfriemelt\wrapped\_\Serializer\Encoder\JsonEncoder;
+use RuntimeException;
 
 class HolidayRepository extends AbstractRepository implements HolidayRepositoryInterface
 {
@@ -17,17 +18,17 @@ class HolidayRepository extends AbstractRepository implements HolidayRepositoryI
 
     public function __construct()
     {
-        $this->path = \dirname(__FILE__, 4) . '/data/holidays.json';
+        $this->path = \dirname(__FILE__, 3) . '/data/holidays.json';
     }
 
     public function all(): PublicHolidayListDto
     {
         if (!\file_exists($this->path)) {
-            $json = '[]';
-        } else {
-            $json = \file_get_contents($this->path);
-            assert(\is_string($json), "cant read {$this->path}");
+            throw new RuntimeException('holidays file not present');
         }
+
+        $json = \file_get_contents($this->path);
+        assert(\is_string($json), "cant read {$this->path}");
 
         return (new JsonEncoder())->deserialize($json, PublicHolidayListDto::class);
     }
