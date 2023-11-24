@@ -4,26 +4,28 @@ declare(strict_types=1);
 
 namespace timer\Domain\Print;
 
-use DateTime;
-use timer\Repository\EntryRepository;
+use DateTimeImmutable;
+use timer\Domain\Repository\EntryRepositoryInterface;
 
 final readonly class CsvPrint
 {
     public function __construct(
-        private EntryRepository $entryRepository,
+        private EntryRepositoryInterface $entryRepository,
     ) {}
 
-    public function print(DateTime $start, DateTime $end): void
+    public function print(DateTimeImmutable $start, DateTimeImmutable $end): void
     {
-        while ($start <= $end) {
-            $entries = $this->entryRepository->getDay($start);
+        $current = clone $start;
+
+        while ($current <= $end) {
+            $entries = $this->entryRepository->getDay($current);
 
             foreach ($entries->entries as $dto) {
                 echo "{$dto->type->value};{$dto->date->day};{$dto->workTime?->from};{$dto->workTime?->till}";
                 echo \PHP_EOL;
             }
 
-            $start->modify('+1 day');
+            $current = $current->modify('+1 day');
         }
     }
 }

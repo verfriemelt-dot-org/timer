@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace timer\Repository;
 
-use DateTime;
+use DateTimeImmutable;
 use timer\Domain\Dto\WorkTimeDto;
 use timer\Domain\Repository\CurrentWorkRepositoryInterface;
 use verfriemelt\wrapped\_\Serializer\Encoder\JsonEncoder;
@@ -22,7 +22,7 @@ class CurrentWorkRepository implements CurrentWorkRepositoryInterface
     public function toggle(string $timeString): WorkTimeDto
     {
         if (!$this->has()) {
-            $workTime = new WorkTimeDto((new DateTime($timeString))->format('Y-m-d H:i:s'));
+            $workTime = new WorkTimeDto((new DateTimeImmutable($timeString))->format('Y-m-d H:i:s'));
             \file_put_contents($this->path, (new JsonEncoder())->serialize($workTime));
 
             return $workTime;
@@ -31,7 +31,7 @@ class CurrentWorkRepository implements CurrentWorkRepositoryInterface
         $dto = $this->get();
         $this->reset();
 
-        return $dto->till((new DateTime($timeString))->format('Y-m-d H:i:s'));
+        return $dto->till((new DateTimeImmutable($timeString))->format('Y-m-d H:i:s'));
     }
 
     public function get(): WorkTimeDto

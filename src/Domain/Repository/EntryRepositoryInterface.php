@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace timer\Domain\Repository;
 
-use DateTime;
+use DateTimeImmutable;
 use timer\Domain\Dto\EntryDto;
 use timer\Domain\Dto\EntryListDto;
 
@@ -14,5 +14,5 @@ interface EntryRepositoryInterface
 
     public function add(EntryDto $entry): void;
 
-    public function getDay(DateTime $day): EntryListDto;
+    public function getDay(DateTimeImmutable $day): EntryListDto;
 }

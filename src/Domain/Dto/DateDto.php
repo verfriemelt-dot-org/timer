@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace timer\Domain\Dto;
 
+use DateTimeImmutable;
 use Exception;
-use Nette\Utils\DateTime;
 use RuntimeException;
 
 final readonly class DateDto
@@ -14,7 +14,7 @@ final readonly class DateDto
         public string $day,
     ) {
         try {
-            new DateTime($day);
+            new DateTimeImmutable($day);
         } catch (Exception) {
             throw new RuntimeException('illegal date provided: ' . $this->day);
         }

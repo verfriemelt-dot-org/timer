@@ -14,7 +14,8 @@
         "tomasvotruba/cognitive-complexity": "^0.2.2",
         "friendsofphp/php-cs-fixer": "^3.39.0",
         "rector/rector": "^0.18.10",
-        "phpstan/phpstan-deprecation-rules": "^1.1.4"
+        "phpstan/phpstan-deprecation-rules": "^1.1.4",
+        "spaze/phpstan-disallowed-calls": "^2.16"
     },
     "autoload": {
         "psr-4": {

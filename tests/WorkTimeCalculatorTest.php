@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace tests;
 
-use DateTime;
+use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 use timer\Domain\Dto\PublicHoliday;
 use timer\Domain\Dto\PublicHolidayListDto;
@@ -30,9 +30,9 @@ class WorkTimeCalculatorTest extends TestCase
                     // TODO: Implement add() method.
                 }
 
-                public function isHoliday(DateTime $day): bool
+                public function isHoliday(DateTimeImmutable $day): bool
                 {
-                    return $day < new DateTime('2000-01-01');
+                    return $day < new DateTimeImmutable('2000-01-01');
                 }
             },
             new TimeDiff()
@@ -41,7 +41,7 @@ class WorkTimeCalculatorTest extends TestCase
 
     public function test_expected_hours(): void
     {
-        static::assertSame(0.0, $this->calc->expectedHours(new DateTime('1999-01-01')));
-        static::assertSame(8.0, $this->calc->expectedHours(new DateTime('2001-01-01')));
+        static::assertSame(0.0, $this->calc->expectedHours(new DateTimeImmutable('1999-01-01')));
+        static::assertSame(8.0, $this->calc->expectedHours(new DateTimeImmutable('2001-01-01')));
     }
 }

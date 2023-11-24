@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace timer\Repository;
 
-use DateTime;
+use DateTimeImmutable;
 use timer\Domain\Dto\EntryDto;
 use timer\Domain\Dto\EntryListDto;
 use timer\Domain\Repository\EntryRepositoryInterface;
@@ -47,7 +47,7 @@ class EntryRepository implements EntryRepositoryInterface
         \file_put_contents($this->path, (new JsonEncoder())->serialize($dto->entries, true));
     }
 
-    public function getDay(DateTime $day): EntryListDto
+    public function getDay(DateTimeImmutable $day): EntryListDto
     {
         return new EntryListDto(
             ...\array_filter(

@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace timer\Controller;
 
-use DateTime;
+use DateTimeImmutable;
 use timer\Domain\Dto\DateDto;
 use timer\Domain\Dto\EntryDto;
 use timer\Domain\EntryType;
 use timer\Domain\Repository\CurrentWorkRepositoryInterface;
 use timer\Domain\Repository\EntryRepositoryInterface;
+use timer\Domain\TimeBalance;
 use timer\Domain\TimeDiff;
 use timer\Domain\WorkTimeCalculator;
 use verfriemelt\wrapped\_\Cli\Console;
@@ -23,6 +24,7 @@ class EntryController extends Controller
         private readonly EntryRepositoryInterface $entryRepository,
         private readonly WorkTimeCalculator $workTimeCalculator,
         private readonly CurrentWorkRepositoryInterface $currentWorkRepository,
+        private readonly TimeBalance $timeBalance,
         private readonly TimeDiff $timeDiff,
         private readonly Console $console,
     ) {}
@@ -48,7 +50,7 @@ class EntryController extends Controller
     {
         $this->entryRepository->add(
             new EntryDto(
-                new DateDto((new DateTime())->format('Y-m-d')),
+                new DateDto((new DateTimeImmutable())->format('Y-m-d')),
                 type: EntryType::Sick,
             )
         );
@@ -60,7 +62,7 @@ class EntryController extends Controller
     {
         $this->entryRepository->add(
             new EntryDto(
-                new DateDto((new DateTime())->format('Y-m-d')),
+                new DateDto((new DateTimeImmutable())->format('Y-m-d')),
                 type: EntryType::Vacation,
             )
         );
@@ -83,7 +85,7 @@ class EntryController extends Controller
 
     public function handle_clock(): Response
     {
-        $today = new DateTime();
+        $today = new DateTimeImmutable();
 
         $entries = $this->entryRepository->getDay($today);
         $hours = $this->workTimeCalculator->getTotalWorkHours($entries)
@@ -94,7 +96,7 @@ class EntryController extends Controller
         $expected = $this->workTimeCalculator->expectedHours($today);
 
         if ($this->currentWorkRepository->has()) {
-            $hours += $this->timeDiff->getInHours($this->currentWorkRepository->get()->till((new DateTime())->format('Y-m-d H:i:s')));
+            $hours += $this->timeDiff->getInHours($this->currentWorkRepository->get()->till((new DateTimeImmutable())->format('Y-m-d H:i:s')));
         }
 
         $hours = \number_format($hours, 2, '.');
@@ -116,13 +118,25 @@ class EntryController extends Controller
         $workTimeDto = $this->currentWorkRepository->toggle($timeString);
 
         $work = new EntryDto(
-            new DateDto((new DateTime())->format('Y-m-d')),
+            new DateDto((new DateTimeImmutable())->format('Y-m-d')),
             $workTimeDto
         );
 
         \var_dump($work);
 
         $this->entryRepository->add($work);
+
+        return new Response();
+    }
+
+    public function handle_balance(): Response
+    {
+        $dto = $this->timeBalance->get(
+            new DateTimeImmutable('2023-01-01'),
+            new DateTimeImmutable('Yesterday')
+        );
+
+        $this->console->writeLn("{$dto->actual} // {$dto->expected}");
 
         return new Response();
     }

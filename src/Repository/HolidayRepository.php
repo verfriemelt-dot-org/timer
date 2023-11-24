@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace timer\Repository;
 
-use DateTime;
+use DateTimeImmutable;
 use timer\Domain\Dto\PublicHoliday;
 use timer\Domain\Dto\PublicHolidayListDto;
 use timer\Domain\Repository\HolidayRepositoryInterface;
@@ -42,7 +42,7 @@ class HolidayRepository implements HolidayRepositoryInterface
         $this->write($newList);
     }
 
-    public function isHoliday(DateTime $day): bool
+    public function isHoliday(DateTimeImmutable $day): bool
     {
         $holidays = \array_map(fn (PublicHoliday $holiday): string => $holiday->date->day, $this->all()->holidays);
 

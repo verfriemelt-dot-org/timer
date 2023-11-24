@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace timer\Domain;
 
-use DateTime;
+use DateTimeImmutable;
 use timer\Domain\Dto\EntryListDto;
 use timer\Domain\Repository\HolidayRepositoryInterface;
 
@@ -57,7 +57,7 @@ class WorkTimeCalculator
         return $total;
     }
 
-    public function expectedHours(DateTime $day): float
+    public function expectedHours(DateTimeImmutable $day): float
     {
         // weekend
         if (in_array($day->format('N'), ['6', '7'], true)) {

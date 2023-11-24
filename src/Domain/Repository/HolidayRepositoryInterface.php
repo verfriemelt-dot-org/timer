@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace timer\Domain\Repository;
 
-use DateTime;
+use DateTimeImmutable;
 use timer\Domain\Dto\PublicHoliday;
 use timer\Domain\Dto\PublicHolidayListDto;
 
@@ -14,5 +14,5 @@ interface HolidayRepositoryInterface
 
     public function add(PublicHoliday $publicHoliday): void;
 
-    public function isHoliday(DateTime $day): bool;
+    public function isHoliday(DateTimeImmutable $day): bool;
 }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace timer\Controller;
 
-use DateTime;
+use DateTimeImmutable;
 use timer\Domain\Print\PrettyPrint;
 use verfriemelt\wrapped\_\Controller\Controller;
 use verfriemelt\wrapped\_\Http\Request\Request;
@@ -19,9 +19,8 @@ class PrintMonth extends Controller
     public function handle_index(
         Request $request
     ): Response {
-        $month = (int) $request->attributes()->get('month', (new DateTime())->format('m'));
-
-        $date = new DateTime("2023-{$month}-01");
+        $month = (int) $request->attributes()->get('month', (new DateTimeImmutable())->format('m'));
+        $date = new DateTimeImmutable("2023-{$month}-01");
 
         $this->print->print(
             $date,
