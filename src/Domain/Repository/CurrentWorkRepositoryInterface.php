@@ -8,7 +8,7 @@ use timer\Domain\Dto\WorkTimeDto;
 
 interface CurrentWorkRepositoryInterface
 {
-    public function toggle(): WorkTimeDto;
+    public function toggle(string $timeString): WorkTimeDto;
 
     public function has(): bool;
 

@@ -14,6 +14,7 @@ use timer\Domain\TimeDiff;
 use timer\Domain\WorkTimeCalculator;
 use verfriemelt\wrapped\_\Cli\Console;
 use verfriemelt\wrapped\_\Controller\Controller;
+use verfriemelt\wrapped\_\Http\Request\Request;
 use verfriemelt\wrapped\_\Http\Response\Response;
 
 class EntryController extends Controller
@@ -78,27 +79,6 @@ class EntryController extends Controller
         return new Response();
     }
 
-    public function handle_index(): Response
-    {
-        if (!$this->currentWorkRepository->has()) {
-            \var_dump($this->currentWorkRepository->toggle());
-            return new Response();
-        }
-
-        $workTimeDto = $this->currentWorkRepository->toggle();
-
-        $work = new EntryDto(
-            new DateDto((new DateTime())->format('Y-m-d')),
-            $workTimeDto
-        );
-
-        \var_dump($work);
-
-        $this->entryRepository->add($work);
-
-        return new Response();
-    }
-
     public function handle_clock(): Response
     {
         $today = new DateTime();
@@ -118,5 +98,33 @@ class EntryController extends Controller
         $this->console->writeLn("{$hours} // {$expected}", ($hours >= $expected) ? Console::STYLE_GREEN : Console::STYLE_RED);
 
         return new Response();
+    }
+
+    public function handle_toggle(Request $request): Response
+    {
+        $timeString = $request->attributes()->get('args', 'now');
+
+        if (!$this->currentWorkRepository->has()) {
+            \var_dump($this->currentWorkRepository->toggle($timeString));
+            return new Response();
+        }
+
+        $workTimeDto = $this->currentWorkRepository->toggle($timeString);
+
+        $work = new EntryDto(
+            new DateDto((new DateTime())->format('Y-m-d')),
+            $workTimeDto
+        );
+
+        \var_dump($work);
+
+        $this->entryRepository->add($work);
+
+        return new Response();
+    }
+
+    public function handle_index(Request $request): Response
+    {
+        return $this->handle_toggle($request);
     }
 }

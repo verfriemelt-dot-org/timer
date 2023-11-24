@@ -19,10 +19,10 @@ class CurrentWorkRepository implements CurrentWorkRepositoryInterface
         $this->path = \dirname(__FILE__, 3) . '/data/current.json';
     }
 
-    public function toggle(): WorkTimeDto
+    public function toggle(string $timeString): WorkTimeDto
     {
         if (!$this->has()) {
-            $workTime = new WorkTimeDto((new DateTime())->format('Y-m-d H:i:s'));
+            $workTime = new WorkTimeDto((new DateTime($timeString))->format('Y-m-d H:i:s'));
             \file_put_contents($this->path, (new JsonEncoder())->serialize($workTime));
 
             return $workTime;
@@ -32,7 +32,7 @@ class CurrentWorkRepository implements CurrentWorkRepositoryInterface
 
         \unlink($this->path);
 
-        return $dto->till((new DateTime())->format('Y-m-d H:i:s'));
+        return $dto->till((new DateTime($timeString))->format('Y-m-d H:i:s'));
     }
 
     public function get(): WorkTimeDto
