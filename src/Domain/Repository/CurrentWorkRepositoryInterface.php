@@ -13,4 +13,6 @@ interface CurrentWorkRepositoryInterface
     public function has(): bool;
 
     public function get(): WorkTimeDto;
+
+    public function reset(): void;
 }

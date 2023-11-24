@@ -29,8 +29,7 @@ class CurrentWorkRepository implements CurrentWorkRepositoryInterface
         }
 
         $dto = $this->get();
-
-        \unlink($this->path);
+        $this->reset();
 
         return $dto->till((new DateTime($timeString))->format('Y-m-d H:i:s'));
     }
@@ -50,5 +49,10 @@ class CurrentWorkRepository implements CurrentWorkRepositoryInterface
     public function has(): bool
     {
         return \file_exists($this->path);
+    }
+
+    public function reset(): void
+    {
+        \unlink($this->path);
     }
 }

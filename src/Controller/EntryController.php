@@ -34,12 +34,12 @@ class EntryController extends Controller
 
     public function handle_cat(): Response
     {
-        $path = \dirname(__FILE__, 2) . '/data/current.json';
-        if (!\file_exists($path)) {
+        if (!$this->currentWorkRepository->has()) {
             $this->console->writeLn('not started');
             return new Response();
         }
-        \var_dump(\file_get_contents($path));
+
+        var_dump($this->currentWorkRepository->get());
 
         return new Response();
     }
@@ -70,16 +70,13 @@ class EntryController extends Controller
 
     public function handle_reset(): Response
     {
-        $path = \dirname(__FILE__, 3) . '/data/current.json';
-        if (!\file_exists($path)) {
+        if (!$this->currentWorkRepository->has()) {
             $this->console->writeLn('not started');
             return new Response();
         }
 
-        \var_dump(\file_get_contents($path));
-
+        $this->currentWorkRepository->reset();
         $this->console->writeLn('deleted');
-        \unlink($path);
 
         return new Response();
     }
