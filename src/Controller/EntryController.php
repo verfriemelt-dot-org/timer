@@ -27,6 +27,11 @@ class EntryController extends Controller
         private readonly Console $console,
     ) {}
 
+    public function handle_index(): Response
+    {
+        return $this->handle_clock();
+    }
+
     public function handle_cat(): Response
     {
         $path = \dirname(__FILE__, 2) . '/data/current.json';
@@ -95,7 +100,9 @@ class EntryController extends Controller
             $hours += $this->timeDiff->getInHours($this->currentWorkRepository->get()->till((new DateTime())->format('Y-m-d H:i:s')));
         }
 
-        $this->console->writeLn("{$hours} // {$expected}", ($hours >= $expected) ? Console::STYLE_GREEN : Console::STYLE_RED);
+        $hours = \number_format($hours, 2, '.');
+
+        $this->console->writeLn("[{$hours} :: {$expected}]");
 
         return new Response();
     }
@@ -121,10 +128,5 @@ class EntryController extends Controller
         $this->entryRepository->add($work);
 
         return new Response();
-    }
-
-    public function handle_index(Request $request): Response
-    {
-        return $this->handle_toggle($request);
     }
 }
