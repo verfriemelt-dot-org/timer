@@ -20,11 +20,18 @@ class PrintMonth extends Controller
         Request $request
     ): Response {
         $month = (int) $request->attributes()->get('month', (new DateTimeImmutable())->format('m'));
-        $date = new DateTimeImmutable("2023-{$month}-01");
+
+        $today = new DateTimeImmutable();
+        $start = new DateTimeImmutable("2023-{$month}-01");
+        $end = $start->modify('last day of this month');
+
+        if ($request->attributes()->hasNot('month') && $start < $today && $end > $today) {
+            $end = new DateTimeImmutable('yesterday');
+        }
 
         $this->print->print(
-            $date,
-            (clone $date)->modify('last day of this month'),
+            $start,
+            $end
         );
 
         return new Response();
