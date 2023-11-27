@@ -12,10 +12,10 @@
         "phpunit/phpunit": "^10.4.2",
         "tomasvotruba/type-coverage": "^0.2.1",
         "tomasvotruba/cognitive-complexity": "^0.2.2",
-        "friendsofphp/php-cs-fixer": "^3.39.0",
+        "friendsofphp/php-cs-fixer": "^3.40.0",
         "rector/rector": "^0.18.10",
         "phpstan/phpstan-deprecation-rules": "^1.1.4",
-        "spaze/phpstan-disallowed-calls": "^2.16"
+        "spaze/phpstan-disallowed-calls": "^2.16.1"
     },
     "autoload": {
         "psr-4": {
