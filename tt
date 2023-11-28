@@ -1,3 +1,9 @@
 #!/usr/bin/env bash
 cd "$(dirname "$(realpath $0)")"
 php src/index.php "$@"
+
+
+if [[ $1 =~ 'toggle' ]]
+then
+    skip=. git commit -m 'entry' data/entries.json >/dev/null
+fi
