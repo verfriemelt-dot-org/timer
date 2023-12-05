@@ -118,7 +118,7 @@ class EntryController extends Controller
         $workTimeDto = $this->currentWorkRepository->toggle($timeString);
 
         $work = new EntryDto(
-            new DateDto((new DateTimeImmutable())->format('Y-m-d')),
+            new DateDto((new DateTimeImmutable($timeString))->format('Y-m-d')),
             $workTimeDto
         );
 
