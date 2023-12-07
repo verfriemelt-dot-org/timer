@@ -11,11 +11,13 @@ use timer\Domain\Dto\PublicHolidayListDto;
 use timer\Domain\Repository\HolidayRepositoryInterface;
 use timer\Domain\TimeDiff;
 use timer\Domain\WorkTimeCalculator;
+use Override;
 
 class WorkTimeCalculatorTest extends TestCase
 {
     private WorkTimeCalculator $calc;
 
+    #[Override]
     public function setUp(): void
     {
         $this->calc = new WorkTimeCalculator(

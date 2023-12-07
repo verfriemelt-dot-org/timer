@@ -15,14 +15,7 @@ return static function (RectorConfig $rectorConfig): void {
     ]);
 
     $rectorConfig->sets([
-        LevelSetList::UP_TO_PHP_82,
-    ]);
-
-    $rectorConfig->skip([
-        // this is a type error on recent versions
-        CountOnNullRector::class,
-
-        ClassPropertyAssignToConstructorPromotionRector::class,
+        LevelSetList::UP_TO_PHP_83,
     ]);
 };
 
