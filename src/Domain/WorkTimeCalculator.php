@@ -12,7 +12,7 @@ class WorkTimeCalculator
 {
     public function __construct(
         private readonly HolidayRepositoryInterface $holidayRepository,
-        private readonly TimeDiff $timeDiff,
+        private readonly TimeDiffCalcalator $timeDiff,
     ) {}
 
     public function getTotalWorkHours(EntryListDto $entryListDto): float

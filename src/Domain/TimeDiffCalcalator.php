@@ -7,7 +7,7 @@ namespace timer\Domain;
 use DateTimeImmutable;
 use timer\Domain\Dto\WorkTimeDto;
 
-final class TimeDiff
+final class TimeDiffCalcalator
 {
     public function getInSeconds(WorkTimeDto $workTimeDto): float
     {
