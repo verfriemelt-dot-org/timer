@@ -10,7 +10,7 @@ use timer\Domain\Dto\EntryDto;
 use timer\Domain\EntryType;
 use timer\Domain\Repository\CurrentWorkRepositoryInterface;
 use timer\Domain\Repository\EntryRepositoryInterface;
-use timer\Domain\TimeBalance;
+use timer\Domain\TimeBalanceCalculator;
 use timer\Domain\TimeDiffCalcalator;
 use timer\Domain\WorkTimeCalculator;
 use verfriemelt\wrapped\_\Cli\Console;
@@ -24,7 +24,7 @@ class EntryController extends Controller
         private readonly EntryRepositoryInterface $entryRepository,
         private readonly WorkTimeCalculator $workTimeCalculator,
         private readonly CurrentWorkRepositoryInterface $currentWorkRepository,
-        private readonly TimeBalance $timeBalance,
+        private readonly TimeBalanceCalculator $timeBalance,
         private readonly TimeDiffCalcalator $timeDiff,
         private readonly Console $console,
     ) {}

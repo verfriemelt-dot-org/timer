@@ -7,16 +7,16 @@ namespace timer\Domain\Print;
 use DateTimeImmutable;
 use timer\Domain\EntryType;
 use timer\Domain\Repository\EntryRepositoryInterface;
-use timer\Domain\TimeBalance;
+use timer\Domain\TimeBalanceCalculator;
 use timer\Domain\WorkTimeCalculator;
 use verfriemelt\wrapped\_\Cli\Console;
 
-final readonly class PrettyPrint
+final readonly class PrettyPrinter
 {
     public function __construct(
         private WorkTimeCalculator $workTimeCalculator,
         private EntryRepositoryInterface $entryRepository,
-        private TimeBalance $timeBalance,
+        private TimeBalanceCalculator $timeBalance,
         private Console $console,
     ) {}
 

@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace timer\Controller;
 
 use DateTimeImmutable;
-use timer\Domain\Print\CsvPrint;
+use timer\Domain\Print\CsvPrinter;
 use verfriemelt\wrapped\_\Controller\Controller;
 use verfriemelt\wrapped\_\Http\Response\Response;
 
 class ExportCsv extends Controller
 {
     public function __construct(
-        private readonly CsvPrint $print
+        private readonly CsvPrinter $print
     ) {}
 
     public function handle_index(): Response

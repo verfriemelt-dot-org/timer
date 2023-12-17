@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace timer\Controller;
 
 use DateTimeImmutable;
-use timer\Domain\Print\PrettyPrint;
+use timer\Domain\Print\PrettyPrinter;
 use verfriemelt\wrapped\_\Controller\Controller;
 use verfriemelt\wrapped\_\Http\Request\Request;
 use verfriemelt\wrapped\_\Http\Response\Response;
@@ -13,7 +13,7 @@ use verfriemelt\wrapped\_\Http\Response\Response;
 class PrintYear extends Controller
 {
     public function __construct(
-        private readonly PrettyPrint $print,
+        private readonly PrettyPrinter $print,
     ) {}
 
     public function handle_index(

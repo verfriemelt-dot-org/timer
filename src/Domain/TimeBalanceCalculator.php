@@ -8,7 +8,10 @@ use DateTimeImmutable;
 use timer\Domain\Dto\TimeBalanceDto;
 use timer\Domain\Repository\EntryRepositoryInterface;
 
-final readonly class TimeBalance
+/**
+ * calculates the current for a given day from the repository
+ */
+final readonly class TimeBalanceCalculator
 {
     public function __construct(
         private EntryRepositoryInterface $entryRepository,

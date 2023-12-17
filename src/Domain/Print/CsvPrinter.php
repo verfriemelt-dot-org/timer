@@ -7,7 +7,7 @@ namespace timer\Domain\Print;
 use DateTimeImmutable;
 use timer\Domain\Repository\EntryRepositoryInterface;
 
-final readonly class CsvPrint
+final readonly class CsvPrinter
 {
     public function __construct(
         private EntryRepositoryInterface $entryRepository,
