@@ -13,7 +13,7 @@
         "tomasvotruba/type-coverage": "^0.2.1",
         "tomasvotruba/cognitive-complexity": "^0.2.2",
         "friendsofphp/php-cs-fixer": "^3.41.1",
-        "rector/rector": "^0.18.12",
+        "rector/rector": "^0.18.13",
         "phpstan/phpstan-deprecation-rules": "^1.1.4",
         "spaze/phpstan-disallowed-calls": "^2.16.1"
     },
