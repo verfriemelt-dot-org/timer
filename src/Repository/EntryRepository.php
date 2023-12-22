@@ -15,9 +15,10 @@ class EntryRepository implements EntryRepositoryInterface
     private readonly string $path;
     private EntryListDto $list;
 
-    public function __construct()
-    {
-        $this->path = \dirname(__FILE__, 3) . '/data/entries.json';
+    public function __construct(
+        string $dataPath
+    ) {
+        $this->path = "{$dataPath}/entries.json";
     }
 
     public function all(): EntryListDto

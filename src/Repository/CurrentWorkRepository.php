@@ -14,9 +14,10 @@ class CurrentWorkRepository implements CurrentWorkRepositoryInterface
 {
     private readonly string $path;
 
-    public function __construct()
-    {
-        $this->path = \dirname(__FILE__, 3) . '/data/current.json';
+    public function __construct(
+        string $dataPath
+    ) {
+        $this->path = "{$dataPath}/current.json";
     }
 
     public function toggle(string $timeString): WorkTimeDto

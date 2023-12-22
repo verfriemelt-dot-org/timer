@@ -4,14 +4,17 @@ declare(strict_types=1);
 
 namespace timer;
 
+use timer\Domain\Repository\CurrentWorkRepositoryInterface;
 use timer\Domain\Repository\EntryRepositoryInterface;
 use timer\Domain\Repository\HolidayRepositoryInterface;
 use timer\Repository\CurrentWorkRepository;
 use timer\Repository\EntryRepository;
 use timer\Repository\HolidayRepository;
 use verfriemelt\wrapped\_\Cli\Console;
+use verfriemelt\wrapped\_\DotEnv\DotEnv;
 use verfriemelt\wrapped\_\Http\Request\Request;
 use verfriemelt\wrapped\_\Kernel;
+use RuntimeException;
 
 define('_', true);
 
@@ -26,9 +29,13 @@ $kernel = new class () extends Kernel {
     }
 };
 
-$kernel->getContainer()->register(HolidayRepositoryInterface::class, new HolidayRepository());
-$kernel->getContainer()->register(EntryRepositoryInterface::class, new EntryRepository());
-$kernel->getContainer()->register(CurrentWorkRepository::class, new CurrentWorkRepository());
+(new DotEnv())->load('.env');
+
+$path = $kernel->getProjectPath() . '/' . ($_ENV['DATA_PATH'] ?? throw new RuntimeException('DATA_PATH is not set'));
+
+$kernel->getContainer()->register(HolidayRepositoryInterface::class, new HolidayRepository($path));
+$kernel->getContainer()->register(EntryRepositoryInterface::class, new EntryRepository($path));
+$kernel->getContainer()->register(CurrentWorkRepositoryInterface::class, new CurrentWorkRepository($path));
 
 $kernel->loadRoutes(require_once __DIR__ . '/routes.php');
 $request = Request::createFromGlobals();

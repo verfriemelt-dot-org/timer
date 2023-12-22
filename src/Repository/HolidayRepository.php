@@ -11,13 +11,14 @@ use timer\Domain\Repository\HolidayRepositoryInterface;
 use verfriemelt\wrapped\_\Serializer\Encoder\JsonEncoder;
 use RuntimeException;
 
-class HolidayRepository implements HolidayRepositoryInterface
+final readonly class HolidayRepository implements HolidayRepositoryInterface
 {
-    private readonly string $path;
+    private string $path;
 
-    public function __construct()
-    {
-        $this->path = \dirname(__FILE__, 3) . '/data/holidays.json';
+    public function __construct(
+        string $dataPath
+    ) {
+        $this->path = "{$dataPath}/holidays.json";
     }
 
     public function all(): PublicHolidayListDto
