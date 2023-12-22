@@ -88,7 +88,7 @@ class EntryController extends Controller
         $today = new DateTimeImmutable();
 
         $entries = $this->entryRepository->getDay($today);
-        $hours = $this->workTimeCalculator->getTotalWorkHours($entries)
+        $hours = $this->workTimeCalculator->getWorkHours($entries)
             + $this->workTimeCalculator->getVacationHours($entries)
             + $this->workTimeCalculator->getSickHours($entries)
         ;

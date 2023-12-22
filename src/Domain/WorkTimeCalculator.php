@@ -15,7 +15,7 @@ class WorkTimeCalculator
         private readonly TimeDiffCalcalator $timeDiff,
     ) {}
 
-    public function getTotalWorkHours(EntryListDto $entryListDto): float
+    public function getWorkHours(EntryListDto $entryListDto): float
     {
         $total = 0;
 
