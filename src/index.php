@@ -13,8 +13,9 @@ use timer\Repository\HolidayRepository;
 use verfriemelt\wrapped\_\Cli\Console;
 use verfriemelt\wrapped\_\DotEnv\DotEnv;
 use verfriemelt\wrapped\_\Http\Request\Request;
-use verfriemelt\wrapped\_\Kernel;
+use verfriemelt\wrapped\_\AbstractKernel;
 use RuntimeException;
+use verfriemelt\wrapped\_\Router\Router;
 
 define('_', true);
 
@@ -22,12 +23,7 @@ require __DIR__ . '/../vendor/autoload.php';
 
 date_default_timezone_set('Europe/Berlin');
 
-$kernel = new class () extends Kernel {
-    public function getProjectPath(): string
-    {
-        return \dirname(__DIR__);
-    }
-};
+$kernel = new Kernel();
 
 (new DotEnv())->load('.env');
 
@@ -37,10 +33,6 @@ $kernel->getContainer()->register(HolidayRepositoryInterface::class, new Holiday
 $kernel->getContainer()->register(EntryRepositoryInterface::class, new EntryRepository($path));
 $kernel->getContainer()->register(CurrentWorkRepositoryInterface::class, new CurrentWorkRepository($path));
 
-$kernel->loadRoutes(require_once __DIR__ . '/routes.php');
-$request = Request::createFromGlobals();
-$request->server()->override(
-    'REQUEST_URI',
-    Console::getInstance()->getArgvAsString()
-);
-$kernel->handle($request);
+$kernel->loadCommands('src/Commands', 'src/');
+
+$kernel->execute(new Console());

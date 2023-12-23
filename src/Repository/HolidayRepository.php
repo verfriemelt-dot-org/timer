@@ -24,7 +24,7 @@ final readonly class HolidayRepository implements HolidayRepositoryInterface
     public function all(): PublicHolidayListDto
     {
         if (!\file_exists($this->path)) {
-            throw new RuntimeException('holidays file not present');
+            throw new RuntimeException('holidays file not present:' . $this->path);
         }
 
         $json = \file_get_contents($this->path);

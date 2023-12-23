@@ -12,6 +12,7 @@
         displayDetailsOnTestsThatTriggerWarnings="true"
         displayDetailsOnTestsThatTriggerNotices="true"
         displayDetailsOnTestsThatTriggerDeprecations="true"
+        bootstrap="tests/bootstrap.php"
 >
     <testsuites>
         <testsuite name="unit">
