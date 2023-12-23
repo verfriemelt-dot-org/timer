@@ -12,10 +12,7 @@ use timer\Repository\EntryRepository;
 use timer\Repository\HolidayRepository;
 use verfriemelt\wrapped\_\Cli\Console;
 use verfriemelt\wrapped\_\DotEnv\DotEnv;
-use verfriemelt\wrapped\_\Http\Request\Request;
-use verfriemelt\wrapped\_\AbstractKernel;
 use RuntimeException;
-use verfriemelt\wrapped\_\Router\Router;
 
 define('_', true);
 
