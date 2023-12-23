@@ -1,32 +1,33 @@
-<?php namespace timer\Commands\Entry;
+<?php
+
+declare(strict_types=1);
+
+namespace timer\Commands\Entry;
 
 use DateTimeImmutable;
 use timer\Domain\Dto\DateDto;
 use timer\Domain\Dto\EntryDto;
 use timer\Domain\Repository\CurrentWorkRepositoryInterface;
 use timer\Domain\Repository\EntryRepositoryInterface;
-use timer\Repository\EntryRepository;
 use verfriemelt\wrapped\_\Cli\Console;
 use verfriemelt\wrapped\_\Command\AbstractCommand;
 use verfriemelt\wrapped\_\Command\Command;
 use verfriemelt\wrapped\_\Command\ExitCode;
+use Override;
 
-use function var_dump;
-
-#[Command("toggle")]
+#[Command('toggle')]
 final readonly class EntryToggleCommand extends AbstractCommand
 {
     public function __construct(
         private CurrentWorkRepositoryInterface $currentWorkRepository,
         private EntryRepositoryInterface $entryRepository,
-    ) {
+    ) {}
 
-    }
-
+    #[Override]
     public function execute(Console $console): ExitCode
     {
         $args = array_slice($console->getArgv()->all(), 2);
-        $timeString = implode(" ", $args);
+        $timeString = implode(' ', $args);
 
         if (!$this->currentWorkRepository->has()) {
             \var_dump($this->currentWorkRepository->toggle($timeString));
@@ -43,7 +44,6 @@ final readonly class EntryToggleCommand extends AbstractCommand
         \var_dump($work);
 
         $this->entryRepository->add($work);
-
 
         return ExitCode::Success;
     }

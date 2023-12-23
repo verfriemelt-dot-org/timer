@@ -1,32 +1,24 @@
-<?php namespace timer\Commands\Entry;
+<?php
 
-use DateTimeImmutable;
-use timer\Domain\Dto\PublicHoliday;
+declare(strict_types=1);
+
+namespace timer\Commands\Entry;
+
 use timer\Domain\Repository\CurrentWorkRepositoryInterface;
-use timer\Domain\Repository\EntryRepositoryInterface;
-use timer\Domain\Repository\HolidayRepositoryInterface;
-use timer\Domain\TimeBalanceCalculator;
-use timer\Domain\TimeDiffCalcalator;
-use timer\Domain\WorkTimeCalculator;
 use verfriemelt\wrapped\_\Cli\Console;
 use verfriemelt\wrapped\_\Command\AbstractCommand;
 use verfriemelt\wrapped\_\Command\Command;
 use verfriemelt\wrapped\_\Command\ExitCode;
+use Override;
 
-use verfriemelt\wrapped\_\Http\Response\Response;
-
-use function usort;
-use function var_dump;
-
-#[Command("cat$")]
+#[Command('cat$')]
 final readonly class EntryPrintClockCommand extends AbstractCommand
 {
     public function __construct(
         private CurrentWorkRepositoryInterface $currentWorkRepository,
-    ) {
+    ) {}
 
-    }
-
+    #[Override]
     public function execute(Console $console): ExitCode
     {
         if (!$this->currentWorkRepository->has()) {
@@ -34,7 +26,7 @@ final readonly class EntryPrintClockCommand extends AbstractCommand
             return ExitCode::Success;
         }
 
-        var_dump($this->currentWorkRepository->get());
+        \var_dump($this->currentWorkRepository->get());
 
         return ExitCode::Success;
     }

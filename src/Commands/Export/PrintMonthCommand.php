@@ -1,30 +1,34 @@
-<?php namespace timer\Commands\Export;
+<?php
+
+declare(strict_types=1);
+
+namespace timer\Commands\Export;
 
 use DateTimeImmutable;
-use timer\Domain\Dto\PublicHoliday;
-use timer\Domain\Print\CsvPrinter;
 use timer\Domain\Print\PrettyPrinter;
-use timer\Domain\Repository\HolidayRepositoryInterface;
 use verfriemelt\wrapped\_\Cli\Console;
 use verfriemelt\wrapped\_\Command\AbstractCommand;
 use verfriemelt\wrapped\_\Command\Command;
 use verfriemelt\wrapped\_\Command\ExitCode;
+use Override;
 
-use function usort;
-
-#[Command("export:text:month")]
+#[Command('export:text:month')]
 final readonly class PrintMonthCommand extends AbstractCommand
 {
     public function __construct(
         private readonly PrettyPrinter $print
-    ) {
+    ) {}
 
-    }
-
+    #[Override]
     public function execute(Console $console): ExitCode
     {
-        $month = (int) $console->getArgv()->get(2, (new DateTimeImmutable())->format('m'));
-        $year = (int) $console->getArgv()->get(3, (new DateTimeImmutable())->format('Y'));
+        $asInt = static function (mixed $i): int {
+            assert(\is_string($i));
+            return (int) $i;
+        };
+
+        $month = $asInt($console->getArgv()->get(2, (new DateTimeImmutable())->format('m')));
+        $year = $asInt($console->getArgv()->get(3, (new DateTimeImmutable())->format('Y')));
 
         $today = new DateTimeImmutable();
         $start = new DateTimeImmutable("{$year}-{$month}-01");

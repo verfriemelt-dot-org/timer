@@ -1,21 +1,21 @@
-<?php namespace timer\Commands\Entry;
+<?php
+
+declare(strict_types=1);
+
+namespace timer\Commands\Entry;
 
 use DateTimeImmutable;
-use timer\Domain\Dto\PublicHoliday;
 use timer\Domain\Repository\CurrentWorkRepositoryInterface;
 use timer\Domain\Repository\EntryRepositoryInterface;
-use timer\Domain\Repository\HolidayRepositoryInterface;
-use timer\Domain\TimeBalanceCalculator;
 use timer\Domain\TimeDiffCalcalator;
 use timer\Domain\WorkTimeCalculator;
 use verfriemelt\wrapped\_\Cli\Console;
 use verfriemelt\wrapped\_\Command\AbstractCommand;
 use verfriemelt\wrapped\_\Command\Command;
 use verfriemelt\wrapped\_\Command\ExitCode;
+use Override;
 
-use function usort;
-
-#[Command("$")]
+#[Command('$')]
 final readonly class EntryPrintDayCommand extends AbstractCommand
 {
     public function __construct(
@@ -23,10 +23,9 @@ final readonly class EntryPrintDayCommand extends AbstractCommand
         private WorkTimeCalculator $workTimeCalculator,
         private CurrentWorkRepositoryInterface $currentWorkRepository,
         private TimeDiffCalcalator $timeDiff,
-    ) {
+    ) {}
 
-    }
-
+    #[Override]
     public function execute(Console $console): ExitCode
     {
         $today = new DateTimeImmutable();

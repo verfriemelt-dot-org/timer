@@ -1,11 +1,17 @@
-<?php namespace timer;
+<?php
 
-    use verfriemelt\wrapped\_\AbstractKernel;
+declare(strict_types=1);
 
-    class Kernel extends AbstractKernel {
+namespace timer;
 
-        public function getProjectPath(): string
-        {
-            return \dirname(__DIR__);
-        }
+use verfriemelt\wrapped\_\AbstractKernel;
+use Override;
+
+class Kernel extends AbstractKernel
+{
+    #[Override]
+    public function getProjectPath(): string
+    {
+        return \dirname(__DIR__);
     }
+}

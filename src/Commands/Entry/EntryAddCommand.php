@@ -1,4 +1,8 @@
-<?php namespace timer\Commands\Entry;
+<?php
+
+declare(strict_types=1);
+
+namespace timer\Commands\Entry;
 
 use DateTimeImmutable;
 use timer\Domain\Dto\DateDto;
@@ -9,27 +13,21 @@ use verfriemelt\wrapped\_\Cli\Console;
 use verfriemelt\wrapped\_\Command\AbstractCommand;
 use verfriemelt\wrapped\_\Command\Command;
 use verfriemelt\wrapped\_\Command\ExitCode;
+use Override;
+use RuntimeException;
 
-use verfriemelt\wrapped\_\Http\Response\Response;
-
-use function is_string;
-use function usort;
-use function var_dump;
-
-#[Command("add")]
+#[Command('add')]
 final readonly class EntryAddCommand extends AbstractCommand
 {
     public function __construct(
         private EntryRepositoryInterface $entryRepository,
-    ) {
+    ) {}
 
-    }
-
+    #[Override]
     public function execute(Console $console): ExitCode
     {
-
         $type = $console->getArgv()->get(2, '');
-        assert(is_string($type));
+        assert(\is_string($type));
         match ($type) {
             EntryType::Sick->value => $this->entryRepository->add(
                 new EntryDto(
@@ -43,7 +41,7 @@ final readonly class EntryAddCommand extends AbstractCommand
                     type: EntryType::Vacation,
                 )
             ),
-            default => throw new \RuntimeException('missing or invalid argument')
+            default => throw new RuntimeException('missing or invalid argument')
         };
 
         return ExitCode::Success;
