@@ -6,6 +6,8 @@ namespace timer\Commands\Export;
 
 use DateTimeImmutable;
 use timer\Domain\Print\PrettyPrinter;
+use verfriemelt\wrapped\_\Cli\Argument\CommandOptions;
+use verfriemelt\wrapped\_\Cli\Argument\Option;
 use verfriemelt\wrapped\_\Cli\Console;
 use verfriemelt\wrapped\_\Command\AbstractCommand;
 use verfriemelt\wrapped\_\Command\Command;
@@ -16,8 +18,18 @@ use Override;
 final readonly class PrintMonthCommand extends AbstractCommand
 {
     public function __construct(
-        private readonly PrettyPrinter $print
+        private PrettyPrinter $print,
+        private CommandOptions $argvParser,
     ) {}
+
+    #[Override]
+    public function configure(CommandOptions $argv): void
+    {
+        $argv->addOptions(new Option(
+            'test',
+            Option::REQUIRED
+        ));
+    }
 
     #[Override]
     public function execute(Console $console): ExitCode
