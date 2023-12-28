@@ -12,10 +12,10 @@ use verfriemelt\wrapped\_\Command\ExitCode;
 use Override;
 
 #[Command('reset')]
-final readonly class EntryResetCommand extends AbstractCommand
+final class EntryResetCommand extends AbstractCommand
 {
     public function __construct(
-        private CurrentWorkRepositoryInterface $currentWorkRepository,
+        private readonly CurrentWorkRepositoryInterface $currentWorkRepository,
     ) {}
 
     #[Override]

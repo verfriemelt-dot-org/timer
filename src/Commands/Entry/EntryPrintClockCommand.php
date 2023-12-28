@@ -12,10 +12,10 @@ use verfriemelt\wrapped\_\Command\ExitCode;
 use Override;
 
 #[Command('cat$')]
-final readonly class EntryPrintClockCommand extends AbstractCommand
+final class EntryPrintClockCommand extends AbstractCommand
 {
     public function __construct(
-        private CurrentWorkRepositoryInterface $currentWorkRepository,
+        private readonly CurrentWorkRepositoryInterface $currentWorkRepository,
     ) {}
 
     #[Override]

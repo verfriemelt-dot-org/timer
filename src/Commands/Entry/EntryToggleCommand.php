@@ -16,11 +16,11 @@ use verfriemelt\wrapped\_\Command\ExitCode;
 use Override;
 
 #[Command('toggle')]
-final readonly class EntryToggleCommand extends AbstractCommand
+final class EntryToggleCommand extends AbstractCommand
 {
     public function __construct(
-        private CurrentWorkRepositoryInterface $currentWorkRepository,
-        private EntryRepositoryInterface $entryRepository,
+        private readonly CurrentWorkRepositoryInterface $currentWorkRepository,
+        private readonly EntryRepositoryInterface $entryRepository,
     ) {}
 
     #[Override]

@@ -13,10 +13,10 @@ use verfriemelt\wrapped\_\Command\ExitCode;
 use Override;
 
 #[Command('balance$')]
-final readonly class EntryBalanceCommand extends AbstractCommand
+final class EntryBalanceCommand extends AbstractCommand
 {
     public function __construct(
-        private TimeBalanceCalculator $timeBalance
+        private readonly TimeBalanceCalculator $timeBalance
     ) {}
 
     #[Override]

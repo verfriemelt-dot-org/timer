@@ -30,6 +30,6 @@ $kernel->getContainer()->register(HolidayRepositoryInterface::class, new Holiday
 $kernel->getContainer()->register(EntryRepositoryInterface::class, new EntryRepository($path));
 $kernel->getContainer()->register(CurrentWorkRepositoryInterface::class, new CurrentWorkRepository($path));
 
-$kernel->loadCommands('src/Commands', 'src/');
+$kernel->loadCommands('src/Commands', 'src/', __NAMESPACE__);
 
 $kernel->execute(new Console());

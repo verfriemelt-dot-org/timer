@@ -13,7 +13,7 @@ use verfriemelt\wrapped\_\Command\ExitCode;
 use Override;
 
 #[Command('export:text:year')]
-final readonly class PrintYearCommand extends AbstractCommand
+final class PrintYearCommand extends AbstractCommand
 {
     public function __construct(
         private readonly PrettyPrinter $print

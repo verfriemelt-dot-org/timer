@@ -16,13 +16,13 @@ use verfriemelt\wrapped\_\Command\ExitCode;
 use Override;
 
 #[Command('$')]
-final readonly class EntryPrintDayCommand extends AbstractCommand
+final class EntryPrintDayCommand extends AbstractCommand
 {
     public function __construct(
-        private EntryRepositoryInterface $entryRepository,
-        private WorkTimeCalculator $workTimeCalculator,
-        private CurrentWorkRepositoryInterface $currentWorkRepository,
-        private TimeDiffCalcalator $timeDiff,
+        private readonly EntryRepositoryInterface $entryRepository,
+        private readonly WorkTimeCalculator $workTimeCalculator,
+        private readonly CurrentWorkRepositoryInterface $currentWorkRepository,
+        private readonly TimeDiffCalcalator $timeDiff,
     ) {}
 
     #[Override]

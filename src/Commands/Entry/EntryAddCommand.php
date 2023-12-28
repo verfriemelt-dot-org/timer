@@ -17,10 +17,10 @@ use Override;
 use RuntimeException;
 
 #[Command('add')]
-final readonly class EntryAddCommand extends AbstractCommand
+final class EntryAddCommand extends AbstractCommand
 {
     public function __construct(
-        private EntryRepositoryInterface $entryRepository,
+        private readonly EntryRepositoryInterface $entryRepository,
     ) {}
 
     #[Override]

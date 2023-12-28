@@ -14,10 +14,10 @@ use verfriemelt\wrapped\_\Command\ExitCode;
 use Override;
 
 #[Command('holiday:list')]
-final readonly class HolidayListCommand extends AbstractCommand
+final class HolidayListCommand extends AbstractCommand
 {
     public function __construct(
-        private HolidayRepositoryInterface $holidayRepository,
+        private readonly HolidayRepositoryInterface $holidayRepository,
     ) {}
 
     #[Override]

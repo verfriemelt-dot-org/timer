@@ -13,7 +13,7 @@ use verfriemelt\wrapped\_\Command\ExitCode;
 use Override;
 
 #[Command('export:csv')]
-final readonly class ExportCsvCommand extends AbstractCommand
+final class ExportCsvCommand extends AbstractCommand
 {
     public function __construct(
         private readonly CsvPrinter $print
