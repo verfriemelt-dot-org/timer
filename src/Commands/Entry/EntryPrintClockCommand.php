@@ -7,11 +7,11 @@ namespace timer\Commands\Entry;
 use timer\Domain\Repository\CurrentWorkRepositoryInterface;
 use verfriemelt\wrapped\_\Cli\Console;
 use verfriemelt\wrapped\_\Command\AbstractCommand;
-use verfriemelt\wrapped\_\Command\Command;
+use verfriemelt\wrapped\_\Command\Attributes\Command;
 use verfriemelt\wrapped\_\Command\ExitCode;
 use Override;
 
-#[Command('cat$')]
+#[Command('cat')]
 final class EntryPrintClockCommand extends AbstractCommand
 {
     public function __construct(

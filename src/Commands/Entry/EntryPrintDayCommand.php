@@ -11,11 +11,11 @@ use timer\Domain\TimeDiffCalcalator;
 use timer\Domain\WorkTimeCalculator;
 use verfriemelt\wrapped\_\Cli\Console;
 use verfriemelt\wrapped\_\Command\AbstractCommand;
-use verfriemelt\wrapped\_\Command\Command;
+use verfriemelt\wrapped\_\Command\Attributes\Command;
 use verfriemelt\wrapped\_\Command\ExitCode;
 use Override;
 
-#[Command('$')]
+#[Command('')]
 final class EntryPrintDayCommand extends AbstractCommand
 {
     public function __construct(

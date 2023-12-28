@@ -9,7 +9,7 @@ use timer\Domain\Dto\PublicHoliday;
 use timer\Domain\Repository\HolidayRepositoryInterface;
 use verfriemelt\wrapped\_\Cli\Console;
 use verfriemelt\wrapped\_\Command\AbstractCommand;
-use verfriemelt\wrapped\_\Command\Command;
+use verfriemelt\wrapped\_\Command\Attributes\Command;
 use verfriemelt\wrapped\_\Command\ExitCode;
 use Override;
 
