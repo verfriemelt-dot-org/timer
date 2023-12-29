@@ -31,5 +31,4 @@ $kernel->getContainer()->register(EntryRepositoryInterface::class, new EntryRepo
 $kernel->getContainer()->register(CurrentWorkRepositoryInterface::class, new CurrentWorkRepository($path));
 
 $kernel->loadCommands('src/Commands', 'src/', __NAMESPACE__);
-
 $kernel->execute(new Console());

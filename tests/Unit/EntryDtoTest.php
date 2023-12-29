@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace tests;
+namespace timer\tests\Unit;
 
 use PHPUnit\Framework\TestCase;
 use timer\Domain\Dto\EntryDto;

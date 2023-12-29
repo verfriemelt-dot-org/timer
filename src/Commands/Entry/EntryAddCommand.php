@@ -12,6 +12,8 @@ use timer\Domain\Repository\EntryRepositoryInterface;
 use verfriemelt\wrapped\_\Cli\Console;
 use verfriemelt\wrapped\_\Command\AbstractCommand;
 use verfriemelt\wrapped\_\Command\Attributes\Command;
+use verfriemelt\wrapped\_\Command\CommandArguments\Argument;
+use verfriemelt\wrapped\_\Command\CommandArguments\ArgvParser;
 use verfriemelt\wrapped\_\Command\ExitCode;
 use Override;
 use RuntimeException;
@@ -19,25 +21,34 @@ use RuntimeException;
 #[Command('add')]
 final class EntryAddCommand extends AbstractCommand
 {
+    private Argument $typeArgument;
+    private Argument $dateArgument;
+
     public function __construct(
         private readonly EntryRepositoryInterface $entryRepository,
     ) {}
 
     #[Override]
+    public function configure(ArgvParser $argv): void
+    {
+        $this->typeArgument = new Argument('type');
+        $this->dateArgument = new Argument('date', Argument::OPTIONAL);
+        $argv->addArguments($this->typeArgument, $this->dateArgument);
+    }
+
+    #[Override]
     public function execute(Console $console): ExitCode
     {
-        $type = $console->getArgv()->get(2, '');
-        assert(\is_string($type));
-        match ($type) {
+        match ($this->typeArgument->get() ?? '') {
             EntryType::Sick->value => $this->entryRepository->add(
                 new EntryDto(
-                    new DateDto((new DateTimeImmutable())->format('Y-m-d')),
+                    new DateDto((new DateTimeImmutable($this->dateArgument->get() ?? ''))->format('Y-m-d')),
                     type: EntryType::Sick,
                 )
             ),
             EntryType::Vacation->value => $this->entryRepository->add(
                 new EntryDto(
-                    new DateDto((new DateTimeImmutable())->format('Y-m-d')),
+                    new DateDto((new DateTimeImmutable($this->dateArgument->get() ?? ''))->format('Y-m-d')),
                     type: EntryType::Vacation,
                 )
             ),

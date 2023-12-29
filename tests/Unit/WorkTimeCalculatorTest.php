@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace tests;
+namespace timer\tests\Unit;
 
 use DateTimeImmutable;
+use Override;
 use PHPUnit\Framework\TestCase;
 use timer\Domain\Dto\PublicHoliday;
 use timer\Domain\Dto\PublicHolidayListDto;
 use timer\Domain\Repository\HolidayRepositoryInterface;
 use timer\Domain\TimeDiffCalcalator;
 use timer\Domain\WorkTimeCalculator;
-use Override;
 
 class WorkTimeCalculatorTest extends TestCase
 {
