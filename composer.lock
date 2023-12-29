@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/verfriemelt-dot-org/wrapped.git",
-                "reference": "5f87c822b325677f30f775a19c5b1ec5879a88dc"
+                "reference": "9ef23a91231e035dab008aaa036ba2726e0be24c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/verfriemelt-dot-org/wrapped/zipball/5f87c822b325677f30f775a19c5b1ec5879a88dc",
-                "reference": "5f87c822b325677f30f775a19c5b1ec5879a88dc",
+                "url": "https://api.github.com/repos/verfriemelt-dot-org/wrapped/zipball/9ef23a91231e035dab008aaa036ba2726e0be24c",
+                "reference": "9ef23a91231e035dab008aaa036ba2726e0be24c",
                 "shasum": ""
             },
             "require": {
@@ -25,7 +25,7 @@
                 "php": "^8.3"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.42.0",
+                "friendsofphp/php-cs-fixer": "^3.44.0",
                 "phpstan/phpstan": "^1.10.50",
                 "phpstan/phpstan-phpunit": "^1.3.15",
                 "phpstan/phpstan-strict-rules": "^1.5.2",
@@ -53,7 +53,7 @@
                 "issues": "https://github.com/verfriemelt-dot-org/wrapped/issues",
                 "source": "https://github.com/verfriemelt-dot-org/wrapped/tree/master"
             },
-            "time": "2023-12-29T19:52:58+00:00"
+            "time": "2023-12-29T22:21:39+00:00"
         }
     ],
     "packages-dev": [
