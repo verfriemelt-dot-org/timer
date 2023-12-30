@@ -5,10 +5,17 @@
             "src"
         ],
         "excludes": [
-            "src/Commands"
+            "src/Commands",
+
         ]
     },
     "mutators": {
-        "@default": true
+        "@default": true,
+        "AssignCoalesce": {
+            ignore: [
+                "timer\\Repository\\HolidayRepository::all",
+                "timer\\Repository\\EntryRepository::all"
+            ],
+        }
     }
 }
