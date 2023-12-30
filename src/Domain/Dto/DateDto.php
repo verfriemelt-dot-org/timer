@@ -16,7 +16,7 @@ final readonly class DateDto
         try {
             new DateTimeImmutable($day);
         } catch (Exception) {
-            throw new RuntimeException('illegal date provided: ' . $this->day);
+            throw new RuntimeException("illegal date provided: {$this->day}");
         }
     }
 }
