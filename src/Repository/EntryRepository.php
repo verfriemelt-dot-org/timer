@@ -9,6 +9,7 @@ use timer\Domain\Dto\EntryDto;
 use timer\Domain\Dto\EntryListDto;
 use timer\Domain\Repository\EntryRepositoryInterface;
 use verfriemelt\wrapped\_\Serializer\Encoder\JsonEncoder;
+use RuntimeException;
 
 class EntryRepository implements EntryRepositoryInterface
 {
@@ -23,14 +24,7 @@ class EntryRepository implements EntryRepositoryInterface
 
     public function all(): EntryListDto
     {
-        if (!\file_exists($this->path)) {
-            $json = '[]';
-        } else {
-            $json = \file_get_contents($this->path);
-            assert(is_string($json), "cant read {$this->path}");
-        }
-
-        return $this->list ??= (new JsonEncoder())->deserialize($json, EntryListDto::class);
+        return $this->list ??= (new JsonEncoder())->deserialize($this->read(), EntryListDto::class);
     }
 
     public function add(EntryDto $entry): void
@@ -41,6 +35,16 @@ class EntryRepository implements EntryRepositoryInterface
         );
 
         $this->write($this->list);
+    }
+
+    private function read(): string
+    {
+        if (!\file_exists($this->path)) {
+            return '[]';
+        }
+
+        /** @phpstan-ignore-next-line */
+        return \file_get_contents($this->path) ?: throw new RuntimeException("cant read {$this->path}");
     }
 
     private function write(EntryListDto $dto): void

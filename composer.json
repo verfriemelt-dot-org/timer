@@ -15,7 +15,8 @@
         "friendsofphp/php-cs-fixer": "^3.44.0",
         "rector/rector": "^0.18.13",
         "phpstan/phpstan-deprecation-rules": "^1.1.4",
-        "spaze/phpstan-disallowed-calls": "^3.0"
+        "spaze/phpstan-disallowed-calls": "^3.0",
+        "infection/infection": "^0.27.9"
     },
     "autoload": {
         "psr-4": {
@@ -30,6 +31,9 @@
     "config": {
         "preferred-install": {
             "verfriemelt/wrapped": "source"
+        },
+        "allow-plugins": {
+            "infection/extension-installer": true
         }
     }
 }

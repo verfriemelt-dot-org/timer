@@ -11,9 +11,10 @@ use timer\Domain\Repository\HolidayRepositoryInterface;
 use verfriemelt\wrapped\_\Serializer\Encoder\JsonEncoder;
 use RuntimeException;
 
-final readonly class HolidayRepository implements HolidayRepositoryInterface
+final class HolidayRepository implements HolidayRepositoryInterface
 {
-    private string $path;
+    private readonly string $path;
+    private PublicHolidayListDto $list;
 
     public function __construct(
         string $dataPath
@@ -23,24 +24,17 @@ final readonly class HolidayRepository implements HolidayRepositoryInterface
 
     public function all(): PublicHolidayListDto
     {
-        if (!\file_exists($this->path)) {
-            throw new RuntimeException('holidays file not present:' . $this->path);
-        }
-
-        $json = \file_get_contents($this->path);
-        assert(\is_string($json), "cant read {$this->path}");
-
-        return (new JsonEncoder())->deserialize($json, PublicHolidayListDto::class);
+        return $this->list ??= (new JsonEncoder())->deserialize($this->read(), PublicHolidayListDto::class);
     }
 
     public function add(PublicHoliday $publicHoliday): void
     {
-        $newList = new PublicHolidayListDto(
+        $this->list = new PublicHolidayListDto(
             $publicHoliday,
             ...array_values($this->all()->holidays),
         );
 
-        $this->write($newList);
+        $this->write($this->list);
     }
 
     public function isHoliday(DateTimeImmutable $day): bool
@@ -48,6 +42,16 @@ final readonly class HolidayRepository implements HolidayRepositoryInterface
         $holidays = \array_map(fn (PublicHoliday $holiday): string => $holiday->date->day, $this->all()->holidays);
 
         return \in_array($day->format('Y-m-d'), $holidays, true);
+    }
+
+    private function read(): string
+    {
+        if (!\file_exists($this->path)) {
+            return '[]';
+        }
+
+        /** @phpstan-ignore-next-line */
+        return \file_get_contents($this->path) ?: throw new RuntimeException("cant read {$this->path}");
     }
 
     private function write(PublicHolidayListDto $dto): void

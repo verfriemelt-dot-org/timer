@@ -18,7 +18,7 @@ use verfriemelt\wrapped\_\Command\ExitCode;
 use Override;
 use RuntimeException;
 
-#[Command('add')]
+#[Command('add', 'used to add non-work entries')]
 final class EntryAddCommand extends AbstractCommand
 {
     private Argument $typeArgument;

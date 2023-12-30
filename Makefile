@@ -14,7 +14,10 @@ rector: ## run rector
 	vendor/bin/rector
 
 cs: ## Run php-cs-fixer
-	php vendor/bin/php-cs-fixer fix -v
+	vendor/bin/php-cs-fixer fix -v
+
+infection: ## run infection
+	vendor/bin/infection --threads=max --show-mutations --min-covered-msi=100 --ignore-msi-with-no-mutations
 
 .PHONY: coverage
 coverage: ## generate coverage
