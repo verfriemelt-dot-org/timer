@@ -13,7 +13,7 @@ use verfriemelt\wrapped\_\Command\Attributes\Command;
 use verfriemelt\wrapped\_\Command\ExitCode;
 use Override;
 
-#[Command('holiday:list')]
+#[Command('holiday:list', 'prints all know holidays')]
 final class HolidayListCommand extends AbstractCommand
 {
     public function __construct(

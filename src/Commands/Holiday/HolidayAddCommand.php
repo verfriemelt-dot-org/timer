@@ -16,7 +16,7 @@ use verfriemelt\wrapped\_\Command\CommandArguments\ArgvParser;
 use verfriemelt\wrapped\_\Command\ExitCode;
 use RuntimeException;
 
-#[Command('holiday:add')]
+#[Command('holiday:add', 'adds a new holiday')]
 final class HolidayAddCommand extends AbstractCommand
 {
     private Argument $date;

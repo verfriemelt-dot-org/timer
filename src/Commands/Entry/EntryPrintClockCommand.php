@@ -11,7 +11,7 @@ use verfriemelt\wrapped\_\Command\Attributes\Command;
 use verfriemelt\wrapped\_\Command\ExitCode;
 use Override;
 
-#[Command('cat')]
+#[Command('cat', 'prints out the raw current worktime dto')]
 final class EntryPrintClockCommand extends AbstractCommand
 {
     public function __construct(

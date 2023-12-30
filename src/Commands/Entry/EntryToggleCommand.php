@@ -17,7 +17,7 @@ use verfriemelt\wrapped\_\Command\CommandArguments\ArgvParser;
 use verfriemelt\wrapped\_\Command\ExitCode;
 use Override;
 
-#[Command('toggle')]
+#[Command('toggle', 'start and stops new entries and adds them to the repository')]
 final class EntryToggleCommand extends AbstractCommand
 {
     private Argument $time;

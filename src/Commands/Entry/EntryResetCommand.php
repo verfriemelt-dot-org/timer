@@ -11,7 +11,7 @@ use verfriemelt\wrapped\_\Command\Attributes\Command;
 use verfriemelt\wrapped\_\Command\ExitCode;
 use Override;
 
-#[Command('reset')]
+#[Command('reset', 'discards the current worktime entry')]
 final class EntryResetCommand extends AbstractCommand
 {
     public function __construct(

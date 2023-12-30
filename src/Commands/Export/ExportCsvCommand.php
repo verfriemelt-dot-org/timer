@@ -12,7 +12,7 @@ use verfriemelt\wrapped\_\Command\Attributes\Command;
 use verfriemelt\wrapped\_\Command\ExitCode;
 use Override;
 
-#[Command('export:csv')]
+#[Command('export:csv', 'exports the current year as a csv')]
 final class ExportCsvCommand extends AbstractCommand
 {
     public function __construct(

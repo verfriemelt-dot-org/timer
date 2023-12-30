@@ -14,7 +14,7 @@ use verfriemelt\wrapped\_\Command\CommandArguments\ArgvParser;
 use verfriemelt\wrapped\_\Command\ExitCode;
 use Override;
 
-#[Command('export:text:month')]
+#[Command('export:text:month', 'prints the given month')]
 final class PrintMonthCommand extends AbstractCommand
 {
     private Argument $year;

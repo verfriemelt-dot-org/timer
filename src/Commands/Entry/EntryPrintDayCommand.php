@@ -17,7 +17,7 @@ use verfriemelt\wrapped\_\Command\ExitCode;
 use Override;
 
 #[DefaultCommand]
-#[Command('print:day')]
+#[Command('print:day', 'the default action; prints the time balance of the current day')]
 final class EntryPrintDayCommand extends AbstractCommand
 {
     public function __construct(

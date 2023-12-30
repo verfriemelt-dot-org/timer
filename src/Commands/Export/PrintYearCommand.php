@@ -12,7 +12,7 @@ use verfriemelt\wrapped\_\Command\Attributes\Command;
 use verfriemelt\wrapped\_\Command\ExitCode;
 use Override;
 
-#[Command('export:text:year')]
+#[Command('export:text:year', 'prints the current year')]
 final class PrintYearCommand extends AbstractCommand
 {
     public function __construct(
