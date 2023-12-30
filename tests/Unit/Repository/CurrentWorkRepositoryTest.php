@@ -17,14 +17,23 @@ class CurrentWorkRepositoryTest extends TestCase
     #[Override]
     public function setUp(): void
     {
-        $this->repo = new CurrentWorkRepository(self::TEST_PATH);
-        @unlink(self::TEST_PATH);
+        $this->repo = new CurrentWorkRepository(self::getFilepath());
+        @unlink(self::getFilepath());
+    }
+
+    protected static function getFilepath(): string
+    {
+        if (($token = \getenv('TEST_TOKEN')) === false) {
+            $token = '';
+        }
+
+        return self::TEST_PATH . $token;
     }
 
     #[Override]
     public function tearDown(): void
     {
-        @unlink(self::TEST_PATH);
+        @unlink(self::getFilepath());
     }
 
     public function test_empty(): void
@@ -35,8 +44,8 @@ class CurrentWorkRepositoryTest extends TestCase
     public function test_toggle_start(): void
     {
         $dto = $this->repo->toggle();
-        static::assertNull($dto->till);
 
+        static::assertNull($dto->till);
         static::assertFileExists(self::TEST_PATH);
     }
 
@@ -44,6 +53,7 @@ class CurrentWorkRepositoryTest extends TestCase
     {
         $this->repo->toggle();
         $dto = $this->repo->toggle();
+
         static::assertNotNull($dto->till);
         static::assertFileDoesNotExist(self::TEST_PATH);
     }

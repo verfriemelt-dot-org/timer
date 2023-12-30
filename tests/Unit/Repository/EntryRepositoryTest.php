@@ -21,14 +21,23 @@ class EntryRepositoryTest extends TestCase
     #[Override]
     public function setUp(): void
     {
-        $this->repo = new EntryRepository(self::TEST_PATH);
-        @unlink(self::TEST_PATH);
+        $this->repo = new EntryRepository(self::getFilepath());
+        @unlink(self::getFilepath());
+    }
+
+    protected static function getFilepath(): string
+    {
+        if (($token = \getenv('TEST_TOKEN')) === false) {
+            $token = '';
+        }
+
+        return self::TEST_PATH . $token;
     }
 
     #[Override]
     public function tearDown(): void
     {
-        @unlink(self::TEST_PATH);
+        @unlink(self::getFilepath());
     }
 
     public function test_empty(): void

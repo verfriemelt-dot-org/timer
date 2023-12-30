@@ -19,14 +19,23 @@ class HolidayRepositoryTest extends TestCase
     #[Override]
     public function setUp(): void
     {
-        $this->repo = new HolidayRepository(self::TEST_PATH);
-        @unlink(self::TEST_PATH);
+        $this->repo = new HolidayRepository(self::getFilepath());
+        @unlink(self::getFilepath());
     }
 
     #[Override]
     public function tearDown(): void
     {
-        @unlink(self::TEST_PATH);
+        @unlink(self::getFilepath());
+    }
+
+    protected static function getFilepath(): string
+    {
+        if (($token = \getenv('TEST_TOKEN')) === false) {
+            $token = '';
+        }
+
+        return self::TEST_PATH . $token;
     }
 
     public function test_empty(): void

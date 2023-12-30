@@ -8,9 +8,9 @@ use PHPUnit\Framework\TestCase;
 use timer\Domain\Repository\CurrentWorkRepositoryInterface;
 use timer\Domain\Repository\EntryRepositoryInterface;
 use timer\Domain\Repository\HolidayRepositoryInterface;
-use timer\Repository\CurrentWorkRepository;
-use timer\Repository\EntryRepository;
-use timer\Repository\HolidayRepository;
+use timer\Repository\MemoryCurrentWorkRepository;
+use timer\Repository\MemoryEntryRepository;
+use timer\Repository\MemoryHolidayRepository;
 use verfriemelt\wrapped\_\AbstractKernel;
 use verfriemelt\wrapped\_\Cli\Console;
 use verfriemelt\wrapped\_\Command\AbstractCommand;
@@ -47,12 +47,6 @@ abstract class ApplicationTestCase extends TestCase
     #[Override]
     public function setUp(): void
     {
-        $path = \TEST_ROOT . '/_data';
-
-        \file_put_contents("{$path}/holidays.json", '[]');
-        \file_put_contents("{$path}/entries.json", '[]');
-        @unlink("{$path}/current.json");
-
         $this->kernel = new class () extends AbstractKernel {
             public function getProjectPath(): string
             {
@@ -60,8 +54,8 @@ abstract class ApplicationTestCase extends TestCase
             }
         };
 
-        $this->kernel->getContainer()->register(HolidayRepositoryInterface::class, new HolidayRepository("{$path}/holidays.json"));
-        $this->kernel->getContainer()->register(EntryRepositoryInterface::class, new EntryRepository("{$path}/entries.json"));
-        $this->kernel->getContainer()->register(CurrentWorkRepositoryInterface::class, new CurrentWorkRepository("{$path}/current.json"));
+        $this->kernel->getContainer()->register(HolidayRepositoryInterface::class, new MemoryHolidayRepository());
+        $this->kernel->getContainer()->register(EntryRepositoryInterface::class, new MemoryEntryRepository());
+        $this->kernel->getContainer()->register(CurrentWorkRepositoryInterface::class, new MemoryCurrentWorkRepository());
     }
 }
