@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Unit\Repository;
 
+use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 use timer\Domain\Dto\DateDto;
 use timer\Domain\Dto\EntryDto;
@@ -43,6 +44,7 @@ class EntryRepositoryTest extends TestCase
                 type: EntryType::Sick
             )
         );
+
         static::assertCount(1, $this->repo->all()->entries);
         static::assertSame(
             <<<JSON
@@ -58,5 +60,16 @@ class EntryRepositoryTest extends TestCase
                 JSON,
             file_get_contents(self::TEST_PATH)
         );
+    }
+
+    public function test_get_day(): void
+    {
+        $this->repo->add(new EntryDto(new DateDto('2022-02-02'), type: EntryType::Sick));
+        $this->repo->add(new EntryDto(new DateDto('2022-02-03'), type: EntryType::Sick));
+        $this->repo->add(new EntryDto(new DateDto('2022-02-03'), type: EntryType::Sick));
+
+        static::assertCount(1, $this->repo->getDay(new DateTimeImmutable('2022-02-02'))->entries);
+        static::assertCount(2, $this->repo->getDay(new DateTimeImmutable('2022-02-03'))->entries);
+        static::assertCount(0, $this->repo->getDay(new DateTimeImmutable('2022-02-04'))->entries);
     }
 }
