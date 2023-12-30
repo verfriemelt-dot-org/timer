@@ -13,14 +13,11 @@ use RuntimeException;
 
 final class HolidayRepository implements HolidayRepositoryInterface
 {
-    private readonly string $path;
     private PublicHolidayListDto $list;
 
     public function __construct(
-        string $dataPath
-    ) {
-        $this->path = "{$dataPath}/holidays.json";
-    }
+        private readonly string $path
+    ) {}
 
     public function all(): PublicHolidayListDto
     {
@@ -30,8 +27,8 @@ final class HolidayRepository implements HolidayRepositoryInterface
     public function add(PublicHoliday $publicHoliday): void
     {
         $this->list = new PublicHolidayListDto(
-            $publicHoliday,
-            ...array_values($this->all()->holidays),
+            ...$this->all()->holidays,
+            ...[$publicHoliday],
         );
 
         $this->write($this->list);

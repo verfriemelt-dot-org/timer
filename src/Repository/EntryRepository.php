@@ -13,14 +13,11 @@ use RuntimeException;
 
 class EntryRepository implements EntryRepositoryInterface
 {
-    private readonly string $path;
     private EntryListDto $list;
 
     public function __construct(
-        string $dataPath
-    ) {
-        $this->path = "{$dataPath}/entries.json";
-    }
+        private readonly string $path
+    ) {}
 
     public function all(): EntryListDto
     {
@@ -30,7 +27,7 @@ class EntryRepository implements EntryRepositoryInterface
     public function add(EntryDto $entry): void
     {
         $this->list = new EntryListDto(
-            ...array_values($this->all()->entries),
+            ...$this->all()->entries,
             ...[$entry],
         );
 

@@ -26,9 +26,9 @@ $kernel = new Kernel();
 
 $path = $kernel->getProjectPath() . '/' . ($_ENV['DATA_PATH'] ?? throw new RuntimeException('DATA_PATH is not set'));
 
-$kernel->getContainer()->register(HolidayRepositoryInterface::class, new HolidayRepository($path));
-$kernel->getContainer()->register(EntryRepositoryInterface::class, new EntryRepository($path));
-$kernel->getContainer()->register(CurrentWorkRepositoryInterface::class, new CurrentWorkRepository($path));
+$kernel->getContainer()->register(HolidayRepositoryInterface::class, new HolidayRepository($path . '/holidays.json'));
+$kernel->getContainer()->register(EntryRepositoryInterface::class, new EntryRepository($path . '/entries.json'));
+$kernel->getContainer()->register(CurrentWorkRepositoryInterface::class, new CurrentWorkRepository($path . '/current.json'));
 
 $kernel->loadCommands('src/Commands', 'src/', __NAMESPACE__);
 $kernel->execute(new Console());

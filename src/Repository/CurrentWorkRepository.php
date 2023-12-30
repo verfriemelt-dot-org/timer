@@ -12,13 +12,9 @@ use RuntimeException;
 
 class CurrentWorkRepository implements CurrentWorkRepositoryInterface
 {
-    private readonly string $path;
-
     public function __construct(
-        string $dataPath
-    ) {
-        $this->path = "{$dataPath}/current.json";
-    }
+        private readonly string $path
+    ) {}
 
     public function toggle(string $timeString): WorkTimeDto
     {

@@ -1,0 +1,55 @@
+<?php
+
+declare(strict_types=1);
+
+namespace timer\tests\Unit\Repository;
+
+use PHPUnit\Framework\TestCase;
+use timer\Domain\Dto\DateDto;
+use timer\Domain\Dto\PublicHoliday;
+use timer\Repository\HolidayRepository;
+use Override;
+
+class HolidayRepositoryTest extends TestCase
+{
+    private const string TEST_PATH = \TEST_ROOT . '/_data/holidaytest.json';
+
+    private HolidayRepository $repo;
+
+    #[Override]
+    public function setUp(): void
+    {
+        $this->repo = new HolidayRepository(self::TEST_PATH);
+        @unlink(self::TEST_PATH);
+    }
+
+    #[Override]
+    public function tearDown(): void
+    {
+        @unlink(self::TEST_PATH);
+    }
+
+    public function test_empty(): void
+    {
+        static::assertCount(0, $this->repo->all()->holidays);
+    }
+
+    public function test_add(): void
+    {
+        $this->repo->add(new PublicHoliday(new DateDto('2022-02-02'), 'test'));
+        static::assertCount(1, $this->repo->all()->holidays);
+        static::assertSame(
+            <<<JSON
+                [
+                    {
+                        "date": {
+                            "day": "2022-02-02"
+                        },
+                        "name": "test"
+                    }
+                ]
+                JSON,
+            file_get_contents(self::TEST_PATH)
+        );
+    }
+}

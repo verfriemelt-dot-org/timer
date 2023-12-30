@@ -60,8 +60,8 @@ abstract class ApplicationTestCase extends TestCase
             }
         };
 
-        $this->kernel->getContainer()->register(HolidayRepositoryInterface::class, new HolidayRepository($path));
-        $this->kernel->getContainer()->register(EntryRepositoryInterface::class, new EntryRepository($path));
-        $this->kernel->getContainer()->register(CurrentWorkRepositoryInterface::class, new CurrentWorkRepository($path));
+        $this->kernel->getContainer()->register(HolidayRepositoryInterface::class, new HolidayRepository("{$path}/holidays.json"));
+        $this->kernel->getContainer()->register(EntryRepositoryInterface::class, new EntryRepository("{$path}/entries.json"));
+        $this->kernel->getContainer()->register(CurrentWorkRepositoryInterface::class, new CurrentWorkRepository("{$path}/current.json"));
     }
 }
