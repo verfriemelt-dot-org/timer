@@ -10,13 +10,13 @@ use timer\Domain\Repository\CurrentWorkRepositoryInterface;
 use verfriemelt\wrapped\_\Serializer\Encoder\JsonEncoder;
 use RuntimeException;
 
-class CurrentWorkRepository implements CurrentWorkRepositoryInterface
+final readonly class CurrentWorkRepository implements CurrentWorkRepositoryInterface
 {
     public function __construct(
-        private readonly string $path
+        private string $path
     ) {}
 
-    public function toggle(string $timeString): WorkTimeDto
+    public function toggle(string $timeString = ''): WorkTimeDto
     {
         if (!$this->has()) {
             $workTime = new WorkTimeDto((new DateTimeImmutable($timeString))->format('Y-m-d H:i:s'));

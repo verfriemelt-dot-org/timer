@@ -8,20 +8,19 @@ use DateTimeImmutable;
 use timer\Domain\Dto\EntryDto;
 use timer\Domain\Dto\EntryListDto;
 use timer\Domain\Repository\EntryRepositoryInterface;
-use verfriemelt\wrapped\_\Serializer\Encoder\JsonEncoder;
-use RuntimeException;
 
-final class EntryRepository implements EntryRepositoryInterface
+final class MemoryEntryRepository implements EntryRepositoryInterface
 {
     private EntryListDto $list;
 
     public function __construct(
-        private readonly string $path
-    ) {}
+    ) {
+        $this->list = new EntryListDto();
+    }
 
     public function all(): EntryListDto
     {
-        return $this->list ??= (new JsonEncoder())->deserialize($this->read(), EntryListDto::class);
+        return $this->list;
     }
 
     public function add(EntryDto $entry): void
@@ -30,23 +29,6 @@ final class EntryRepository implements EntryRepositoryInterface
             ...$this->all()->entries,
             ...[$entry],
         );
-
-        $this->write($this->list);
-    }
-
-    private function read(): string
-    {
-        if (!\file_exists($this->path)) {
-            return '[]';
-        }
-
-        /** @phpstan-ignore-next-line */
-        return \file_get_contents($this->path) ?: throw new RuntimeException("cant read {$this->path}");
-    }
-
-    private function write(EntryListDto $dto): void
-    {
-        \file_put_contents($this->path, (new JsonEncoder())->serialize($dto->entries, true));
     }
 
     public function getDay(DateTimeImmutable $day): EntryListDto

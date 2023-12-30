@@ -23,7 +23,7 @@ final readonly class TimeBalanceCalculator
         $total = 0;
         $totalRequired = 0;
 
-        $current = clone $start;
+        $current = $start;
 
         while ($current <= $end) {
             $entries = $this->entryRepository->getDay($current);

@@ -21,5 +21,5 @@ infection: ## run infection
 
 .PHONY: coverage
 coverage: ## generate coverage
-	XDEBUG_MODE=coverage phpunit --coverage-html coverage
+	XDEBUG_MODE=coverage phpunit --coverage-html coverage --coverage-text
 
