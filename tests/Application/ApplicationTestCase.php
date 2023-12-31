@@ -23,11 +23,15 @@ abstract class ApplicationTestCase extends TestCase
 {
     protected KernelInterface $kernel;
 
+    protected MemoryHolidayRepository $holidayRepository;
+    protected MemoryEntryRepository $entryRepository;
+    protected MemoryCurrentWorkRepository $currentWorkRepository;
+
     /**
      * @param class-string<AbstractCommand> $command
      * @param string[]                      $argv
      */
-    protected function executeCommand(string $command, array $argv = []): ExitCode
+    protected function executeCommand(string $command, array $argv = [], ?Console $cli = null): ExitCode
     {
         $argvParser = new ArgvParser();
 
@@ -36,7 +40,7 @@ abstract class ApplicationTestCase extends TestCase
         static::assertInstanceOf($command, $instance);
 
         $argvParser->parse($argv);
-        return $instance->execute(new class () extends Console {
+        return $instance->execute($cli ?? new class () extends Console {
             public function write(string $text, ?int $color = null): static
             {
                 return $this;
@@ -54,8 +58,17 @@ abstract class ApplicationTestCase extends TestCase
             }
         };
 
-        $this->kernel->getContainer()->register(HolidayRepositoryInterface::class, new MemoryHolidayRepository());
-        $this->kernel->getContainer()->register(EntryRepositoryInterface::class, new MemoryEntryRepository());
-        $this->kernel->getContainer()->register(CurrentWorkRepositoryInterface::class, new MemoryCurrentWorkRepository());
+        $this->kernel->getContainer()->register(
+            HolidayRepositoryInterface::class,
+            $this->holidayRepository = new MemoryHolidayRepository()
+        );
+        $this->kernel->getContainer()->register(
+            EntryRepositoryInterface::class,
+            $this->entryRepository = new MemoryEntryRepository()
+        );
+        $this->kernel->getContainer()->register(
+            CurrentWorkRepositoryInterface::class,
+            $this->currentWorkRepository = new MemoryCurrentWorkRepository()
+        );
     }
 }

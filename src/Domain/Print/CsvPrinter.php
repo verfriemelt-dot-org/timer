@@ -6,6 +6,7 @@ namespace timer\Domain\Print;
 
 use DateTimeImmutable;
 use timer\Domain\Repository\EntryRepositoryInterface;
+use verfriemelt\wrapped\_\Cli\Console;
 
 final readonly class CsvPrinter
 {
@@ -13,16 +14,15 @@ final readonly class CsvPrinter
         private EntryRepositoryInterface $entryRepository,
     ) {}
 
-    public function print(DateTimeImmutable $start, DateTimeImmutable $end): void
+    public function print(Console $console, DateTimeImmutable $start, DateTimeImmutable $end): void
     {
-        $current = clone $start;
+        $current = $start;
 
         while ($current <= $end) {
             $entries = $this->entryRepository->getDay($current);
 
             foreach ($entries->entries as $dto) {
-                echo "{$dto->type->value};{$dto->date->day};{$dto->workTime?->from};{$dto->workTime?->till}";
-                echo \PHP_EOL;
+                $console->writeLn("{$dto->type->value};{$dto->date->day};{$dto->workTime?->from};{$dto->workTime?->till}");
             }
 
             $current = $current->modify('+1 day');

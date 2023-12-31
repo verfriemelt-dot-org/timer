@@ -23,6 +23,7 @@ final class ExportCsvCommand extends AbstractCommand
     public function execute(Console $console): ExitCode
     {
         $this->print->print(
+            $console,
             new DateTimeImmutable('first day of january this year'),
             new DateTimeImmutable('Today'),
         );
