@@ -4,7 +4,6 @@
 $ tt help
 add                  used to add non-work entries
 balance              prints out the current overtime balance
-cat                  prints out the raw current worktime dto
 export:csv           exports the current year as a csv
 export:text:month    prints the given month
 export:text:year     prints the current year
