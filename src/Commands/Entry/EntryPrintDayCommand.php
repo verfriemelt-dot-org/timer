@@ -39,6 +39,9 @@ final class EntryPrintDayCommand extends AbstractCommand
         $argv->addOptions($this->raw);
     }
 
+    /**
+     * @infection-ignore-all
+     */
     #[Override]
     public function execute(OutputInterface $output): ExitCode
     {

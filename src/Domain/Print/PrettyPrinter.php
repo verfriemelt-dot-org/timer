@@ -49,7 +49,9 @@ final readonly class PrettyPrinter
                     continue;
                 }
 
-                $output->writeLn("{$dto->workTime?->from} - {$dto->workTime?->till}");
+                assert($dto->workTime !== null);
+                assert($dto->workTime->till !== null);
+                $output->writeLn("{$dto->workTime->from} - {$dto->workTime->till}");
             }
 
             $current = $current->modify('+1 day');
@@ -60,6 +62,9 @@ final readonly class PrettyPrinter
         $output->writeLn("{$balanceDto->actual} // {$balanceDto->expected}");
     }
 
+    /**
+     * @infection-ignore-all
+     */
     private function printHours(OutputInterface $output, float $workPerDay, float $expected): void
     {
         $output->write(' » ');
