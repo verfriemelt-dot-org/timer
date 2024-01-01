@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace timer\tests\Application;
 
+use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
+use Psr\Clock\ClockInterface;
 use timer\Domain\Repository\CurrentWorkRepositoryInterface;
 use timer\Domain\Repository\EntryRepositoryInterface;
 use timer\Domain\Repository\HolidayRepositoryInterface;
@@ -13,6 +15,7 @@ use timer\Repository\MemoryEntryRepository;
 use timer\Repository\MemoryHolidayRepository;
 use verfriemelt\wrapped\_\AbstractKernel;
 use verfriemelt\wrapped\_\Cli\Console;
+use verfriemelt\wrapped\_\Clock\MockClock;
 use verfriemelt\wrapped\_\Command\AbstractCommand;
 use verfriemelt\wrapped\_\Command\CommandArguments\ArgvParser;
 use verfriemelt\wrapped\_\Command\ExitCode;
@@ -69,6 +72,10 @@ abstract class ApplicationTestCase extends TestCase
         $this->kernel->getContainer()->register(
             CurrentWorkRepositoryInterface::class,
             $this->currentWorkRepository = new MemoryCurrentWorkRepository()
+        );
+        $this->kernel->getContainer()->register(
+            ClockInterface::class,
+            new MockClock(new DateTimeImmutable('2023-12-01'))
         );
     }
 }

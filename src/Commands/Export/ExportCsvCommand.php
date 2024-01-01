@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace timer\Commands\Export;
 
-use DateTimeImmutable;
+use Psr\Clock\ClockInterface;
 use timer\Domain\Print\CsvPrinter;
 use verfriemelt\wrapped\_\Cli\Console;
 use verfriemelt\wrapped\_\Command\AbstractCommand;
@@ -16,7 +16,8 @@ use Override;
 final class ExportCsvCommand extends AbstractCommand
 {
     public function __construct(
-        private readonly CsvPrinter $print
+        private readonly CsvPrinter $print,
+        private readonly ClockInterface $clock,
     ) {}
 
     #[Override]
@@ -24,8 +25,8 @@ final class ExportCsvCommand extends AbstractCommand
     {
         $this->print->print(
             $console,
-            new DateTimeImmutable('first day of january this year'),
-            new DateTimeImmutable('Today'),
+            $this->clock->now()->modify('first day of january'),
+            $this->clock->now()
         );
 
         return ExitCode::Success;

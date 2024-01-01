@@ -14,8 +14,11 @@ final readonly class CsvPrinter
         private EntryRepositoryInterface $entryRepository,
     ) {}
 
-    public function print(Console $console, DateTimeImmutable $start, DateTimeImmutable $end): void
-    {
+    public function print(
+        Console $console,
+        DateTimeImmutable $start,
+        DateTimeImmutable $end
+    ): void {
         $current = $start;
 
         while ($current <= $end) {

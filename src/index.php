@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace timer;
 
+use Psr\Clock\ClockInterface;
 use timer\Domain\Repository\CurrentWorkRepositoryInterface;
 use timer\Domain\Repository\EntryRepositoryInterface;
 use timer\Domain\Repository\HolidayRepositoryInterface;
@@ -11,6 +12,7 @@ use timer\Repository\CurrentWorkRepository;
 use timer\Repository\EntryRepository;
 use timer\Repository\HolidayRepository;
 use verfriemelt\wrapped\_\Cli\Console;
+use verfriemelt\wrapped\_\Clock\SystemClock;
 use verfriemelt\wrapped\_\DotEnv\DotEnv;
 use RuntimeException;
 
@@ -29,6 +31,7 @@ $path = $kernel->getProjectPath() . '/' . ($_ENV['DATA_PATH'] ?? throw new Runti
 $kernel->getContainer()->register(HolidayRepositoryInterface::class, new HolidayRepository($path . '/holidays.json'));
 $kernel->getContainer()->register(EntryRepositoryInterface::class, new EntryRepository($path . '/entries.json'));
 $kernel->getContainer()->register(CurrentWorkRepositoryInterface::class, new CurrentWorkRepository($path . '/current.json'));
+$kernel->getContainer()->register(ClockInterface::class, new SystemClock());
 
 $kernel->loadCommands('src/Commands', 'src/', __NAMESPACE__);
 $kernel->execute(new Console());
