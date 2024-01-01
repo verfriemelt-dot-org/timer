@@ -6,7 +6,7 @@ namespace timer\Commands\Export;
 
 use Psr\Clock\ClockInterface;
 use timer\Domain\Print\CsvPrinter;
-use verfriemelt\wrapped\_\Cli\Console;
+use verfriemelt\wrapped\_\Cli\OutputInterface;
 use verfriemelt\wrapped\_\Command\AbstractCommand;
 use verfriemelt\wrapped\_\Command\Attributes\Command;
 use verfriemelt\wrapped\_\Command\ExitCode;
@@ -21,10 +21,10 @@ final class ExportCsvCommand extends AbstractCommand
     ) {}
 
     #[Override]
-    public function execute(Console $console): ExitCode
+    public function execute(OutputInterface $output): ExitCode
     {
         $this->print->print(
-            $console,
+            $output,
             $this->clock->now()->modify('first day of january'),
             $this->clock->now()
         );

@@ -9,7 +9,7 @@ use timer\Domain\Dto\DateDto;
 use timer\Domain\Dto\EntryDto;
 use timer\Domain\EntryType;
 use timer\Domain\Repository\EntryRepositoryInterface;
-use verfriemelt\wrapped\_\Cli\Console;
+use verfriemelt\wrapped\_\Cli\OutputInterface;
 use verfriemelt\wrapped\_\Command\AbstractCommand;
 use verfriemelt\wrapped\_\Command\Attributes\Command;
 use verfriemelt\wrapped\_\Command\CommandArguments\Argument;
@@ -37,7 +37,7 @@ final class EntryAddCommand extends AbstractCommand
     }
 
     #[Override]
-    public function execute(Console $console): ExitCode
+    public function execute(OutputInterface $output): ExitCode
     {
         match ($this->typeArgument->get() ?? '') {
             EntryType::Sick->value => $this->entryRepository->add(

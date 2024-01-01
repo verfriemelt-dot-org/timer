@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace timer\Commands\Holiday;
 
 use DateTimeImmutable;
-use timer\Domain\Dto\PublicHoliday;
+use timer\Domain\Dto\PublicHolidayDto;
 use timer\Domain\Repository\HolidayRepositoryInterface;
-use verfriemelt\wrapped\_\Cli\Console;
 use verfriemelt\wrapped\_\Command\AbstractCommand;
 use verfriemelt\wrapped\_\Command\Attributes\Command;
 use verfriemelt\wrapped\_\Command\ExitCode;
@@ -21,16 +20,16 @@ final class HolidayListCommand extends AbstractCommand
     ) {}
 
     #[Override]
-    public function execute(Console $console): ExitCode
+    public function execute(\verfriemelt\wrapped\_\Cli\OutputInterface $output): ExitCode
     {
         $holidays = $this->holidayRepository->all()->holidays;
         \usort(
             $holidays,
-            static fn (PublicHoliday $a, PublicHoliday $b): int => new DateTimeImmutable($a->date->day) <=> new DateTimeImmutable($b->date->day)
+            static fn (PublicHolidayDto $a, PublicHolidayDto $b): int => new DateTimeImmutable($a->date->day) <=> new DateTimeImmutable($b->date->day)
         );
 
         foreach ($holidays as $holiday) {
-            $console->writeLn("{$holiday->date->day} {$holiday->name}");
+            $output->writeLn("{$holiday->date->day} {$holiday->name}");
         }
 
         return ExitCode::Success;

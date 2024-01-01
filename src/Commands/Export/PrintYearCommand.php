@@ -6,7 +6,7 @@ namespace timer\Commands\Export;
 
 use DateTimeImmutable;
 use timer\Domain\Print\PrettyPrinter;
-use verfriemelt\wrapped\_\Cli\Console;
+use verfriemelt\wrapped\_\Cli\OutputInterface;
 use verfriemelt\wrapped\_\Command\AbstractCommand;
 use verfriemelt\wrapped\_\Command\Attributes\Command;
 use verfriemelt\wrapped\_\Command\ExitCode;
@@ -20,7 +20,7 @@ final class PrintYearCommand extends AbstractCommand
     ) {}
 
     #[Override]
-    public function execute(Console $console): ExitCode
+    public function execute(OutputInterface $output): ExitCode
     {
         $this->print->print(new DateTimeImmutable('first day of january this year'), new DateTimeImmutable('Yesterday'));
         return ExitCode::Success;

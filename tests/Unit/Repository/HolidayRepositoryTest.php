@@ -6,7 +6,7 @@ namespace timer\tests\Unit\Repository;
 
 use PHPUnit\Framework\TestCase;
 use timer\Domain\Dto\DateDto;
-use timer\Domain\Dto\PublicHoliday;
+use timer\Domain\Dto\PublicHolidayDto;
 use timer\Repository\HolidayRepository;
 use Override;
 
@@ -45,7 +45,7 @@ class HolidayRepositoryTest extends TestCase
 
     public function test_add(): void
     {
-        $this->repo->add(new PublicHoliday(new DateDto('2022-02-02'), 'test'));
+        $this->repo->add(new PublicHolidayDto(new DateDto('2022-02-02'), 'test'));
         static::assertCount(1, $this->repo->all()->holidays);
         static::assertSame(
             <<<JSON

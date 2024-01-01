@@ -8,7 +8,7 @@ use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 use timer\Domain\Dto\DateDto;
 use timer\Domain\Dto\EntryDto;
-use timer\Domain\Dto\PublicHoliday;
+use timer\Domain\Dto\PublicHolidayDto;
 use timer\Domain\Dto\WorkTimeDto;
 use timer\Domain\EntryType;
 use timer\Domain\TimeBalanceCalculator;
@@ -42,7 +42,7 @@ class TimeBalanceCalculatorTest extends TestCase
     public function test(): void
     {
         $this->holidayRepository->add(
-            new PublicHoliday(
+            new PublicHolidayDto(
                 new DateDto('2024-01-01'),
                 'Neujahr'
             )

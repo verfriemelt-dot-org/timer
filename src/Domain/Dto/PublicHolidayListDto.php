@@ -6,11 +6,11 @@ namespace timer\Domain\Dto;
 
 class PublicHolidayListDto
 {
-    /** @var PublicHoliday[] */
+    /** @var PublicHolidayDto[] */
     public array $holidays;
 
     public function __construct(
-        PublicHoliday ...$holidays
+        PublicHolidayDto ...$holidays
     ) {
         $this->holidays = $holidays;
     }

@@ -10,28 +10,12 @@ use timer\Domain\Dto\EntryDto;
 use timer\Domain\Dto\WorkTimeDto;
 use timer\Domain\EntryType;
 use timer\tests\Application\ApplicationTestCase;
-use verfriemelt\wrapped\_\Cli\Console;
 use verfriemelt\wrapped\_\Command\ExitCode;
 
 final class ExportCsvCommandTest extends ApplicationTestCase
 {
     public function test(): void
     {
-        $cli = new class () extends Console {
-            private string $buffer = '';
-
-            public function write(string $text, ?int $color = null): static
-            {
-                $this->buffer .= $text;
-                return $this;
-            }
-
-            public function getBuffer(): string
-            {
-                return $this->buffer;
-            }
-        };
-
         $this->entryRepository->add(
             new EntryDto(
                 new DateDto('2023-04-01'),
@@ -57,7 +41,7 @@ final class ExportCsvCommandTest extends ApplicationTestCase
 
         static::assertSame(
             ExitCode::Success,
-            $this->executeCommand(ExportCsvCommand::class, [], $cli)
+            $this->executeCommand(ExportCsvCommand::class, [])
         );
 
         static::assertSame(
@@ -67,7 +51,7 @@ final class ExportCsvCommandTest extends ApplicationTestCase
             vacation;2023-12-01;;
             
             OUT,
-            $cli->getBuffer()
+            $this->consoleSpy->getBuffer()
         );
     }
 }

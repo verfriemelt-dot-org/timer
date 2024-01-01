@@ -9,7 +9,7 @@ use timer\Domain\Repository\CurrentWorkRepositoryInterface;
 use timer\Domain\Repository\EntryRepositoryInterface;
 use timer\Domain\TimeDiffCalcalator;
 use timer\Domain\WorkTimeCalculator;
-use verfriemelt\wrapped\_\Cli\Console;
+use verfriemelt\wrapped\_\Cli\OutputInterface;
 use verfriemelt\wrapped\_\Command\AbstractCommand;
 use verfriemelt\wrapped\_\Command\Attributes\Command;
 use verfriemelt\wrapped\_\Command\Attributes\DefaultCommand;
@@ -28,7 +28,7 @@ final class EntryPrintDayCommand extends AbstractCommand
     ) {}
 
     #[Override]
-    public function execute(Console $console): ExitCode
+    public function execute(OutputInterface $output): ExitCode
     {
         $today = new DateTimeImmutable();
 
@@ -46,7 +46,7 @@ final class EntryPrintDayCommand extends AbstractCommand
 
         $hours = \number_format($hours, 2, '.');
 
-        $console->writeLn("[{$hours} :: {$expected}]");
+        $output->writeLn("[{$hours} :: {$expected}]");
 
         return ExitCode::Success;
     }

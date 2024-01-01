@@ -6,7 +6,7 @@ namespace timer\Domain\Print;
 
 use DateTimeImmutable;
 use timer\Domain\Repository\EntryRepositoryInterface;
-use verfriemelt\wrapped\_\Cli\Console;
+use verfriemelt\wrapped\_\Cli\OutputInterface;
 
 final readonly class CsvPrinter
 {
@@ -15,7 +15,7 @@ final readonly class CsvPrinter
     ) {}
 
     public function print(
-        Console $console,
+        OutputInterface $console,
         DateTimeImmutable $start,
         DateTimeImmutable $end
     ): void {

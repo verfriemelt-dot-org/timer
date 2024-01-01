@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace timer\Commands\Entry;
 
 use timer\Domain\Repository\CurrentWorkRepositoryInterface;
-use verfriemelt\wrapped\_\Cli\Console;
+use verfriemelt\wrapped\_\Cli\OutputInterface;
 use verfriemelt\wrapped\_\Command\AbstractCommand;
 use verfriemelt\wrapped\_\Command\Attributes\Command;
 use verfriemelt\wrapped\_\Command\ExitCode;
@@ -19,15 +19,15 @@ final class EntryResetCommand extends AbstractCommand
     ) {}
 
     #[Override]
-    public function execute(Console $console): ExitCode
+    public function execute(OutputInterface $output): ExitCode
     {
         if (!$this->currentWorkRepository->has()) {
-            $console->writeLn('not started');
+            $output->writeLn('not started');
             return ExitCode::Success;
         }
 
         $this->currentWorkRepository->reset();
-        $console->writeLn('deleted');
+        $output->writeLn('deleted');
 
         return ExitCode::Success;
     }

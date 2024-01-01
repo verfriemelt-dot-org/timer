@@ -6,9 +6,9 @@ namespace timer\Commands\Holiday;
 
 use Override;
 use timer\Domain\Dto\DateDto;
-use timer\Domain\Dto\PublicHoliday;
+use timer\Domain\Dto\PublicHolidayDto;
 use timer\Domain\Repository\HolidayRepositoryInterface;
-use verfriemelt\wrapped\_\Cli\Console;
+use verfriemelt\wrapped\_\Cli\OutputInterface;
 use verfriemelt\wrapped\_\Command\AbstractCommand;
 use verfriemelt\wrapped\_\Command\Attributes\Command;
 use verfriemelt\wrapped\_\Command\CommandArguments\Argument;
@@ -36,9 +36,9 @@ final class HolidayAddCommand extends AbstractCommand
     }
 
     #[Override]
-    public function execute(Console $console): ExitCode
+    public function execute(OutputInterface $output): ExitCode
     {
-        $this->holidayRepository->add(new PublicHoliday(
+        $this->holidayRepository->add(new PublicHolidayDto(
             new DateDto($this->date->get() ?? throw new RuntimeException()),
             $this->name->get()  ?? throw new RuntimeException()
         ));

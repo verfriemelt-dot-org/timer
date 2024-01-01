@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 use timer\Domain\Dto\DateDto;
 use timer\Domain\Dto\EntryDto;
 use timer\Domain\Dto\EntryListDto;
-use timer\Domain\Dto\PublicHoliday;
+use timer\Domain\Dto\PublicHolidayDto;
 use timer\Domain\Dto\PublicHolidayListDto;
 use timer\Domain\Dto\WorkTimeDto;
 use timer\Domain\EntryType;
@@ -32,7 +32,7 @@ class WorkTimeCalculatorTest extends TestCase
                     return new PublicHolidayListDto();
                 }
 
-                public function add(PublicHoliday $publicHoliday): void
+                public function add(PublicHolidayDto $publicHoliday): void
                 {
                     // TODO: Implement add() method.
                 }

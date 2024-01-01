@@ -9,7 +9,7 @@ use timer\Domain\Dto\DateDto;
 use timer\Domain\Dto\EntryDto;
 use timer\Domain\Repository\CurrentWorkRepositoryInterface;
 use timer\Domain\Repository\EntryRepositoryInterface;
-use verfriemelt\wrapped\_\Cli\Console;
+use verfriemelt\wrapped\_\Cli\OutputInterface;
 use verfriemelt\wrapped\_\Command\AbstractCommand;
 use verfriemelt\wrapped\_\Command\Attributes\Command;
 use verfriemelt\wrapped\_\Command\CommandArguments\Argument;
@@ -35,12 +35,12 @@ final class EntryToggleCommand extends AbstractCommand
     }
 
     #[Override]
-    public function execute(Console $console): ExitCode
+    public function execute(OutputInterface $output): ExitCode
     {
         $timeString = $this->time->get() ?? '';
 
         if (!$this->currentWorkRepository->has()) {
-            $console->writeLn(\print_r($this->currentWorkRepository->toggle($timeString), true));
+            $output->writeLn(\print_r($this->currentWorkRepository->toggle($timeString), true));
             return ExitCode::Success;
         }
 
@@ -52,7 +52,7 @@ final class EntryToggleCommand extends AbstractCommand
         );
 
         $this->entryRepository->add($work);
-        $console->writeLn(\print_r($work, true));
+        $output->writeLn(\print_r($work, true));
 
         return ExitCode::Success;
     }

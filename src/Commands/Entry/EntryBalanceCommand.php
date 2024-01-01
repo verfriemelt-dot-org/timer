@@ -6,7 +6,7 @@ namespace timer\Commands\Entry;
 
 use DateTimeImmutable;
 use timer\Domain\TimeBalanceCalculator;
-use verfriemelt\wrapped\_\Cli\Console;
+use verfriemelt\wrapped\_\Cli\OutputInterface;
 use verfriemelt\wrapped\_\Command\AbstractCommand;
 use verfriemelt\wrapped\_\Command\Attributes\Command;
 use verfriemelt\wrapped\_\Command\ExitCode;
@@ -20,14 +20,14 @@ final class EntryBalanceCommand extends AbstractCommand
     ) {}
 
     #[Override]
-    public function execute(Console $console): ExitCode
+    public function execute(OutputInterface $output): ExitCode
     {
         $dto = $this->timeBalance->get(
             new DateTimeImmutable('2023-01-01'),
             new DateTimeImmutable('Yesterday')
         );
 
-        $console->writeLn("{$dto->actual} // {$dto->expected}");
+        $output->writeLn("{$dto->actual} // {$dto->expected}");
 
         return ExitCode::Success;
     }

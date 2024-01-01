@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace timer\Commands\Entry;
 
+use Override;
 use timer\Domain\Repository\CurrentWorkRepositoryInterface;
-use verfriemelt\wrapped\_\Cli\Console;
+use verfriemelt\wrapped\_\Cli\OutputInterface;
 use verfriemelt\wrapped\_\Command\AbstractCommand;
 use verfriemelt\wrapped\_\Command\Attributes\Command;
 use verfriemelt\wrapped\_\Command\ExitCode;
-use Override;
 
 #[Command('cat', 'prints out the raw current worktime dto')]
 final class EntryPrintClockCommand extends AbstractCommand
@@ -19,10 +19,10 @@ final class EntryPrintClockCommand extends AbstractCommand
     ) {}
 
     #[Override]
-    public function execute(Console $console): ExitCode
+    public function execute(OutputInterface $output): ExitCode
     {
         if (!$this->currentWorkRepository->has()) {
-            $console->writeLn('not started');
+            $output->writeLn('not started');
             return ExitCode::Success;
         }
 

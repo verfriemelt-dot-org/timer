@@ -60,12 +60,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/verfriemelt-dot-org/wrapped.git",
-                "reference": "e3b9db335dc21de3fd76200027ece31b20588c03"
+                "reference": "763591edbda0db3402382421cbb9fc40b327b728"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/verfriemelt-dot-org/wrapped/zipball/e3b9db335dc21de3fd76200027ece31b20588c03",
-                "reference": "e3b9db335dc21de3fd76200027ece31b20588c03",
+                "url": "https://api.github.com/repos/verfriemelt-dot-org/wrapped/zipball/763591edbda0db3402382421cbb9fc40b327b728",
+                "reference": "763591edbda0db3402382421cbb9fc40b327b728",
                 "shasum": ""
             },
             "require": {
@@ -105,7 +105,7 @@
                 "issues": "https://github.com/verfriemelt-dot-org/wrapped/issues",
                 "source": "https://github.com/verfriemelt-dot-org/wrapped/tree/master"
             },
-            "time": "2024-01-01T11:24:59+00:00"
+            "time": "2024-01-01T15:32:48+00:00"
         }
     ],
     "packages-dev": [

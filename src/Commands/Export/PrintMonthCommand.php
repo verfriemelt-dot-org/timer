@@ -6,7 +6,7 @@ namespace timer\Commands\Export;
 
 use DateTimeImmutable;
 use timer\Domain\Print\PrettyPrinter;
-use verfriemelt\wrapped\_\Cli\Console;
+use verfriemelt\wrapped\_\Cli\OutputInterface;
 use verfriemelt\wrapped\_\Command\AbstractCommand;
 use verfriemelt\wrapped\_\Command\Attributes\Command;
 use verfriemelt\wrapped\_\Command\CommandArguments\Argument;
@@ -34,7 +34,7 @@ final class PrintMonthCommand extends AbstractCommand
     }
 
     #[Override]
-    public function execute(Console $console): ExitCode
+    public function execute(OutputInterface $output): ExitCode
     {
         $month = (int) ($this->month->get() ??  (new DateTimeImmutable())->format('m'));
         $year = (int) ($this->year->get() ??  (new DateTimeImmutable())->format('Y'));
@@ -43,7 +43,7 @@ final class PrintMonthCommand extends AbstractCommand
         $start = new DateTimeImmutable("{$year}-{$month}-01");
         $end = $start->modify('last day of this month');
 
-        if ($console->getArgv()->hasNot(2) && $start < $today && $end > $today) {
+        if (!$this->month->present() && $start < $today && $end > $today) {
             $end = new DateTimeImmutable('yesterday');
         }
 

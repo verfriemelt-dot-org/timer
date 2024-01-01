@@ -14,6 +14,7 @@ use timer\Repository\MemoryCurrentWorkRepository;
 use timer\Repository\MemoryEntryRepository;
 use timer\Repository\MemoryHolidayRepository;
 use verfriemelt\wrapped\_\AbstractKernel;
+use verfriemelt\wrapped\_\Cli\BufferedOutput;
 use verfriemelt\wrapped\_\Cli\Console;
 use verfriemelt\wrapped\_\Clock\MockClock;
 use verfriemelt\wrapped\_\Command\AbstractCommand;
@@ -25,6 +26,8 @@ use Override;
 abstract class ApplicationTestCase extends TestCase
 {
     protected KernelInterface $kernel;
+
+    protected BufferedOutput $consoleSpy;
 
     protected MemoryHolidayRepository $holidayRepository;
     protected MemoryEntryRepository $entryRepository;
@@ -43,12 +46,10 @@ abstract class ApplicationTestCase extends TestCase
         static::assertInstanceOf($command, $instance);
 
         $argvParser->parse($argv);
-        return $instance->execute($cli ?? new class () extends Console {
-            public function write(string $text, ?int $color = null): static
-            {
-                return $this;
-            }
-        });
+
+        $this->consoleSpy = new BufferedOutput();
+
+        return $instance->execute($cli ?? $this->consoleSpy);
     }
 
     #[Override]
