@@ -16,10 +16,10 @@ final readonly class CurrentWorkRepository implements CurrentWorkRepositoryInter
         private string $path
     ) {}
 
-    public function toggle(string $timeString = ''): WorkTimeDto
+    public function toggle(DateTimeImmutable $time): WorkTimeDto
     {
         if (!$this->has()) {
-            $workTime = new WorkTimeDto((new DateTimeImmutable($timeString))->format('Y-m-d H:i:s'));
+            $workTime = new WorkTimeDto($time->format('Y-m-d H:i:s'));
             \file_put_contents($this->path, (new JsonEncoder())->serialize($workTime));
 
             return $workTime;
@@ -28,7 +28,7 @@ final readonly class CurrentWorkRepository implements CurrentWorkRepositoryInter
         $dto = $this->get();
         $this->reset();
 
-        return $dto->till((new DateTimeImmutable($timeString))->format('Y-m-d H:i:s'));
+        return $dto->till($time->format('Y-m-d H:i:s'));
     }
 
     public function get(): WorkTimeDto

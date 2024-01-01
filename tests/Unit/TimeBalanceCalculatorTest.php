@@ -6,6 +6,7 @@ namespace timer\tests\Unit;
 
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
+use timer\Domain\Clock;
 use timer\Domain\Dto\DateDto;
 use timer\Domain\Dto\EntryDto;
 use timer\Domain\Dto\PublicHolidayDto;
@@ -34,7 +35,7 @@ class TimeBalanceCalculatorTest extends TestCase
             $this->entryRepository,
             new WorkTimeCalculator(
                 $this->holidayRepository,
-                new TimeDiffCalcalator()
+                new TimeDiffCalcalator(new Clock())
             )
         );
     }

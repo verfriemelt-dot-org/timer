@@ -4,6 +4,7 @@ includes:
     - vendor/phpstan/phpstan/conf/bleedingEdge.neon
     - vendor/tomasvotruba/type-coverage/config/extension.neon
     - vendor/tomasvotruba/cognitive-complexity/config/extension.neon
+    - vendor/phpat/phpat/extension.neon
     - vendor/phpstan/phpstan-deprecation-rules/rules.neon
     - vendor/spaze/phpstan-disallowed-calls/extension.neon
 
@@ -33,7 +34,9 @@ parameters:
   parallel:
     processTimeout: 30.0
 
-  disallowedClasses:
+
+services:
     -
-        class: '\DateTime'
-        message: 'do not use DateTime'
+        class: timer\tests\Architecture\DisallowDateTime
+        tags:
+            - phpat.test

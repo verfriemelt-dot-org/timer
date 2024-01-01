@@ -16,7 +16,8 @@
         "rector/rector": "^0.18.13",
         "phpstan/phpstan-deprecation-rules": "^1.1.4",
         "spaze/phpstan-disallowed-calls": "^3.0",
-        "infection/infection": "^0.27.9"
+        "infection/infection": "^0.27.9",
+        "phpat/phpat": "^0.10.12"
     },
     "autoload": {
         "psr-4": {

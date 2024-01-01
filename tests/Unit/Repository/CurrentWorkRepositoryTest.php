@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace timer\tests\Unit\Repository;
 
+use DateTimeImmutable;
 use Override;
 use PHPUnit\Framework\TestCase;
 use timer\Repository\CurrentWorkRepository;
@@ -43,7 +44,7 @@ class CurrentWorkRepositoryTest extends TestCase
 
     public function test_toggle_start(): void
     {
-        $dto = $this->repo->toggle();
+        $dto = $this->repo->toggle(new DateTimeImmutable());
 
         static::assertNull($dto->till);
         static::assertFileExists(self::TEST_PATH);
@@ -51,8 +52,8 @@ class CurrentWorkRepositoryTest extends TestCase
 
     public function test_toggle_finish(): void
     {
-        $this->repo->toggle();
-        $dto = $this->repo->toggle();
+        $this->repo->toggle(new DateTimeImmutable());
+        $dto = $this->repo->toggle(new DateTimeImmutable());
 
         static::assertNotNull($dto->till);
         static::assertFileDoesNotExist(self::TEST_PATH);

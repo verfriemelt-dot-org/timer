@@ -4,17 +4,20 @@ declare(strict_types=1);
 
 namespace timer\Domain;
 
-use DateTimeImmutable;
 use timer\Domain\Dto\WorkTimeDto;
 
-final class TimeDiffCalcalator
+final readonly class TimeDiffCalcalator
 {
+    public function __construct(
+        private Clock $clock,
+    ) {}
+
     public function getInSeconds(WorkTimeDto $workTimeDto): float
     {
         \assert(isset($workTimeDto->from, $workTimeDto->till));
 
-        $from = new DateTimeImmutable($workTimeDto->from);
-        $to = new DateTimeImmutable($workTimeDto->till);
+        $from = $this->clock->fromString($workTimeDto->from);
+        $to = $this->clock->fromString($workTimeDto->till);
 
         $diff = $from->diff($to);
 

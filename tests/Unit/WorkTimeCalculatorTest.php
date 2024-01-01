@@ -7,6 +7,7 @@ namespace timer\tests\Unit;
 use DateTimeImmutable;
 use Override;
 use PHPUnit\Framework\TestCase;
+use timer\Domain\Clock;
 use timer\Domain\Dto\DateDto;
 use timer\Domain\Dto\EntryDto;
 use timer\Domain\Dto\EntryListDto;
@@ -17,6 +18,7 @@ use timer\Domain\EntryType;
 use timer\Domain\Repository\HolidayRepositoryInterface;
 use timer\Domain\TimeDiffCalcalator;
 use timer\Domain\WorkTimeCalculator;
+use verfriemelt\wrapped\_\Clock\SystemClock;
 
 class WorkTimeCalculatorTest extends TestCase
 {
@@ -42,7 +44,9 @@ class WorkTimeCalculatorTest extends TestCase
                     return $day > new DateTimeImmutable('2020-04-01');
                 }
             },
-            new TimeDiffCalcalator()
+            new TimeDiffCalcalator(
+                new Clock(new SystemClock())
+            )
         );
     }
 

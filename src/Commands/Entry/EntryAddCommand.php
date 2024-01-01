@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace timer\Commands\Entry;
 
-use DateTimeImmutable;
+use timer\Domain\Clock;
 use timer\Domain\Dto\DateDto;
 use timer\Domain\Dto\EntryDto;
 use timer\Domain\EntryType;
@@ -26,6 +26,7 @@ final class EntryAddCommand extends AbstractCommand
 
     public function __construct(
         private readonly EntryRepositoryInterface $entryRepository,
+        private readonly Clock $clock,
     ) {}
 
     #[Override]
@@ -39,16 +40,22 @@ final class EntryAddCommand extends AbstractCommand
     #[Override]
     public function execute(OutputInterface $output): ExitCode
     {
+        if ($this->dateArgument->present()) {
+            $time = $this->clock->fromString($this->dateArgument->get());
+        } else {
+            $time = $this->clock->now();
+        }
+
         match ($this->typeArgument->get() ?? '') {
             EntryType::Sick->value => $this->entryRepository->add(
                 new EntryDto(
-                    new DateDto((new DateTimeImmutable($this->dateArgument->get() ?? ''))->format('Y-m-d')),
+                    new DateDto($time->format('Y-m-d')),
                     type: EntryType::Sick,
                 )
             ),
             EntryType::Vacation->value => $this->entryRepository->add(
                 new EntryDto(
-                    new DateDto((new DateTimeImmutable($this->dateArgument->get() ?? ''))->format('Y-m-d')),
+                    new DateDto($time->format('Y-m-d')),
                     type: EntryType::Vacation,
                 )
             ),

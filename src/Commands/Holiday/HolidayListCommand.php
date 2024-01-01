@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace timer\Commands\Holiday;
 
-use DateTimeImmutable;
+use timer\Domain\Clock;
 use timer\Domain\Dto\PublicHolidayDto;
 use timer\Domain\Repository\HolidayRepositoryInterface;
+use verfriemelt\wrapped\_\Cli\OutputInterface;
 use verfriemelt\wrapped\_\Command\AbstractCommand;
 use verfriemelt\wrapped\_\Command\Attributes\Command;
 use verfriemelt\wrapped\_\Command\ExitCode;
@@ -17,15 +18,16 @@ final class HolidayListCommand extends AbstractCommand
 {
     public function __construct(
         private readonly HolidayRepositoryInterface $holidayRepository,
+        private readonly Clock $clock
     ) {}
 
     #[Override]
-    public function execute(\verfriemelt\wrapped\_\Cli\OutputInterface $output): ExitCode
+    public function execute(OutputInterface $output): ExitCode
     {
         $holidays = $this->holidayRepository->all()->holidays;
         \usort(
             $holidays,
-            static fn (PublicHolidayDto $a, PublicHolidayDto $b): int => new DateTimeImmutable($a->date->day) <=> new DateTimeImmutable($b->date->day)
+            fn (PublicHolidayDto $a, PublicHolidayDto $b): int => $this->clock->fromString($a->date->day) <=> $this->clock->fromString($b->date->day)
         );
 
         foreach ($holidays as $holiday) {

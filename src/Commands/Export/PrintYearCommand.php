@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace timer\Commands\Export;
 
-use DateTimeImmutable;
+use Psr\Clock\ClockInterface;
 use timer\Domain\Print\PrettyPrinter;
 use verfriemelt\wrapped\_\Cli\OutputInterface;
 use verfriemelt\wrapped\_\Command\AbstractCommand;
@@ -16,13 +16,16 @@ use Override;
 final class PrintYearCommand extends AbstractCommand
 {
     public function __construct(
-        private readonly PrettyPrinter $print
+        private readonly PrettyPrinter $print,
+        private readonly ClockInterface $clock,
     ) {}
 
     #[Override]
     public function execute(OutputInterface $output): ExitCode
     {
-        $this->print->print(new DateTimeImmutable('first day of january this year'), new DateTimeImmutable('Yesterday'));
+        $now = $this->clock->now();
+
+        $this->print->print($now->modify('first day of january'), $now->modify('Yesterday'));
         return ExitCode::Success;
     }
 }

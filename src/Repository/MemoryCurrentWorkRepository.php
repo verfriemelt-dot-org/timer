@@ -13,16 +13,16 @@ final class MemoryCurrentWorkRepository implements CurrentWorkRepositoryInterfac
 {
     private ?WorkTimeDto $current = null;
 
-    public function toggle(string $timeString = ''): WorkTimeDto
+    public function toggle(DateTimeImmutable $time): WorkTimeDto
     {
         if (!$this->has()) {
-            return $this->current = new WorkTimeDto((new DateTimeImmutable($timeString))->format('Y-m-d H:i:s'));
+            return $this->current = new WorkTimeDto($time->format('Y-m-d H:i:s'));
         }
 
         $dto = $this->get();
         $this->reset();
 
-        return $dto->till((new DateTimeImmutable($timeString))->format('Y-m-d H:i:s'));
+        return $dto->till($time->format('Y-m-d H:i:s'));
     }
 
     public function get(): WorkTimeDto

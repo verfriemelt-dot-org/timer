@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace timer\Commands\Entry;
 
-use DateTimeImmutable;
+use timer\Domain\Clock;
 use timer\Domain\TimeBalanceCalculator;
 use verfriemelt\wrapped\_\Cli\OutputInterface;
 use verfriemelt\wrapped\_\Command\AbstractCommand;
@@ -16,15 +16,16 @@ use Override;
 final class EntryBalanceCommand extends AbstractCommand
 {
     public function __construct(
-        private readonly TimeBalanceCalculator $timeBalance
+        private readonly TimeBalanceCalculator $timeBalance,
+        private readonly Clock $clock,
     ) {}
 
     #[Override]
     public function execute(OutputInterface $output): ExitCode
     {
         $dto = $this->timeBalance->get(
-            new DateTimeImmutable('2023-01-01'),
-            new DateTimeImmutable('Yesterday')
+            $this->clock->fromString('2023-01-01'),
+            $this->clock->fromString('Yesterday')
         );
 
         $output->writeLn("{$dto->actual} // {$dto->expected}");

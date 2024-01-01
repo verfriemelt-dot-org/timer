@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace timer\Commands\Export;
 
-use DateTimeImmutable;
+use timer\Domain\Clock;
 use timer\Domain\Print\PrettyPrinter;
 use verfriemelt\wrapped\_\Cli\OutputInterface;
 use verfriemelt\wrapped\_\Command\AbstractCommand;
@@ -22,6 +22,7 @@ final class PrintMonthCommand extends AbstractCommand
 
     public function __construct(
         private readonly PrettyPrinter $print,
+        private readonly Clock $clock,
     ) {}
 
     #[Override]
@@ -36,15 +37,15 @@ final class PrintMonthCommand extends AbstractCommand
     #[Override]
     public function execute(OutputInterface $output): ExitCode
     {
-        $month = (int) ($this->month->get() ??  (new DateTimeImmutable())->format('m'));
-        $year = (int) ($this->year->get() ??  (new DateTimeImmutable())->format('Y'));
+        $month = (int) ($this->month->get() ?? $this->clock->now()->format('m'));
+        $year = (int) ($this->year->get() ?? $this->clock->now()->format('Y'));
 
-        $today = new DateTimeImmutable();
-        $start = new DateTimeImmutable("{$year}-{$month}-01");
+        $today = $this->clock->now();
+        $start = $this->clock->fromString("{$year}-{$month}-01");
         $end = $start->modify('last day of this month');
 
         if (!$this->month->present() && $start < $today && $end > $today) {
-            $end = new DateTimeImmutable('yesterday');
+            $end = $this->clock->fromString('yesterday');
         }
 
         $this->print->print(

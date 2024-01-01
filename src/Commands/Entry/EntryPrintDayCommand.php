@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace timer\Commands\Entry;
 
-use DateTimeImmutable;
+use Psr\Clock\ClockInterface;
 use timer\Domain\Repository\CurrentWorkRepositoryInterface;
 use timer\Domain\Repository\EntryRepositoryInterface;
 use timer\Domain\TimeDiffCalcalator;
@@ -25,12 +25,13 @@ final class EntryPrintDayCommand extends AbstractCommand
         private readonly WorkTimeCalculator $workTimeCalculator,
         private readonly CurrentWorkRepositoryInterface $currentWorkRepository,
         private readonly TimeDiffCalcalator $timeDiff,
+        private readonly ClockInterface $clock
     ) {}
 
     #[Override]
     public function execute(OutputInterface $output): ExitCode
     {
-        $today = new DateTimeImmutable();
+        $today = $this->clock->now();
 
         $entries = $this->entryRepository->getDay($today);
         $hours = $this->workTimeCalculator->getWorkHours($entries)
@@ -41,7 +42,7 @@ final class EntryPrintDayCommand extends AbstractCommand
         $expected = $this->workTimeCalculator->expectedHours($today);
 
         if ($this->currentWorkRepository->has()) {
-            $hours += $this->timeDiff->getInHours($this->currentWorkRepository->get()->till((new DateTimeImmutable())->format('Y-m-d H:i:s')));
+            $hours += $this->timeDiff->getInHours($this->currentWorkRepository->get()->till($today->format('Y-m-d H:i:s')));
         }
 
         $hours = \number_format($hours, 2, '.');

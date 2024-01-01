@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace timer\Commands\Entry;
 
-use DateTimeImmutable;
+use timer\Domain\Clock;
 use timer\Domain\Dto\DateDto;
 use timer\Domain\Dto\EntryDto;
 use timer\Domain\Repository\CurrentWorkRepositoryInterface;
@@ -25,6 +25,7 @@ final class EntryToggleCommand extends AbstractCommand
     public function __construct(
         private readonly CurrentWorkRepositoryInterface $currentWorkRepository,
         private readonly EntryRepositoryInterface $entryRepository,
+        private readonly Clock $clock
     ) {}
 
     #[Override]
@@ -37,17 +38,21 @@ final class EntryToggleCommand extends AbstractCommand
     #[Override]
     public function execute(OutputInterface $output): ExitCode
     {
-        $timeString = $this->time->get() ?? '';
+        if ($this->time->present()) {
+            $time = $this->clock->fromString($this->time->get());
+        } else {
+            $time = $this->clock->now();
+        }
 
         if (!$this->currentWorkRepository->has()) {
-            $output->writeLn(\print_r($this->currentWorkRepository->toggle($timeString), true));
+            $output->writeLn(\print_r($this->currentWorkRepository->toggle($time), true));
             return ExitCode::Success;
         }
 
-        $workTimeDto = $this->currentWorkRepository->toggle($timeString);
+        $workTimeDto = $this->currentWorkRepository->toggle($time);
 
         $work = new EntryDto(
-            new DateDto((new DateTimeImmutable($timeString))->format('Y-m-d')),
+            new DateDto($time->format('Y-m-d')),
             $workTimeDto
         );
 
