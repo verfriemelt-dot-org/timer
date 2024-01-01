@@ -60,18 +60,21 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/verfriemelt-dot-org/wrapped.git",
-                "reference": "ba80ce57f5e8c4c5711bc17b582625beed55a026"
+                "reference": "e3b9db335dc21de3fd76200027ece31b20588c03"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/verfriemelt-dot-org/wrapped/zipball/ba80ce57f5e8c4c5711bc17b582625beed55a026",
-                "reference": "ba80ce57f5e8c4c5711bc17b582625beed55a026",
+                "url": "https://api.github.com/repos/verfriemelt-dot-org/wrapped/zipball/e3b9db335dc21de3fd76200027ece31b20588c03",
+                "reference": "e3b9db335dc21de3fd76200027ece31b20588c03",
                 "shasum": ""
             },
             "require": {
                 "ext-pdo": "*",
                 "php": "^8.3",
                 "psr/clock": "^1.0"
+            },
+            "provide": {
+                "psr/clock-implementation": "1.0"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^3.45.0",
@@ -102,7 +105,7 @@
                 "issues": "https://github.com/verfriemelt-dot-org/wrapped/issues",
                 "source": "https://github.com/verfriemelt-dot-org/wrapped/tree/master"
             },
-            "time": "2024-01-01T11:12:44+00:00"
+            "time": "2024-01-01T11:24:59+00:00"
         }
     ],
     "packages-dev": [
