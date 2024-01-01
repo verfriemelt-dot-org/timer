@@ -25,7 +25,11 @@ final class PrintYearCommand extends AbstractCommand
     {
         $now = $this->clock->now();
 
-        $this->print->print($now->modify('first day of january'), $now->modify('Yesterday'));
+        $this->print->print(
+            $output,
+            $now->modify('first day of january'),
+            $now->modify('last day of december')
+        );
         return ExitCode::Success;
     }
 }

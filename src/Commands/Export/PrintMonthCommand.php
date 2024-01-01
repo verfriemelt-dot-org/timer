@@ -49,6 +49,7 @@ final class PrintMonthCommand extends AbstractCommand
         }
 
         $this->print->print(
+            $output,
             $start,
             $end
         );

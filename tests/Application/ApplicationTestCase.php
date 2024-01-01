@@ -25,6 +25,7 @@ use Override;
 
 abstract class ApplicationTestCase extends TestCase
 {
+    protected MockClock $clock;
     protected KernelInterface $kernel;
 
     protected BufferedOutput $consoleSpy;
@@ -76,7 +77,7 @@ abstract class ApplicationTestCase extends TestCase
         );
         $this->kernel->getContainer()->register(
             ClockInterface::class,
-            new MockClock(new DateTimeImmutable('2023-12-01'))
+            $this->clock = new MockClock(new DateTimeImmutable('2023-12-01'))
         );
     }
 }

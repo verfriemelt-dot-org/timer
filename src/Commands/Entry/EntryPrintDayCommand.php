@@ -13,6 +13,8 @@ use verfriemelt\wrapped\_\Cli\OutputInterface;
 use verfriemelt\wrapped\_\Command\AbstractCommand;
 use verfriemelt\wrapped\_\Command\Attributes\Command;
 use verfriemelt\wrapped\_\Command\Attributes\DefaultCommand;
+use verfriemelt\wrapped\_\Command\CommandArguments\ArgvParser;
+use verfriemelt\wrapped\_\Command\CommandArguments\Option;
 use verfriemelt\wrapped\_\Command\ExitCode;
 use Override;
 
@@ -20,6 +22,8 @@ use Override;
 #[Command('print:day', 'the default action; prints the time balance of the current day')]
 final class EntryPrintDayCommand extends AbstractCommand
 {
+    private Option $raw;
+
     public function __construct(
         private readonly EntryRepositoryInterface $entryRepository,
         private readonly WorkTimeCalculator $workTimeCalculator,
@@ -29,9 +33,21 @@ final class EntryPrintDayCommand extends AbstractCommand
     ) {}
 
     #[Override]
+    public function configure(ArgvParser $argv): void
+    {
+        $this->raw = new Option('raw', short: 'r');
+        $argv->addOptions($this->raw);
+    }
+
+    #[Override]
     public function execute(OutputInterface $output): ExitCode
     {
         $today = $this->clock->now();
+
+        if ($this->raw->present()) {
+            $this->dumpRaw($output);
+            return ExitCode::Success;
+        }
 
         $entries = $this->entryRepository->getDay($today);
         $hours = $this->workTimeCalculator->getWorkHours($entries)
@@ -50,5 +66,15 @@ final class EntryPrintDayCommand extends AbstractCommand
         $output->writeLn("[{$hours} :: {$expected}]");
 
         return ExitCode::Success;
+    }
+
+    private function dumpRaw(OutputInterface $output): void
+    {
+        if (!$this->currentWorkRepository->has()) {
+            $output->writeLn('not started');
+            return;
+        }
+
+        $output->write(print_r($this->currentWorkRepository->get(), true));
     }
 }

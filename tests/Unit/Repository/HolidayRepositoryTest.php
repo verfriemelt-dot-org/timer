@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace timer\tests\Unit\Repository;
 
+use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 use timer\Domain\Dto\DateDto;
 use timer\Domain\Dto\PublicHolidayDto;
@@ -60,5 +61,12 @@ class HolidayRepositoryTest extends TestCase
                 JSON,
             file_get_contents(self::TEST_PATH)
         );
+    }
+
+    public function test_is_holiday(): void
+    {
+        $this->repo->add(new PublicHolidayDto(new DateDto('2022-02-02'), 'test'));
+        static::assertTrue($this->repo->isHoliday(new DateTimeImmutable('2022-02-02')));
+        static::assertFalse($this->repo->isHoliday(new DateTimeImmutable('2022-02-01')));
     }
 }

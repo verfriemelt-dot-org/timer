@@ -10,6 +10,7 @@ use timer\Domain\Repository\EntryRepositoryInterface;
 use timer\Domain\TimeBalanceCalculator;
 use timer\Domain\WorkTimeCalculator;
 use verfriemelt\wrapped\_\Cli\Console;
+use verfriemelt\wrapped\_\Cli\OutputInterface;
 
 final readonly class PrettyPrinter
 {
@@ -17,12 +18,14 @@ final readonly class PrettyPrinter
         private WorkTimeCalculator $workTimeCalculator,
         private EntryRepositoryInterface $entryRepository,
         private TimeBalanceCalculator $timeBalance,
-        private Console $console,
     ) {}
 
-    public function print(DateTimeImmutable $start, DateTimeImmutable $end): void
-    {
-        $current = clone $start;
+    public function print(
+        OutputInterface $output,
+        DateTimeImmutable $start,
+        DateTimeImmutable $end
+    ): void {
+        $current = $start;
 
         while ($current <= $end) {
             $entries = $this->entryRepository->getDay($current);
@@ -32,35 +35,35 @@ final readonly class PrettyPrinter
                 + $this->workTimeCalculator->getSickHours($entries)
             ;
 
-            $this->console->write($current->format('Y.m.d l'));
+            $output->write($current->format('Y.m.d l'));
 
-            $this->printHours($workPerDay, $this->workTimeCalculator->expectedHours($current));
-            $this->console->eol();
+            $this->printHours($output, $workPerDay, $this->workTimeCalculator->expectedHours($current));
+            $output->eol();
 
             foreach ($entries->entries as $dto) {
-                $this->console->write('    ');
+                $output->write('    ');
 
                 if ($dto->type !== EntryType::Work) {
-                    $this->console->write($dto->type->value);
-                    $this->console->eol();
+                    $output->write($dto->type->value);
+                    $output->eol();
                     continue;
                 }
 
-                $this->console->writeLn("{$dto->workTime?->from} - {$dto->workTime?->till}");
+                $output->writeLn("{$dto->workTime?->from} - {$dto->workTime?->till}");
             }
 
             $current = $current->modify('+1 day');
         }
 
-        $this->console->eol();
+        $output->eol();
         $balanceDto = $this->timeBalance->get($start, $end);
-        $this->console->writeLn("{$balanceDto->actual} // {$balanceDto->expected}");
+        $output->writeLn("{$balanceDto->actual} // {$balanceDto->expected}");
     }
 
-    private function printHours(float $workPerDay, float $expected): void
+    private function printHours(OutputInterface $output, float $workPerDay, float $expected): void
     {
-        $this->console->write(' » ');
-        $this->console->write(
+        $output->write(' » ');
+        $output->write(
             "{$workPerDay}/{$expected}",
             ($workPerDay >= $expected) ? Console::STYLE_GREEN : Console::STYLE_RED
         );
