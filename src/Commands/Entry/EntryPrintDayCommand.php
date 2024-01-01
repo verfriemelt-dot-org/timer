@@ -35,7 +35,7 @@ final class EntryPrintDayCommand extends AbstractCommand
     #[Override]
     public function configure(ArgvParser $argv): void
     {
-        $this->raw = new Option('raw', short: 'r');
+        $this->raw = new Option('raw', short: 'r', description: 'just dumpts out the dto');
         $argv->addOptions($this->raw);
     }
 
