@@ -6,7 +6,9 @@ namespace timer\Domain;
 
 use DateTimeImmutable;
 use timer\Domain\Dto\EntryListDto;
+use timer\Domain\Repository\ExpectedHoursRepositoryInterface;
 use timer\Domain\Repository\HolidayRepositoryInterface;
+use RuntimeException;
 
 class WorkTimeCalculator
 {
@@ -15,6 +17,7 @@ class WorkTimeCalculator
     public function __construct(
         private readonly HolidayRepositoryInterface $holidayRepository,
         private readonly TimeDiffCalcalator $timeDiff,
+        private readonly ExpectedHoursRepositoryInterface $expectedHoursRepository,
     ) {}
 
     public function getHours(EntryListDto $entryListDto): float
@@ -35,15 +38,10 @@ class WorkTimeCalculator
 
     public function expectedHours(DateTimeImmutable $day): float
     {
-        // weekend
-        if (in_array($day->format('N'), ['6', '7'], true)) {
-            return 0;
-        }
-
         if ($this->holidayRepository->isHoliday($day)) {
             return 0;
         }
 
-        return 8;
+        return $this->expectedHoursRepository->getActive()->hours->toArray()[$day->format('N')] ?? throw new RuntimeException();
     }
 }

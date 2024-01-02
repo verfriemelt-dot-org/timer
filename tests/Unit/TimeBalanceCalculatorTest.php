@@ -17,6 +17,7 @@ use timer\Domain\TimeBalanceCalculator;
 use timer\Domain\TimeDiffCalcalator;
 use timer\Domain\WorkTimeCalculator;
 use timer\Repository\MemoryEntryRepository;
+use timer\Repository\MemoryExpectedHoursRepository;
 use timer\Repository\MemoryHolidayRepository;
 use verfriemelt\wrapped\_\Clock\MockClock;
 
@@ -36,7 +37,8 @@ class TimeBalanceCalculatorTest extends TestCase
             $this->entryRepository,
             new WorkTimeCalculator(
                 $this->holidayRepository,
-                new TimeDiffCalcalator(new Clock(new MockClock(new DateTimeImmutable('now'))))
+                new TimeDiffCalcalator(new Clock(new MockClock(new DateTimeImmutable('now')))),
+                new MemoryExpectedHoursRepository()
             )
         );
     }

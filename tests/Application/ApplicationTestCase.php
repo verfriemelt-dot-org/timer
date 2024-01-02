@@ -9,9 +9,11 @@ use PHPUnit\Framework\TestCase;
 use Psr\Clock\ClockInterface;
 use timer\Domain\Repository\CurrentWorkRepositoryInterface;
 use timer\Domain\Repository\EntryRepositoryInterface;
+use timer\Domain\Repository\ExpectedHoursRepositoryInterface;
 use timer\Domain\Repository\HolidayRepositoryInterface;
 use timer\Repository\MemoryCurrentWorkRepository;
 use timer\Repository\MemoryEntryRepository;
+use timer\Repository\MemoryExpectedHoursRepository;
 use timer\Repository\MemoryHolidayRepository;
 use verfriemelt\wrapped\_\AbstractKernel;
 use verfriemelt\wrapped\_\Cli\BufferedOutput;
@@ -33,6 +35,7 @@ abstract class ApplicationTestCase extends TestCase
     protected MemoryHolidayRepository $holidayRepository;
     protected MemoryEntryRepository $entryRepository;
     protected MemoryCurrentWorkRepository $currentWorkRepository;
+    protected MemoryExpectedHoursRepository $expectedHoursRepository;
 
     /**
      * @param class-string<AbstractCommand> $command
@@ -78,6 +81,11 @@ abstract class ApplicationTestCase extends TestCase
         $this->kernel->getContainer()->register(
             ClockInterface::class,
             $this->clock = new MockClock(new DateTimeImmutable('2023-12-07 14:32:16'))
+        );
+
+        $this->kernel->getContainer()->register(
+            ExpectedHoursRepositoryInterface::class,
+            $this->expectedHoursRepository = new MemoryExpectedHoursRepository()
         );
     }
 }

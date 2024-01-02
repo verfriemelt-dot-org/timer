@@ -17,6 +17,7 @@ use timer\Domain\Dto\WorkTimeDto;
 use timer\Domain\EntryType;
 use timer\Domain\TimeDiffCalcalator;
 use timer\Domain\WorkTimeCalculator;
+use timer\Repository\MemoryExpectedHoursRepository;
 use timer\Repository\MemoryHolidayRepository;
 use verfriemelt\wrapped\_\Clock\SystemClock;
 
@@ -34,7 +35,8 @@ class WorkTimeCalculatorTest extends TestCase
             $repo,
             new TimeDiffCalcalator(
                 new Clock(new SystemClock())
-            )
+            ),
+            new MemoryExpectedHoursRepository()
         );
     }
 
