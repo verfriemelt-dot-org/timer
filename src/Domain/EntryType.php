@@ -14,6 +14,7 @@ enum EntryType: string
     case SpecialVacation = 'special-vacation';
     case MourningVacation = 'mourning-vacation';
     case EducationalVacation = 'educational-vacation';
+    case OvertimeReduction = 'overtime-reduction';
 
     /** @var EntryType[] */
     final public const array VACATION = [
@@ -27,8 +28,9 @@ enum EntryType: string
     public function getFactor(): int
     {
         return match ($this) {
+            EntryType::OvertimeReduction,
             EntryType::Work => 0,
-            EntryType::VacationHalf => 50,
+            EntryType::VacationHalf,
             EntryType::SickHalf => 50,
             EntryType::Sick,
             EntryType::Vacation,
