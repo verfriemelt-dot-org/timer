@@ -45,4 +45,27 @@ final class VacationListCommandTest extends ApplicationTestCase
             $this->consoleSpy->getBuffer()
         );
     }
+
+    public function test_year_filter(): void
+    {
+        $this->entryRepository->add(
+            new EntryDto(
+                new DateDto('2024-01-01'),
+                type: EntryType::Vacation
+            )
+        );
+
+        static::assertSame(
+            ExitCode::Success,
+            $this->executeCommand(VacationListCommand::class, ['2024'])
+        );
+
+        static::assertSame(
+            <<<OUTPUT
+            2024-01-01 vacation
+            
+            OUTPUT,
+            $this->consoleSpy->getBuffer()
+        );
+    }
 }
