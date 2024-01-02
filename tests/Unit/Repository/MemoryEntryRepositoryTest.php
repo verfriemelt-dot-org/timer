@@ -10,34 +10,17 @@ use PHPUnit\Framework\TestCase;
 use timer\Domain\Dto\DateDto;
 use timer\Domain\Dto\EntryDto;
 use timer\Domain\EntryType;
-use timer\Repository\EntryRepository;
+use timer\Domain\Repository\EntryRepositoryInterface;
+use timer\Repository\MemoryEntryRepository;
 
-class EntryRepositoryTest extends TestCase
+class MemoryEntryRepositoryTest extends TestCase
 {
-    private const string TEST_PATH = \TEST_ROOT . '/_data/entrytest.json';
-
-    private EntryRepository $repo;
+    private EntryRepositoryInterface $repo;
 
     #[Override]
     public function setUp(): void
     {
-        $this->repo = new EntryRepository(self::getFilepath());
-        @unlink(self::getFilepath());
-    }
-
-    protected static function getFilepath(): string
-    {
-        if (($token = \getenv('TEST_TOKEN')) === false) {
-            $token = '';
-        }
-
-        return self::TEST_PATH . $token;
-    }
-
-    #[Override]
-    public function tearDown(): void
-    {
-        @unlink(self::getFilepath());
+        $this->repo = new MemoryEntryRepository();
     }
 
     public function test_empty(): void
@@ -55,20 +38,6 @@ class EntryRepositoryTest extends TestCase
         );
 
         static::assertCount(1, $this->repo->all()->entries);
-        static::assertSame(
-            <<<JSON
-                [
-                    {
-                        "date": {
-                            "day": "2022-02-02"
-                        },
-                        "workTime": null,
-                        "type": "sick"
-                    }
-                ]
-                JSON,
-            file_get_contents(self::TEST_PATH)
-        );
     }
 
     public function test_get_day(): void

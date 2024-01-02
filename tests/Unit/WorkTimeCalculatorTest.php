@@ -59,12 +59,13 @@ class WorkTimeCalculatorTest extends TestCase
      */
     public static function typesFactors(): iterable
     {
-        yield 'sick' => [EntryType::Sick, 8.0];
-        yield 'sick-half' => [EntryType::SickHalf, 4.0];
-        yield 'vacation' => [EntryType::Vacation, 8.0];
-        yield 'vacation-half' => [EntryType::VacationHalf, 4.0];
-        yield 'special-vacation' => [EntryType::SpecialVacation, 8.0];
-        yield 'education-vacation' => [EntryType::EducationalVacation, 8.0];
+        yield EntryType::Sick->value => [EntryType::Sick, 8.0];
+        yield EntryType::SickHalf->value => [EntryType::SickHalf, 4.0];
+        yield EntryType::Vacation->value => [EntryType::Vacation, 8.0];
+        yield EntryType::VacationHalf->value => [EntryType::VacationHalf, 4.0];
+        yield EntryType::SpecialVacation->value => [EntryType::SpecialVacation, 8.0];
+        yield EntryType::EducationalVacation->value => [EntryType::EducationalVacation, 8.0];
+        yield EntryType::MourningVacation->value => [EntryType::MourningVacation, 8.0];
     }
 
     #[DataProvider('typesFactors')]

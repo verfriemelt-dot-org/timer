@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace timer\tests\Unit;
 
 use DateTimeImmutable;
+use Override;
 use PHPUnit\Framework\TestCase;
 use timer\Domain\Clock;
 use timer\Domain\Dto\DateDto;
@@ -17,7 +18,6 @@ use timer\Domain\TimeDiffCalcalator;
 use timer\Domain\WorkTimeCalculator;
 use timer\Repository\MemoryEntryRepository;
 use timer\Repository\MemoryHolidayRepository;
-use Override;
 
 class TimeBalanceCalculatorTest extends TestCase
 {

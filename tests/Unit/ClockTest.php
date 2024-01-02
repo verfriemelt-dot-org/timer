@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace timer\tests;
+namespace timer\tests\Unit;
 
 use DateMalformedStringException;
 use DateTimeImmutable;

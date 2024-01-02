@@ -9,34 +9,17 @@ use Override;
 use PHPUnit\Framework\TestCase;
 use timer\Domain\Dto\DateDto;
 use timer\Domain\Dto\PublicHolidayDto;
-use timer\Repository\HolidayRepository;
+use timer\Domain\Repository\HolidayRepositoryInterface;
+use timer\Repository\MemoryHolidayRepository;
 
-class HolidayRepositoryTest extends TestCase
+class MemoryHolidayRepositoryTest extends TestCase
 {
-    private const string TEST_PATH = \TEST_ROOT . '/_data/holidaytest.json';
-
-    private HolidayRepository $repo;
+    private HolidayRepositoryInterface $repo;
 
     #[Override]
     public function setUp(): void
     {
-        $this->repo = new HolidayRepository(self::getFilepath());
-        @unlink(self::getFilepath());
-    }
-
-    #[Override]
-    public function tearDown(): void
-    {
-        @unlink(self::getFilepath());
-    }
-
-    protected static function getFilepath(): string
-    {
-        if (($token = \getenv('TEST_TOKEN')) === false) {
-            $token = '';
-        }
-
-        return self::TEST_PATH . $token;
+        $this->repo = new MemoryHolidayRepository();
     }
 
     public function test_empty(): void
@@ -48,19 +31,6 @@ class HolidayRepositoryTest extends TestCase
     {
         $this->repo->add(new PublicHolidayDto(new DateDto('2022-02-02'), 'test'));
         static::assertCount(1, $this->repo->all()->holidays);
-        static::assertSame(
-            <<<JSON
-                [
-                    {
-                        "date": {
-                            "day": "2022-02-02"
-                        },
-                        "name": "test"
-                    }
-                ]
-                JSON,
-            file_get_contents(self::TEST_PATH)
-        );
     }
 
     public function test_is_holiday(): void
