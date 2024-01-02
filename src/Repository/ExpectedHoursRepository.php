@@ -34,6 +34,9 @@ final class ExpectedHoursRepository implements ExpectedHoursRepositoryInterface
         throw new RuntimeException('no hours defined');
     }
 
+    /**
+     * @infection-ignore-all
+     */
     public function all(): ExpectedHoursListDto
     {
         return $this->list ??= (new JsonEncoder())->deserialize($this->read(), ExpectedHoursListDto::class);

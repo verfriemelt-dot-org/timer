@@ -28,7 +28,7 @@ class ExpectedHoursRepositoryTest extends TestCase
                         "day": "2022-01-01"
                     },
                     "till": {
-                        "day": "2099-01-01"
+                        "day": "2100-01-01"
                     },
                     "hours": {
                         "monday": 8,
