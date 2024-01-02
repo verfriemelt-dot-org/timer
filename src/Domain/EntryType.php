@@ -20,6 +20,7 @@ enum EntryType: string
         EntryType::Vacation,
         EntryType::VacationHalf,
         EntryType::SpecialVacation,
+        EntryType::MourningVacation,
         EntryType::EducationalVacation,
     ];
 

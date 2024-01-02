@@ -22,7 +22,7 @@ class EntryBalanceCommandTest extends ApplicationTestCase
 
         static::assertSame(
             <<<OUTPUT
-            0 // 2080
+            0 // 1944
             
             OUTPUT,
             $this->consoleSpy->getBuffer()

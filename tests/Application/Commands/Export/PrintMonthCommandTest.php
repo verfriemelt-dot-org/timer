@@ -10,7 +10,7 @@ use verfriemelt\wrapped\_\Command\ExitCode;
 
 class PrintMonthCommandTest extends ApplicationTestCase
 {
-    public function test(): void
+    public function test_month(): void
     {
         static::assertSame(
             ExitCode::Success,
@@ -55,6 +55,32 @@ class PrintMonthCommandTest extends ApplicationTestCase
             2023.12.31 Sunday » 0/0
             
             0 // 168
+            
+            OUTPUT,
+            $this->consoleSpy->getBuffer()
+        );
+    }
+
+    public function test_default(): void
+    {
+        static::assertSame(
+            ExitCode::Success,
+            $this->executeCommand(
+                PrintMonthCommand::class,
+                []
+            )
+        );
+
+        static::assertSame(
+            <<<OUTPUT
+            2023.12.01 Friday » 0/8
+            2023.12.02 Saturday » 0/0
+            2023.12.03 Sunday » 0/0
+            2023.12.04 Monday » 0/8
+            2023.12.05 Tuesday » 0/8
+            2023.12.06 Wednesday » 0/8
+
+            0 // 32
             
             OUTPUT,
             $this->consoleSpy->getBuffer()

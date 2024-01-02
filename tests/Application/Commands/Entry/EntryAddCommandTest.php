@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace timer\tests\Application\Commands\Entry;
 
-use DateTimeImmutable;
 use timer\Commands\Entry\EntryAddCommand;
 use timer\Domain\EntryType;
 use timer\Domain\Repository\EntryRepositoryInterface;
@@ -26,11 +25,11 @@ class EntryAddCommandTest extends ApplicationTestCase
         $repo = $this->kernel->getContainer()->get(EntryRepositoryInterface::class);
         static::assertInstanceOf(EntryRepositoryInterface::class, $repo);
 
-        $dto = $repo->getDay(new DateTimeImmutable());
+        $dto = $repo->getDay($this->clock->now());
         $entry = $dto->entries[0] ?? static::fail('entry not found');
 
         static::assertSame(EntryType::Sick, $entry->type);
-        static::assertSame((new DateTimeImmutable())->format('Y-m-d'), $entry->date->day);
+        static::assertSame($this->clock->now()->format('Y-m-d'), $entry->date->day);
         static::assertNull($entry->workTime);
     }
 
@@ -47,11 +46,11 @@ class EntryAddCommandTest extends ApplicationTestCase
         $repo = $this->kernel->getContainer()->get(EntryRepositoryInterface::class);
         static::assertInstanceOf(EntryRepositoryInterface::class, $repo);
 
-        $dto = $repo->getDay(new DateTimeImmutable());
+        $dto = $repo->getDay($this->clock->now());
         $entry = $dto->entries[0] ?? static::fail('entry not found');
 
         static::assertSame(EntryType::Vacation, $entry->type);
-        static::assertSame((new DateTimeImmutable())->format('Y-m-d'), $entry->date->day);
+        static::assertSame($this->clock->now()->format('Y-m-d'), $entry->date->day);
         static::assertNull($entry->workTime);
     }
 }

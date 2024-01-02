@@ -7,6 +7,7 @@ namespace timer\Domain\Dto;
 use Exception;
 use RuntimeException;
 use timer\Domain\Clock;
+use verfriemelt\wrapped\_\Clock\SystemClock;
 
 final readonly class DateDto
 {
@@ -14,7 +15,7 @@ final readonly class DateDto
         public string $day,
     ) {
         try {
-            (new Clock())->fromString($day);
+            (new Clock(new SystemClock()))->fromString($day);
         } catch (Exception) {
             throw new RuntimeException("illegal date provided: {$this->day}");
         }

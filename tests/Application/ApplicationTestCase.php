@@ -77,7 +77,7 @@ abstract class ApplicationTestCase extends TestCase
         );
         $this->kernel->getContainer()->register(
             ClockInterface::class,
-            $this->clock = new MockClock(new DateTimeImmutable('2023-12-01'))
+            $this->clock = new MockClock(new DateTimeImmutable('2023-12-07'))
         );
     }
 }

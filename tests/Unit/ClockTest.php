@@ -9,6 +9,7 @@ use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 use timer\Domain\Clock;
 use verfriemelt\wrapped\_\Clock\MockClock;
+use verfriemelt\wrapped\_\Clock\SystemClock;
 
 class ClockTest extends TestCase
 {
@@ -16,7 +17,7 @@ class ClockTest extends TestCase
     {
         static::expectException(DateMalformedStringException::class);
 
-        $clock = new Clock();
+        $clock = new Clock(new SystemClock());
         $clock->fromString('foobar');
     }
 

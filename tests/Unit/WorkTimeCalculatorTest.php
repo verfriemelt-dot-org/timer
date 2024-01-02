@@ -64,8 +64,8 @@ class WorkTimeCalculatorTest extends TestCase
         yield EntryType::Vacation->value => [EntryType::Vacation, 8.0];
         yield EntryType::VacationHalf->value => [EntryType::VacationHalf, 4.0];
         yield EntryType::SpecialVacation->value => [EntryType::SpecialVacation, 8.0];
-        yield EntryType::EducationalVacation->value => [EntryType::EducationalVacation, 8.0];
         yield EntryType::MourningVacation->value => [EntryType::MourningVacation, 8.0];
+        yield EntryType::EducationalVacation->value => [EntryType::EducationalVacation, 8.0];
     }
 
     #[DataProvider('typesFactors')]

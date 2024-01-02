@@ -6,12 +6,11 @@ namespace timer\Domain;
 
 use DateTimeImmutable;
 use Psr\Clock\ClockInterface;
-use verfriemelt\wrapped\_\Clock\SystemClock;
 
 final readonly class Clock
 {
     public function __construct(
-        private ClockInterface $clock = new SystemClock()
+        private ClockInterface $clock
     ) {}
 
     public function now(): DateTimeImmutable
