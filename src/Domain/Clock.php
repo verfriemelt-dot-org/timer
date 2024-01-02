@@ -18,8 +18,13 @@ final readonly class Clock
         return $this->clock->now();
     }
 
+    public function today(): DateTimeImmutable
+    {
+        return $this->clock->now()->setTime(0, 0, 0, 0);
+    }
+
     public function fromString(string $string): DateTimeImmutable
     {
-        return $this->clock->now()->modify($string);
+        return $this->today()->modify($string);
     }
 }

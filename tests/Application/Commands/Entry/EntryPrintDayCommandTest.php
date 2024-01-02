@@ -47,7 +47,7 @@ class EntryPrintDayCommandTest extends ApplicationTestCase
             <<<OUTPUT
             timer\Domain\Dto\WorkTimeDto Object
             (
-                [from] => 2023-12-06 23:00:00
+                [from] => {$this->clock->now()->modify('-1hour')->format('Y-m-d H:i:s')}
                 [till] => 
             )
             

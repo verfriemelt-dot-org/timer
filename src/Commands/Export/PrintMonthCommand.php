@@ -40,7 +40,7 @@ final class PrintMonthCommand extends AbstractCommand
         $month = (int) ($this->month->get() ?? $this->clock->now()->format('m'));
         $year = (int) ($this->year->get() ?? $this->clock->now()->format('Y'));
 
-        $today = $this->clock->now();
+        $today = $this->clock->today();
         $start = $this->clock->fromString("{$year}-{$month}-01");
         $end = $start->modify('last day of this month');
 
