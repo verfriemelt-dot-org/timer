@@ -7,6 +7,7 @@ namespace timer\Commands\Entry;
 use timer\Domain\Clock;
 use timer\Domain\Dto\DateDto;
 use timer\Domain\Dto\EntryDto;
+use timer\Domain\EntryType;
 use timer\Domain\Repository\CurrentWorkRepositoryInterface;
 use timer\Domain\Repository\EntryRepositoryInterface;
 use verfriemelt\wrapped\_\Cli\OutputInterface;
@@ -53,6 +54,7 @@ final class EntryToggleCommand extends AbstractCommand
 
         $work = new EntryDto(
             new DateDto($time->format('Y-m-d')),
+            EntryType::Work,
             $workTimeDto
         );
 

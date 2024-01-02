@@ -62,8 +62,8 @@ class EntryRepositoryTest extends TestCase
                         "date": {
                             "day": "2022-02-02"
                         },
-                        "workTime": null,
-                        "type": "sick"
+                        "type": "sick",
+                        "workTime": null
                     }
                 ]
                 JSON,
@@ -88,7 +88,7 @@ class EntryRepositoryTest extends TestCase
         $this->repo->add(new EntryDto(new DateDto('2022-02-01'), type: EntryType::Work));
         $this->repo->add(new EntryDto(new DateDto('2022-02-01'), type: EntryType::Work));
         $this->repo->add(new EntryDto(new DateDto('2022-02-03'), type: EntryType::Vacation));
-        $this->repo->add(new EntryDto(new DateDto('2022-02-03'), type: EntryType::Vacation));
+        $this->repo->add(new EntryDto(new DateDto('2022-02-03'), EntryType::Vacation));
         $this->repo->add(new EntryDto(new DateDto('2022-02-03'), type: EntryType::Sick));
 
         static::assertCount(3, $this->repo->getByType(EntryType::Work)->entries);

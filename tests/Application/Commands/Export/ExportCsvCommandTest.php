@@ -19,11 +19,11 @@ final class ExportCsvCommandTest extends ApplicationTestCase
         $this->entryRepository->add(
             new EntryDto(
                 new DateDto('2023-04-01'),
+                EntryType::Work,
                 new WorkTimeDto(
                     '2023-04-01 08:00:00',
                     '2023-04-01 16:00:00',
-                ),
-                EntryType::Work
+                )
             ),
         );
         $this->entryRepository->add(

@@ -76,7 +76,7 @@ class WorkTimeCalculatorTest extends TestCase
         $dto = new EntryListDto(
             new EntryDto(
                 new DateDto('2023-01-01'),
-                type: $type
+                type: $type,
             )
         );
 
@@ -88,11 +88,11 @@ class WorkTimeCalculatorTest extends TestCase
         $dto = new EntryListDto(
             new EntryDto(
                 new DateDto('2023-01-01'),
+                EntryType::Work,
                 new WorkTimeDto(
                     '2023-01-01 08:00:00',
                     '2023-01-01 16:00:00',
-                ),
-                EntryType::Work
+                )
             )
         );
 
@@ -104,23 +104,23 @@ class WorkTimeCalculatorTest extends TestCase
         $dto = new EntryListDto(
             new EntryDto(
                 new DateDto('2023-01-01'),
-                type: EntryType::Vacation
+                type: EntryType::Vacation,
             ),
             new EntryDto(
                 new DateDto('2023-01-01'),
+                EntryType::Work,
                 new WorkTimeDto(
                     '2023-01-01 08:00:00',
                     '2023-01-01 09:00:00',
-                ),
-                EntryType::Work
+                )
             ),
             new EntryDto(
                 new DateDto('2023-01-01'),
+                EntryType::Work,
                 new WorkTimeDto(
                     '2023-01-01 10:00:00',
                     '2023-01-01 11:00:00',
-                ),
-                EntryType::Work
+                )
             ),
         );
 

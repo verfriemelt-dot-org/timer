@@ -10,7 +10,7 @@ class EntryDto
 {
     public function __construct(
         public DateDto $date,
-        public ?WorkTimeDto $workTime = null,
         public EntryType $type = EntryType::Work,
+        public ?WorkTimeDto $workTime = null,
     ) {}
 }

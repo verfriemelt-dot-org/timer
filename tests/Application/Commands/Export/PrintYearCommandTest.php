@@ -19,29 +19,29 @@ class PrintYearCommandTest extends ApplicationTestCase
         $this->entryRepository->add(
             new EntryDto(
                 new DateDto('2023-01-02'),
-                type: EntryType::Vacation
+                type: EntryType::Vacation,
             )
         );
 
         $this->entryRepository->add(
             new EntryDto(
                 new DateDto('2023-01-03'),
+                EntryType::Work,
                 new WorkTimeDto(
                     '2023-01-02 08:00:00',
                     '2023-01-02 12:00:00',
-                ),
-                EntryType::Work
+                )
             )
         );
 
         $this->entryRepository->add(
             new EntryDto(
                 new DateDto('2023-01-03'),
+                EntryType::Work,
                 new WorkTimeDto(
                     '2023-01-02 14:00:00',
                     '2023-01-02 16:00:00',
-                ),
-                EntryType::Work
+                )
             )
         );
 

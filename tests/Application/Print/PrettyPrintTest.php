@@ -37,11 +37,11 @@ class PrettyPrintTest extends ApplicationTestCase
         $this->entryRepository->add(
             new EntryDto(
                 new DateDto('2023-01-02'),
+                EntryType::Work,
                 new WorkTimeDto(
                     '2023-01-02 08:00:00',
                     '2023-01-02 12:00:00',
-                ),
-                EntryType::Work
+                )
             )
         );
 
