@@ -34,7 +34,7 @@ final class ExportCsvCommandTest extends ApplicationTestCase
         );
         $this->entryRepository->add(
             new EntryDto(
-                new DateDto('2023-12-01'),
+                new DateDto($this->clock->now()->format('Y-m-d')),
                 type: EntryType::Vacation
             )
         );
@@ -48,7 +48,7 @@ final class ExportCsvCommandTest extends ApplicationTestCase
             <<<OUT
             work;2023-04-01;2023-04-01 08:00:00;2023-04-01 16:00:00
             sick;2023-04-02;;
-            vacation;2023-12-01;;
+            vacation;2023-12-07;;
             
             OUT,
             $this->consoleSpy->getBuffer()
