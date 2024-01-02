@@ -19,6 +19,7 @@ final class HolidayListCommandTest extends ApplicationTestCase
         static::assertInstanceOf(HolidayRepositoryInterface::class, $repo);
 
         $repo->add(new PublicHolidayDto(new DateDto('2023-01-01'), 'neujahr'));
+        $repo->add(new PublicHolidayDto(new DateDto('2024-01-01'), 'neujahr'));
         static::assertSame(ExitCode::Success, $this->executeCommand(HolidayListCommand::class, ['2023']));
 
         static::assertSame(

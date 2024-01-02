@@ -6,6 +6,7 @@ namespace timer\tests\Unit;
 
 use DateTimeImmutable;
 use Override;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use timer\Domain\Clock;
 use timer\Domain\Dto\DateDto;
@@ -53,28 +54,30 @@ class WorkTimeCalculatorTest extends TestCase
         static::assertSame(0.0, $this->calc->expectedHours(new DateTimeImmutable('2020-03-29')));
     }
 
-    public function test_sick(): void
+    /**
+     * @return iterable<array{EntryType, float}>
+     */
+    public static function typesFactors(): iterable
     {
-        $dto = new EntryListDto(
-            new EntryDto(
-                new DateDto('2023-01-01'),
-                type: EntryType::Sick
-            )
-        );
-
-        static::assertSame((float) 8, $this->calc->getHours($dto));
+        yield 'sick' => [EntryType::Sick, 8.0];
+        yield 'sick-half' => [EntryType::SickHalf, 4.0];
+        yield 'vacation' => [EntryType::Vacation, 8.0];
+        yield 'vacation-half' => [EntryType::VacationHalf, 4.0];
+        yield 'special-vacation' => [EntryType::SpecialVacation, 8.0];
+        yield 'education-vacation' => [EntryType::EducationalVacation, 8.0];
     }
 
-    public function test_vacation(): void
+    #[DataProvider('typesFactors')]
+    public function test_type_factors(EntryType $type, float $expected): void
     {
         $dto = new EntryListDto(
             new EntryDto(
                 new DateDto('2023-01-01'),
-                type: EntryType::Vacation
+                type: $type
             )
         );
 
-        static::assertSame((float) 8, $this->calc->getHours($dto));
+        static::assertSame($expected, $this->calc->getHours($dto));
     }
 
     public function test_work(): void
