@@ -8,34 +8,17 @@ use DateTimeImmutable;
 use Override;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
-use timer\Repository\CurrentWorkRepository;
+use timer\Domain\Repository\CurrentWorkRepositoryInterface;
+use timer\Repository\MemoryCurrentWorkRepository;
 
-class CurrentWorkRepositoryTest extends TestCase
+class MemoryCurrentWorkRepositoryTest extends TestCase
 {
-    private const string TEST_PATH = \TEST_ROOT . '/_data/worktest.json';
-
-    private CurrentWorkRepository $repo;
+    private CurrentWorkRepositoryInterface $repo;
 
     #[Override]
     public function setUp(): void
     {
-        $this->repo = new CurrentWorkRepository(self::getFilepath());
-        @unlink(self::getFilepath());
-    }
-
-    protected static function getFilepath(): string
-    {
-        if (($token = \getenv('TEST_TOKEN')) === false) {
-            $token = '';
-        }
-
-        return self::TEST_PATH . $token;
-    }
-
-    #[Override]
-    public function tearDown(): void
-    {
-        @unlink(self::getFilepath());
+        $this->repo = new MemoryCurrentWorkRepository();
     }
 
     public function test_empty(): void
@@ -54,7 +37,6 @@ class CurrentWorkRepositoryTest extends TestCase
         $dto = $this->repo->toggle(new DateTimeImmutable());
 
         static::assertNull($dto->till);
-        static::assertFileExists(self::TEST_PATH);
     }
 
     public function test_toggle_finish(): void
@@ -63,6 +45,5 @@ class CurrentWorkRepositoryTest extends TestCase
         $dto = $this->repo->toggle(new DateTimeImmutable());
 
         static::assertNotNull($dto->till);
-        static::assertFileDoesNotExist(self::TEST_PATH);
     }
 }
