@@ -27,11 +27,7 @@ final readonly class TimeBalanceCalculator
 
         while ($current <= $end) {
             $entries = $this->entryRepository->getDay($current);
-            $workPerDay =
-                $this->workTimeCalculator->getWorkHours($entries)
-                + $this->workTimeCalculator->getVacationHours($entries)
-                + $this->workTimeCalculator->getSickHours($entries)
-            ;
+            $workPerDay = $this->workTimeCalculator->getHours($entries);
 
             $total += $workPerDay;
             $totalRequired += $this->workTimeCalculator->expectedHours($current);

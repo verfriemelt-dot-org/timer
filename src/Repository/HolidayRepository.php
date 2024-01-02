@@ -41,6 +41,16 @@ final class HolidayRepository implements HolidayRepositoryInterface
         return \in_array($day->format('Y-m-d'), $holidays, true);
     }
 
+    public function getByYear(string $year): PublicHolidayListDto
+    {
+        return new PublicHolidayListDto(
+            ...\array_filter(
+                $this->all()->holidays,
+                static fn (PublicHolidayDto $dto): bool => \str_starts_with($dto->date->day, $year)
+            )
+        );
+    }
+
     private function read(): string
     {
         if (!\file_exists($this->path)) {

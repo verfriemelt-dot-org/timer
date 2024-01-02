@@ -15,4 +15,6 @@ interface HolidayRepositoryInterface
     public function add(PublicHolidayDto $publicHoliday): void;
 
     public function isHoliday(DateTimeImmutable $day): bool;
+
+    public function getByYear(string $year): PublicHolidayListDto;
 }

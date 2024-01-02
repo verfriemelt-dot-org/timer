@@ -53,10 +53,7 @@ final class EntryPrintDayCommand extends AbstractCommand
         }
 
         $entries = $this->entryRepository->getDay($today);
-        $hours = $this->workTimeCalculator->getWorkHours($entries)
-            + $this->workTimeCalculator->getVacationHours($entries)
-            + $this->workTimeCalculator->getSickHours($entries)
-        ;
+        $hours = $this->workTimeCalculator->getHours($entries);
 
         $expected = $this->workTimeCalculator->expectedHours($today);
 

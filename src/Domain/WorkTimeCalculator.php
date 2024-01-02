@@ -10,48 +10,24 @@ use timer\Domain\Repository\HolidayRepositoryInterface;
 
 class WorkTimeCalculator
 {
+    final public const float EXPECTED_HOURS = 8.0;
+
     public function __construct(
         private readonly HolidayRepositoryInterface $holidayRepository,
         private readonly TimeDiffCalcalator $timeDiff,
     ) {}
 
-    public function getWorkHours(EntryListDto $entryListDto): float
+    public function getHours(EntryListDto $entryListDto): float
     {
-        $total = 0;
+        $total = 0.0;
 
         foreach ($entryListDto->entries as $entry) {
-            if ($entry->type !== EntryType::Work) {
-                continue;
+            if ($entry->type === EntryType::Work) {
+                assert($entry->workTime !== null);
+                $total += $this->timeDiff->getInHours($entry->workTime);
             }
 
-            assert($entry->workTime !== null);
-
-            $total += $this->timeDiff->getInSeconds($entry->workTime);
-        }
-
-        return $total / 3600;
-    }
-
-    public function getVacationHours(EntryListDto $entryListDto): float
-    {
-        $total = 0;
-        foreach ($entryListDto->entries as $entry) {
-            if ($entry->type === EntryType::Vacation) {
-                $total = 8;
-            }
-        }
-
-        return $total;
-    }
-
-    public function getSickHours(EntryListDto $entryListDto): float
-    {
-        $total = 0;
-
-        foreach ($entryListDto->entries as $entry) {
-            if ($entry->type === EntryType::Sick) {
-                $total = 8;
-            }
+            $total += $entry->type->getFactor() / 100 * self::EXPECTED_HOURS;
         }
 
         return $total;

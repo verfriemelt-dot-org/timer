@@ -7,6 +7,7 @@ namespace timer\Repository;
 use DateTimeImmutable;
 use timer\Domain\Dto\EntryDto;
 use timer\Domain\Dto\EntryListDto;
+use timer\Domain\EntryType;
 use timer\Domain\Repository\EntryRepositoryInterface;
 use verfriemelt\wrapped\_\Serializer\Encoder\JsonEncoder;
 use RuntimeException;
@@ -55,6 +56,16 @@ final class EntryRepository implements EntryRepositoryInterface
             ...\array_filter(
                 $this->all()->entries,
                 static fn (EntryDto $dto): bool => $dto->date->day === $day->format('Y-m-d')
+            )
+        );
+    }
+
+    public function getByType(EntryType ... $types): EntryListDto
+    {
+        return new EntryListDto(
+            ...\array_filter(
+                $this->all()->entries,
+                static fn (EntryDto $dto): bool => in_array($dto->type, $types, true)
             )
         );
     }

@@ -81,4 +81,18 @@ class EntryRepositoryTest extends TestCase
         static::assertCount(2, $this->repo->getDay(new DateTimeImmutable('2022-02-03'))->entries);
         static::assertCount(0, $this->repo->getDay(new DateTimeImmutable('2022-02-04'))->entries);
     }
+
+    public function test_get_by_type(): void
+    {
+        $this->repo->add(new EntryDto(new DateDto('2022-02-01'), type: EntryType::Work));
+        $this->repo->add(new EntryDto(new DateDto('2022-02-01'), type: EntryType::Work));
+        $this->repo->add(new EntryDto(new DateDto('2022-02-01'), type: EntryType::Work));
+        $this->repo->add(new EntryDto(new DateDto('2022-02-03'), type: EntryType::Vacation));
+        $this->repo->add(new EntryDto(new DateDto('2022-02-03'), type: EntryType::Vacation));
+        $this->repo->add(new EntryDto(new DateDto('2022-02-03'), type: EntryType::Sick));
+
+        static::assertCount(3, $this->repo->getByType(EntryType::Work)->entries);
+        static::assertCount(2, $this->repo->getByType(EntryType::Vacation)->entries);
+        static::assertCount(1, $this->repo->getByType(EntryType::Sick)->entries);
+    }
 }

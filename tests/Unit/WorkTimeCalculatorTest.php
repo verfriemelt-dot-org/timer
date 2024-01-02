@@ -12,12 +12,11 @@ use timer\Domain\Dto\DateDto;
 use timer\Domain\Dto\EntryDto;
 use timer\Domain\Dto\EntryListDto;
 use timer\Domain\Dto\PublicHolidayDto;
-use timer\Domain\Dto\PublicHolidayListDto;
 use timer\Domain\Dto\WorkTimeDto;
 use timer\Domain\EntryType;
-use timer\Domain\Repository\HolidayRepositoryInterface;
 use timer\Domain\TimeDiffCalcalator;
 use timer\Domain\WorkTimeCalculator;
+use timer\Repository\MemoryHolidayRepository;
 use verfriemelt\wrapped\_\Clock\SystemClock;
 
 class WorkTimeCalculatorTest extends TestCase
@@ -27,23 +26,11 @@ class WorkTimeCalculatorTest extends TestCase
     #[Override]
     public function setUp(): void
     {
+        $repo = new MemoryHolidayRepository();
+        $repo->add(new PublicHolidayDto(new DateDto('2020-04-02'), 'test'));
+
         $this->calc = new WorkTimeCalculator(
-            new class () implements HolidayRepositoryInterface {
-                public function all(): PublicHolidayListDto
-                {
-                    return new PublicHolidayListDto();
-                }
-
-                public function add(PublicHolidayDto $publicHoliday): void
-                {
-                    // TODO: Implement add() method.
-                }
-
-                public function isHoliday(DateTimeImmutable $day): bool
-                {
-                    return $day > new DateTimeImmutable('2020-04-01');
-                }
-            },
+            $repo,
             new TimeDiffCalcalator(
                 new Clock(new SystemClock())
             )
@@ -75,9 +62,7 @@ class WorkTimeCalculatorTest extends TestCase
             )
         );
 
-        static::assertSame((float) 8, $this->calc->getSickHours($dto));
-        static::assertSame((float) 0, $this->calc->getVacationHours($dto));
-        static::assertSame((float) 0, $this->calc->getWorkHours($dto));
+        static::assertSame((float) 8, $this->calc->getHours($dto));
     }
 
     public function test_vacation(): void
@@ -89,9 +74,7 @@ class WorkTimeCalculatorTest extends TestCase
             )
         );
 
-        static::assertSame((float) 0, $this->calc->getSickHours($dto));
-        static::assertSame((float) 8, $this->calc->getVacationHours($dto));
-        static::assertSame((float) 0, $this->calc->getWorkHours($dto));
+        static::assertSame((float) 8, $this->calc->getHours($dto));
     }
 
     public function test_work(): void
@@ -107,9 +90,7 @@ class WorkTimeCalculatorTest extends TestCase
             )
         );
 
-        static::assertSame((float) 0, $this->calc->getSickHours($dto));
-        static::assertSame((float) 0, $this->calc->getVacationHours($dto));
-        static::assertSame((float) 8, $this->calc->getWorkHours($dto));
+        static::assertSame((float) 8, $this->calc->getHours($dto));
     }
 
     public function test_work_multi(): void
@@ -137,6 +118,6 @@ class WorkTimeCalculatorTest extends TestCase
             ),
         );
 
-        static::assertSame((float) 2, $this->calc->getWorkHours($dto));
+        static::assertSame((float) 10, $this->calc->getHours($dto));
     }
 }

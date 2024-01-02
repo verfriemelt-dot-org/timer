@@ -16,7 +16,6 @@ use verfriemelt\wrapped\_\Command\CommandArguments\Argument;
 use verfriemelt\wrapped\_\Command\CommandArguments\ArgvParser;
 use verfriemelt\wrapped\_\Command\ExitCode;
 use Override;
-use RuntimeException;
 
 #[Command('add', 'used to add non-work entries')]
 final class EntryAddCommand extends AbstractCommand
@@ -46,21 +45,16 @@ final class EntryAddCommand extends AbstractCommand
             $time = $this->clock->now();
         }
 
-        match ($this->typeArgument->get() ?? '') {
-            EntryType::Sick->value => $this->entryRepository->add(
-                new EntryDto(
-                    new DateDto($time->format('Y-m-d')),
-                    type: EntryType::Sick,
-                )
-            ),
-            EntryType::Vacation->value => $this->entryRepository->add(
-                new EntryDto(
-                    new DateDto($time->format('Y-m-d')),
-                    type: EntryType::Vacation,
-                )
-            ),
-            default => throw new RuntimeException('missing or invalid argument')
-        };
+        $type = EntryType::from($this->typeArgument->get() ?? '');
+
+        assert($type !== EntryType::Work);
+
+        $this->entryRepository->add(
+            new EntryDto(
+                new DateDto($time->format('Y-m-d')),
+                type: $type,
+            )
+        );
 
         return ExitCode::Success;
     }

@@ -29,11 +29,7 @@ final readonly class PrettyPrinter
 
         while ($current <= $end) {
             $entries = $this->entryRepository->getDay($current);
-            $workPerDay =
-                $this->workTimeCalculator->getWorkHours($entries)
-                + $this->workTimeCalculator->getVacationHours($entries)
-                + $this->workTimeCalculator->getSickHours($entries)
-            ;
+            $workPerDay = $this->workTimeCalculator->getHours($entries);
 
             $output->write($current->format('Y.m.d l'));
 

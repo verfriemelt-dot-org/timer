@@ -7,6 +7,7 @@ namespace timer\Domain\Repository;
 use DateTimeImmutable;
 use timer\Domain\Dto\EntryDto;
 use timer\Domain\Dto\EntryListDto;
+use timer\Domain\EntryType;
 
 interface EntryRepositoryInterface
 {
@@ -15,4 +16,6 @@ interface EntryRepositoryInterface
     public function add(EntryDto $entry): void;
 
     public function getDay(DateTimeImmutable $day): EntryListDto;
+
+    public function getByType(EntryType ... $types): EntryListDto;
 }
