@@ -61,6 +61,7 @@ class WorkTimeCalculatorTest extends TestCase
      */
     public static function typesFactors(): iterable
     {
+        yield EntryType::OvertimeReduction->value => [EntryType::OvertimeReduction, 0.0];
         yield EntryType::Sick->value => [EntryType::Sick, 8.0];
         yield EntryType::SickHalf->value => [EntryType::SickHalf, 4.0];
         yield EntryType::Vacation->value => [EntryType::Vacation, 8.0];
