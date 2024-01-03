@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace timer\Domain\Dto;
 
-class ExpectedHoursDto
+final readonly class ExpectedHoursDto
 {
     public function __construct(
         public DateDto $from,

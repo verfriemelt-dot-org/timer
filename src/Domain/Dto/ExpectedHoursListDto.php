@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace timer\Domain\Dto;
 
-class ExpectedHoursListDto
+final readonly class ExpectedHoursListDto
 {
     /** @var ExpectedHoursDto[] */
     public array $hours;

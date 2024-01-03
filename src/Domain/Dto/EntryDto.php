@@ -6,7 +6,7 @@ namespace timer\Domain\Dto;
 
 use timer\Domain\EntryType;
 
-class EntryDto
+final readonly class EntryDto
 {
     public function __construct(
         public DateDto $date,

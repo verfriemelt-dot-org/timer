@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace timer\Domain\Dto;
 
-class EntryListDto
+final readonly class EntryListDto
 {
     /** @var EntryDto[] */
     public array $entries;
