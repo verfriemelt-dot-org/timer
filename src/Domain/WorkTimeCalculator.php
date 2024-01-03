@@ -10,14 +10,14 @@ use timer\Domain\Repository\ExpectedHoursRepositoryInterface;
 use timer\Domain\Repository\HolidayRepositoryInterface;
 use RuntimeException;
 
-class WorkTimeCalculator
+final readonly class WorkTimeCalculator
 {
     final public const float EXPECTED_HOURS = 8.0;
 
     public function __construct(
-        private readonly HolidayRepositoryInterface $holidayRepository,
-        private readonly TimeDiffCalcalator $timeDiff,
-        private readonly ExpectedHoursRepositoryInterface $expectedHoursRepository,
+        private HolidayRepositoryInterface $holidayRepository,
+        private TimeDiffCalcalator $timeDiff,
+        private ExpectedHoursRepositoryInterface $expectedHoursRepository,
     ) {}
 
     public function getHours(EntryListDto $entryListDto): float
