@@ -38,4 +38,6 @@ $kernel->getContainer()->register(CurrentWorkRepositoryInterface::class, new Cur
 $kernel->getContainer()->register(ExpectedHoursRepositoryInterface::class, new ExpectedHoursRepository($path . '/hours.json', $kernel->getContainer()->get(Clock::class)));
 
 $kernel->loadCommands('src/Commands', 'src/', __NAMESPACE__);
-$kernel->execute(new Console());
+$exitCode = $kernel->execute(new Console());
+
+exit($exitCode->value);
