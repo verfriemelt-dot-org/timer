@@ -12,7 +12,7 @@ enum EntryType: string
     case Vacation = 'vacation';
     case VacationHalf = 'vacation-half';
     case SpecialVacation = 'special-vacation';
-    case MourningVacation = 'mourning-vacation';
+    case MourningLeave = 'mourning-leave';
     case EducationalVacation = 'educational-vacation';
     case OvertimeReduction = 'overtime-reduction';
 
@@ -21,7 +21,7 @@ enum EntryType: string
         EntryType::Vacation,
         EntryType::VacationHalf,
         EntryType::SpecialVacation,
-        EntryType::MourningVacation,
+        EntryType::MourningLeave,
         EntryType::EducationalVacation,
     ];
 
@@ -35,7 +35,7 @@ enum EntryType: string
             EntryType::Sick,
             EntryType::Vacation,
             EntryType::SpecialVacation,
-            EntryType::MourningVacation,
+            EntryType::MourningLeave,
             EntryType::EducationalVacation => 100,
         };
     }

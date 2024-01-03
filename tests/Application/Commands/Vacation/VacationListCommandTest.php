@@ -38,7 +38,7 @@ final class VacationListCommandTest extends ApplicationTestCase
             2023-03-01 vacation
             2023-03-02 vacation-half
             2023-03-03 special-vacation
-            2023-03-04 mourning-vacation
+            2023-03-04 mourning-leave
             2023-03-05 educational-vacation
             
             OUTPUT,
