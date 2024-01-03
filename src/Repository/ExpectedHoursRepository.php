@@ -15,6 +15,8 @@ final class ExpectedHoursRepository implements ExpectedHoursRepositoryInterface
 {
     private ExpectedHoursListDto $list;
 
+    private ExpectedHoursDto $active;
+
     public function __construct(
         private readonly string $path,
         private readonly Clock $clock,
@@ -22,12 +24,16 @@ final class ExpectedHoursRepository implements ExpectedHoursRepositoryInterface
 
     public function getActive(): ExpectedHoursDto
     {
+        if (isset($this->active)) {
+            return $this->active;
+        }
+
         foreach ($this->all()->hours as $hours) {
             if (
                 $this->clock->now() >= $this->clock->fromString($hours->from->day)
                 && $this->clock->now() < $this->clock->fromString($hours->till->day)
             ) {
-                return $hours;
+                return $this->active = $hours;
             }
         }
 

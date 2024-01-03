@@ -15,6 +15,9 @@ final class HolidayRepository implements HolidayRepositoryInterface
 {
     private PublicHolidayListDto $list;
 
+    /** @var array{isHoliday?: PublicHolidayDto[] } */
+    private array $cache = [];
+
     public function __construct(
         private readonly string $path
     ) {}
@@ -36,9 +39,11 @@ final class HolidayRepository implements HolidayRepositoryInterface
 
     public function isHoliday(DateTimeImmutable $day): bool
     {
-        $holidays = \array_map(fn (PublicHolidayDto $holiday): string => $holiday->date->day, $this->all()->holidays);
+        if (!isset($this->cache[__METHOD__])) {
+            $this->cache[__METHOD__] = \array_map(fn (PublicHolidayDto $holiday): string => $holiday->date->day, $this->all()->holidays);
+        }
 
-        return \in_array($day->format('Y-m-d'), $holidays, true);
+        return \in_array($day->format('Y-m-d'), $this->cache[__METHOD__], true);
     }
 
     public function getByYear(string $year): PublicHolidayListDto
@@ -64,5 +69,6 @@ final class HolidayRepository implements HolidayRepositoryInterface
     private function write(PublicHolidayListDto $dto): void
     {
         \file_put_contents($this->path, (new JsonEncoder())->serialize($dto->holidays, true));
+        $this->cache = [];
     }
 }

@@ -16,6 +16,9 @@ final class EntryRepository implements EntryRepositoryInterface
 {
     private EntryListDto $list;
 
+    /** @var array<string,array<string,EntryListDto>> */
+    private array $cache = [];
+
     public function __construct(
         private readonly string $path
     ) {}
@@ -48,14 +51,17 @@ final class EntryRepository implements EntryRepositoryInterface
     private function write(EntryListDto $dto): void
     {
         \file_put_contents($this->path, (new JsonEncoder())->serialize($dto->entries, true));
+        $this->cache = [];
     }
 
     public function getDay(DateTimeImmutable $day): EntryListDto
     {
-        return new EntryListDto(
+        $dayString = $day->format('Y-m-d');
+
+        return $this->cache[__METHOD__][$dayString] ??= new EntryListDto(
             ...\array_filter(
                 $this->all()->entries,
-                static fn (EntryDto $dto): bool => $dto->date->day === $day->format('Y-m-d')
+                static fn (EntryDto $dto): bool => $dto->date->day === $dayString
             )
         );
     }
