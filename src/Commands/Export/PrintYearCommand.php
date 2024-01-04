@@ -10,6 +10,7 @@ use verfriemelt\wrapped\_\Cli\OutputInterface;
 use verfriemelt\wrapped\_\Command\AbstractCommand;
 use verfriemelt\wrapped\_\Command\Attributes\Command;
 use verfriemelt\wrapped\_\Command\CommandArguments\Argument;
+use verfriemelt\wrapped\_\Command\CommandArguments\ArgumentMissingException;
 use verfriemelt\wrapped\_\Command\CommandArguments\ArgvParser;
 use verfriemelt\wrapped\_\Command\ExitCode;
 use Override;
@@ -27,14 +28,14 @@ final class PrintYearCommand extends AbstractCommand
     #[Override]
     public function configure(ArgvParser $argv): void
     {
-        $this->year = new Argument('year', Argument::OPTIONAL);
+        $this->year = new Argument('year', Argument::OPTIONAL, default: $this->clock->now()->format('Y'));
         $argv->addArguments($this->year);
     }
 
     #[Override]
     public function execute(OutputInterface $output): ExitCode
     {
-        $year = (int) ($this->year->get() ?? $this->clock->now()->format('Y'));
+        $year = (int) ($this->year->get() ?? throw new ArgumentMissingException());
         $now = $this->clock->now()->setDate($year, 1, 1);
 
         $this->print->print(

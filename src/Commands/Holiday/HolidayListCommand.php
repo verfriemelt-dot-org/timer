@@ -11,6 +11,7 @@ use verfriemelt\wrapped\_\Cli\OutputInterface;
 use verfriemelt\wrapped\_\Command\AbstractCommand;
 use verfriemelt\wrapped\_\Command\Attributes\Command;
 use verfriemelt\wrapped\_\Command\CommandArguments\Argument;
+use verfriemelt\wrapped\_\Command\CommandArguments\ArgumentMissingException;
 use verfriemelt\wrapped\_\Command\CommandArguments\ArgvParser;
 use verfriemelt\wrapped\_\Command\ExitCode;
 use Override;
@@ -28,14 +29,13 @@ final class HolidayListCommand extends AbstractCommand
     #[Override]
     public function configure(ArgvParser $argv): void
     {
-        $argv->addArguments($this->year = new Argument('year', Argument::OPTIONAL));
+        $argv->addArguments($this->year = new Argument('year', Argument::OPTIONAL, default: $this->clock->now()->format('Y')));
     }
 
     #[Override]
     public function execute(OutputInterface $output): ExitCode
     {
-        $year = $this->year->get();
-        $year ??= $this->clock->now()->format('Y');
+        $year = $this->year->get() ?? throw new ArgumentMissingException();
 
         $holidays = $this->holidayRepository->getByYear($year)->holidays;
         \usort(

@@ -13,6 +13,7 @@ use verfriemelt\wrapped\_\Command\AbstractCommand;
 use verfriemelt\wrapped\_\Command\Attributes\Command;
 use verfriemelt\wrapped\_\Command\CommandArguments\Argument;
 use verfriemelt\wrapped\_\Command\CommandArguments\ArgvParser;
+use verfriemelt\wrapped\_\Command\CommandArguments\Option;
 use verfriemelt\wrapped\_\Command\ExitCode;
 use RuntimeException;
 
@@ -21,7 +22,7 @@ final class HolidayAddCommand extends AbstractCommand
 {
     private Argument $date;
     private Argument $name;
-    private \verfriemelt\wrapped\_\Command\CommandArguments\Option $factor;
+    private Option $factor;
 
     public function __construct(
         private readonly HolidayRepositoryInterface $holidayRepository,
@@ -32,9 +33,9 @@ final class HolidayAddCommand extends AbstractCommand
     {
         $this->date = new Argument('date');
         $this->name = new Argument('name', Argument::REQUIRED | Argument::VARIADIC);
-        $this->factor = new \verfriemelt\wrapped\_\Command\CommandArguments\Option(
+        $this->factor = new Option(
             'factor',
-            \verfriemelt\wrapped\_\Command\CommandArguments\Option::EXPECTS_VALUE,
+            Option::EXPECTS_VALUE,
             description: 'used for half holidays provided by the company',
             short: 'f',
             default: '100'

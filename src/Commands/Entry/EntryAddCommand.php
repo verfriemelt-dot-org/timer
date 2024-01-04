@@ -13,6 +13,7 @@ use verfriemelt\wrapped\_\Cli\OutputInterface;
 use verfriemelt\wrapped\_\Command\AbstractCommand;
 use verfriemelt\wrapped\_\Command\Attributes\Command;
 use verfriemelt\wrapped\_\Command\CommandArguments\Argument;
+use verfriemelt\wrapped\_\Command\CommandArguments\ArgumentMissingException;
 use verfriemelt\wrapped\_\Command\CommandArguments\ArgvParser;
 use verfriemelt\wrapped\_\Command\ExitCode;
 use Override;
@@ -32,19 +33,14 @@ final class EntryAddCommand extends AbstractCommand
     public function configure(ArgvParser $argv): void
     {
         $this->typeArgument = new Argument('type');
-        $this->dateArgument = new Argument('date', Argument::OPTIONAL);
+        $this->dateArgument = new Argument('date', Argument::OPTIONAL, default: 'now');
         $argv->addArguments($this->typeArgument, $this->dateArgument);
     }
 
     #[Override]
     public function execute(OutputInterface $output): ExitCode
     {
-        if ($this->dateArgument->present()) {
-            $time = $this->clock->fromString($this->dateArgument->get());
-        } else {
-            $time = $this->clock->now();
-        }
-
+        $time = $this->clock->fromString($this->dateArgument->get() ?? throw new ArgumentMissingException());
         $type = EntryType::from($this->typeArgument->get() ?? '');
 
         assert($type !== EntryType::Work);
