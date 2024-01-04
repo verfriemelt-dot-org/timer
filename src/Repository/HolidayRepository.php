@@ -6,14 +6,14 @@ namespace timer\Repository;
 
 use DateTimeImmutable;
 use timer\Domain\Dto\PublicHolidayDto;
-use timer\Domain\Dto\PublicHolidayListDto;
+use timer\Domain\Dto\HolidayListDto;
 use timer\Domain\Repository\HolidayRepositoryInterface;
 use verfriemelt\wrapped\_\Serializer\Encoder\JsonEncoder;
 use RuntimeException;
 
 final class HolidayRepository implements HolidayRepositoryInterface
 {
-    private PublicHolidayListDto $list;
+    private HolidayListDto $list;
 
     /** @var array{isHoliday?: PublicHolidayDto[] } */
     private array $cache = [];
@@ -22,14 +22,14 @@ final class HolidayRepository implements HolidayRepositoryInterface
         private readonly string $path
     ) {}
 
-    public function all(): PublicHolidayListDto
+    public function all(): HolidayListDto
     {
-        return $this->list ??= (new JsonEncoder())->deserialize($this->read(), PublicHolidayListDto::class);
+        return $this->list ??= (new JsonEncoder())->deserialize($this->read(), HolidayListDto::class);
     }
 
     public function add(PublicHolidayDto $publicHoliday): void
     {
-        $this->list = new PublicHolidayListDto(
+        $this->list = new HolidayListDto(
             ...$this->all()->holidays,
             ...[$publicHoliday],
         );
@@ -46,9 +46,9 @@ final class HolidayRepository implements HolidayRepositoryInterface
         return \in_array($day->format('Y-m-d'), $this->cache[__METHOD__], true);
     }
 
-    public function getByYear(string $year): PublicHolidayListDto
+    public function getByYear(string $year): HolidayListDto
     {
-        return new PublicHolidayListDto(
+        return new HolidayListDto(
             ...\array_filter(
                 $this->all()->holidays,
                 static fn (PublicHolidayDto $dto): bool => \str_starts_with($dto->date->day, $year)
@@ -66,7 +66,7 @@ final class HolidayRepository implements HolidayRepositoryInterface
         return \file_get_contents($this->path) ?: throw new RuntimeException("cant read {$this->path}");
     }
 
-    private function write(PublicHolidayListDto $dto): void
+    private function write(HolidayListDto $dto): void
     {
         \file_put_contents($this->path, (new JsonEncoder())->serialize($dto->holidays, true));
         $this->cache = [];

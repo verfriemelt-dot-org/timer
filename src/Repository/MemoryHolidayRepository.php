@@ -6,26 +6,26 @@ namespace timer\Repository;
 
 use DateTimeImmutable;
 use timer\Domain\Dto\PublicHolidayDto;
-use timer\Domain\Dto\PublicHolidayListDto;
+use timer\Domain\Dto\HolidayListDto;
 use timer\Domain\Repository\HolidayRepositoryInterface;
 
 final class MemoryHolidayRepository implements HolidayRepositoryInterface
 {
-    private PublicHolidayListDto $list;
+    private HolidayListDto $list;
 
     public function __construct(
     ) {
-        $this->list = new PublicHolidayListDto();
+        $this->list = new HolidayListDto();
     }
 
-    public function all(): PublicHolidayListDto
+    public function all(): HolidayListDto
     {
         return $this->list;
     }
 
     public function add(PublicHolidayDto $publicHoliday): void
     {
-        $this->list = new PublicHolidayListDto(
+        $this->list = new HolidayListDto(
             ...$this->all()->holidays,
             ...[$publicHoliday],
         );
@@ -38,9 +38,9 @@ final class MemoryHolidayRepository implements HolidayRepositoryInterface
         return \in_array($day->format('Y-m-d'), $holidays, true);
     }
 
-    public function getByYear(string $year): PublicHolidayListDto
+    public function getByYear(string $year): HolidayListDto
     {
-        return new PublicHolidayListDto(
+        return new HolidayListDto(
             ...\array_filter(
                 $this->all()->holidays,
                 static fn (PublicHolidayDto $dto): bool => str_starts_with($dto->date->day, $year)

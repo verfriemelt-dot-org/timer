@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace timer\Domain\Dto;
 
-final readonly class PublicHolidayListDto
+final readonly class HolidayListDto
 {
     /** @var PublicHolidayDto[] */
     public array $holidays;
