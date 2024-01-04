@@ -12,7 +12,7 @@ use timer\Domain\Clock;
 use timer\Domain\Dto\DateDto;
 use timer\Domain\Dto\EntryDto;
 use timer\Domain\Dto\EntryListDto;
-use timer\Domain\Dto\PublicHolidayDto;
+use timer\Domain\Dto\HolidayDto;
 use timer\Domain\Dto\WorkTimeDto;
 use timer\Domain\EntryType;
 use timer\Domain\TimeDiffCalcalator;
@@ -29,7 +29,8 @@ class WorkTimeCalculatorTest extends TestCase
     public function setUp(): void
     {
         $repo = new MemoryHolidayRepository();
-        $repo->add(new PublicHolidayDto(new DateDto('2020-04-02'), 'test'));
+        $repo->add(new HolidayDto(new DateDto('2020-04-02'), 'test'));
+        $repo->add(new HolidayDto(new DateDto('2020-04-03'), 'test-with-factor', 50));
 
         $this->calc = new WorkTimeCalculator(
             $repo,
@@ -48,6 +49,11 @@ class WorkTimeCalculatorTest extends TestCase
     public function test_honor_holiday(): void
     {
         static::assertSame(0.0, $this->calc->expectedHours(new DateTimeImmutable('2020-04-02')));
+    }
+
+    public function test_honor_holiday_factor(): void
+    {
+        static::assertSame(4.0, $this->calc->expectedHours(new DateTimeImmutable('2020-04-03')));
     }
 
     public function test_honor_weekend(): void

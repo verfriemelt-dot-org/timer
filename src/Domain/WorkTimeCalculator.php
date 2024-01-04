@@ -38,10 +38,13 @@ final readonly class WorkTimeCalculator
 
     public function expectedHours(DateTimeImmutable $day): float
     {
-        if ($this->holidayRepository->isHoliday($day)) {
-            return 0;
+        $expectedHours = $this->expectedHoursRepository->getActive()->hours->toArray()[$day->format('N')] ?? throw new RuntimeException();
+        $holiday = $this->holidayRepository->getHoliday($day);
+
+        if ($holiday !== null) {
+            return $expectedHours - ($expectedHours / 100 * $holiday->factor);
         }
 
-        return $this->expectedHoursRepository->getActive()->hours->toArray()[$day->format('N')] ?? throw new RuntimeException();
+        return $expectedHours;
     }
 }

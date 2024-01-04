@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace timer\Repository;
 
 use DateTimeImmutable;
-use timer\Domain\Dto\PublicHolidayDto;
+use timer\Domain\Dto\HolidayDto;
 use timer\Domain\Dto\HolidayListDto;
 use timer\Domain\Repository\HolidayRepositoryInterface;
 use verfriemelt\wrapped\_\Serializer\Encoder\JsonEncoder;
@@ -15,7 +15,7 @@ final class HolidayRepository implements HolidayRepositoryInterface
 {
     private HolidayListDto $list;
 
-    /** @var array{isHoliday?: PublicHolidayDto[] } */
+    /** @var array{isHoliday?: HolidayDto[] } */
     private array $cache = [];
 
     public function __construct(
@@ -27,23 +27,31 @@ final class HolidayRepository implements HolidayRepositoryInterface
         return $this->list ??= (new JsonEncoder())->deserialize($this->read(), HolidayListDto::class);
     }
 
-    public function add(PublicHolidayDto $publicHoliday): void
+    public function add(HolidayDto $holiday): void
     {
         $this->list = new HolidayListDto(
             ...$this->all()->holidays,
-            ...[$publicHoliday],
+            ...[$holiday],
         );
 
         $this->write($this->list);
     }
 
-    public function isHoliday(DateTimeImmutable $day): bool
+    public function getHoliday(DateTimeImmutable $day): ?HolidayDto
     {
-        if (!isset($this->cache[__METHOD__])) {
-            $this->cache[__METHOD__] = \array_map(fn (PublicHolidayDto $holiday): string => $holiday->date->day, $this->all()->holidays);
+        $dayString = $day->format('Y-m-d');
+
+        if (\array_key_exists($dayString, $this->cache[__METHOD__] ?? [])) {
+            return $this->cache[__METHOD__][$dayString];
         }
 
-        return \in_array($day->format('Y-m-d'), $this->cache[__METHOD__], true);
+        foreach ($this->all()->holidays as $holiday) {
+            if ($holiday->date->day === $dayString) {
+                return $this->cache[__METHOD__][$dayString] = $holiday;
+            }
+        }
+
+        return $this->cache[__METHOD__][$dayString] = null;
     }
 
     public function getByYear(string $year): HolidayListDto
@@ -51,7 +59,7 @@ final class HolidayRepository implements HolidayRepositoryInterface
         return new HolidayListDto(
             ...\array_filter(
                 $this->all()->holidays,
-                static fn (PublicHolidayDto $dto): bool => \str_starts_with($dto->date->day, $year)
+                static fn (HolidayDto $dto): bool => \str_starts_with($dto->date->day, $year)
             )
         );
     }

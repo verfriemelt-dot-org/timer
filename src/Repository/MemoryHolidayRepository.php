@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace timer\Repository;
 
 use DateTimeImmutable;
-use timer\Domain\Dto\PublicHolidayDto;
+use timer\Domain\Dto\HolidayDto;
 use timer\Domain\Dto\HolidayListDto;
 use timer\Domain\Repository\HolidayRepositoryInterface;
 
@@ -23,19 +23,25 @@ final class MemoryHolidayRepository implements HolidayRepositoryInterface
         return $this->list;
     }
 
-    public function add(PublicHolidayDto $publicHoliday): void
+    public function add(HolidayDto $holiday): void
     {
         $this->list = new HolidayListDto(
             ...$this->all()->holidays,
-            ...[$publicHoliday],
+            ...[$holiday],
         );
     }
 
-    public function isHoliday(DateTimeImmutable $day): bool
+    public function getHoliday(DateTimeImmutable $day): ?HolidayDto
     {
-        $holidays = \array_map(fn (PublicHolidayDto $holiday): string => $holiday->date->day, $this->all()->holidays);
+        $dayString = $day->format('Y-m-d');
 
-        return \in_array($day->format('Y-m-d'), $holidays, true);
+        foreach ($this->all()->holidays as $holiday) {
+            if ($holiday->date->day === $dayString) {
+                return $holiday;
+            }
+        }
+
+        return null;
     }
 
     public function getByYear(string $year): HolidayListDto
@@ -43,7 +49,7 @@ final class MemoryHolidayRepository implements HolidayRepositoryInterface
         return new HolidayListDto(
             ...\array_filter(
                 $this->all()->holidays,
-                static fn (PublicHolidayDto $dto): bool => str_starts_with($dto->date->day, $year)
+                static fn (HolidayDto $dto): bool => str_starts_with($dto->date->day, $year)
             )
         );
     }

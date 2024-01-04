@@ -8,7 +8,7 @@ use DateTimeImmutable;
 use Override;
 use PHPUnit\Framework\TestCase;
 use timer\Domain\Dto\DateDto;
-use timer\Domain\Dto\PublicHolidayDto;
+use timer\Domain\Dto\HolidayDto;
 use timer\Repository\HolidayRepository;
 
 class HolidayRepositoryTest extends TestCase
@@ -46,7 +46,7 @@ class HolidayRepositoryTest extends TestCase
 
     public function test_add(): void
     {
-        $this->repo->add(new PublicHolidayDto(new DateDto('2022-02-02'), 'test'));
+        $this->repo->add(new HolidayDto(new DateDto('2022-02-02'), 'test'));
         static::assertCount(1, $this->repo->all()->holidays);
         static::assertSame(
             <<<JSON
@@ -55,7 +55,8 @@ class HolidayRepositoryTest extends TestCase
                         "date": {
                             "day": "2022-02-02"
                         },
-                        "name": "test"
+                        "name": "test",
+                        "factor": 100
                     }
                 ]
                 JSON,
@@ -65,15 +66,15 @@ class HolidayRepositoryTest extends TestCase
 
     public function test_is_holiday(): void
     {
-        $this->repo->add(new PublicHolidayDto(new DateDto('2022-02-02'), 'test'));
-        static::assertTrue($this->repo->isHoliday(new DateTimeImmutable('2022-02-02')));
-        static::assertFalse($this->repo->isHoliday(new DateTimeImmutable('2022-02-01')));
+        $this->repo->add(new HolidayDto(new DateDto('2022-02-02'), 'test'));
+        static::assertNotNull($this->repo->getHoliday(new DateTimeImmutable('2022-02-02')));
+        static::assertNull($this->repo->getHoliday(new DateTimeImmutable('2022-02-01')));
     }
 
     public function test_filter_by_year(): void
     {
-        $this->repo->add(new PublicHolidayDto(new DateDto('2022-02-02'), 'test 1'));
-        $this->repo->add(new PublicHolidayDto(new DateDto('2023-02-02'), 'test 1'));
+        $this->repo->add(new HolidayDto(new DateDto('2022-02-02'), 'test 1'));
+        $this->repo->add(new HolidayDto(new DateDto('2023-02-02'), 'test 1'));
         static::assertCount(1, $this->repo->getByYear('2023')->holidays);
     }
 }

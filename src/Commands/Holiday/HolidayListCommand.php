@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace timer\Commands\Holiday;
 
 use timer\Domain\Clock;
-use timer\Domain\Dto\PublicHolidayDto;
+use timer\Domain\Dto\HolidayDto;
 use timer\Domain\Repository\HolidayRepositoryInterface;
 use verfriemelt\wrapped\_\Cli\OutputInterface;
 use verfriemelt\wrapped\_\Command\AbstractCommand;
@@ -40,7 +40,7 @@ final class HolidayListCommand extends AbstractCommand
         $holidays = $this->holidayRepository->getByYear($year)->holidays;
         \usort(
             $holidays,
-            fn (PublicHolidayDto $a, PublicHolidayDto $b): int => $this->clock->fromString($a->date->day) <=> $this->clock->fromString($b->date->day)
+            fn (HolidayDto $a, HolidayDto $b): int => $this->clock->fromString($a->date->day) <=> $this->clock->fromString($b->date->day)
         );
 
         foreach ($holidays as $holiday) {
