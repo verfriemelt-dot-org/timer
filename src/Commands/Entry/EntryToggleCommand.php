@@ -39,11 +39,7 @@ final class EntryToggleCommand extends AbstractCommand
     #[Override]
     public function execute(OutputInterface $output): ExitCode
     {
-        if ($this->time->present()) {
-            $time = $this->clock->fromString($this->time->get());
-        } else {
-            $time = $this->clock->now();
-        }
+        $time = $this->clock->now()->modify($this->time->get() ?? 'now');
 
         if (!$this->currentWorkRepository->has()) {
             $output->writeLn(\print_r($this->currentWorkRepository->toggle($time), true));
