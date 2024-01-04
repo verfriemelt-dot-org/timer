@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "46702b801be07d52c0b8cdba0143b03c",
+    "content-hash": "d585219f81ea7592c1d3fe33e4a92607",
     "packages": [
         {
             "name": "psr/clock",
@@ -60,12 +60,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/verfriemelt-dot-org/wrapped.git",
-                "reference": "5919e33a16395bf6b464569b3be2d8a098f65cd3"
+                "reference": "3920995bac9ed3a57ff7b6749ff9327d5ef0f6da"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/verfriemelt-dot-org/wrapped/zipball/5919e33a16395bf6b464569b3be2d8a098f65cd3",
-                "reference": "5919e33a16395bf6b464569b3be2d8a098f65cd3",
+                "url": "https://api.github.com/repos/verfriemelt-dot-org/wrapped/zipball/3920995bac9ed3a57ff7b6749ff9327d5ef0f6da",
+                "reference": "3920995bac9ed3a57ff7b6749ff9327d5ef0f6da",
                 "shasum": ""
             },
             "require": {
@@ -105,7 +105,7 @@
                 "issues": "https://github.com/verfriemelt-dot-org/wrapped/issues",
                 "source": "https://github.com/verfriemelt-dot-org/wrapped/tree/master"
             },
-            "time": "2024-01-03T20:14:04+00:00"
+            "time": "2024-01-04T20:09:44+00:00"
         }
     ],
     "packages-dev": [
@@ -481,21 +481,22 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v3.45.0",
+            "version": "v3.46.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer.git",
-                "reference": "c0daa33cb2533cd73f48dde1c70c2afa3e7953b5"
+                "reference": "be6831c9af1740470d2a773119b9273f8ac1c3d2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/c0daa33cb2533cd73f48dde1c70c2afa3e7953b5",
-                "reference": "c0daa33cb2533cd73f48dde1c70c2afa3e7953b5",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/be6831c9af1740470d2a773119b9273f8ac1c3d2",
+                "reference": "be6831c9af1740470d2a773119b9273f8ac1c3d2",
                 "shasum": ""
             },
             "require": {
                 "composer/semver": "^3.4",
                 "composer/xdebug-handler": "^3.0.3",
+                "ext-filter": "*",
                 "ext-json": "*",
                 "ext-tokenizer": "*",
                 "php": "^7.4 || ^8.0",
@@ -559,7 +560,7 @@
             ],
             "support": {
                 "issues": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/issues",
-                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.45.0"
+                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.46.0"
             },
             "funding": [
                 {
@@ -567,7 +568,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-12-30T02:07:07+00:00"
+            "time": "2024-01-03T21:38:46+00:00"
         },
         {
             "name": "infection/abstract-testframework-adapter",
@@ -1340,16 +1341,16 @@
         },
         {
             "name": "phpat/phpat",
-            "version": "0.10.12",
+            "version": "0.10.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/carlosas/phpat.git",
-                "reference": "5f6e50757d769fdb62d6a3d6e0dc1ea0c2bb4ed7"
+                "reference": "4954eebf9b456837720b07486d29828461ed24fc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/carlosas/phpat/zipball/5f6e50757d769fdb62d6a3d6e0dc1ea0c2bb4ed7",
-                "reference": "5f6e50757d769fdb62d6a3d6e0dc1ea0c2bb4ed7",
+                "url": "https://api.github.com/repos/carlosas/phpat/zipball/4954eebf9b456837720b07486d29828461ed24fc",
+                "reference": "4954eebf9b456837720b07486d29828461ed24fc",
                 "shasum": ""
             },
             "require": {
@@ -1391,9 +1392,9 @@
             "description": "PHP Architecture Tester",
             "support": {
                 "issues": "https://github.com/carlosas/phpat/issues",
-                "source": "https://github.com/carlosas/phpat/tree/0.10.12"
+                "source": "https://github.com/carlosas/phpat/tree/0.10.13"
             },
-            "time": "2023-12-23T23:39:56+00:00"
+            "time": "2024-01-04T17:18:43+00:00"
         },
         {
             "name": "phpstan/phpstan",
