@@ -7,6 +7,7 @@ namespace timer\Domain\Print;
 use DateTimeImmutable;
 use timer\Domain\EntryType;
 use timer\Domain\Repository\EntryRepositoryInterface;
+use timer\Domain\Repository\HolidayRepositoryInterface;
 use timer\Domain\TimeBalanceCalculator;
 use timer\Domain\WorkTimeCalculator;
 use verfriemelt\wrapped\_\Cli\Console;
@@ -18,6 +19,7 @@ final readonly class PrettyPrinter
         private WorkTimeCalculator $workTimeCalculator,
         private EntryRepositoryInterface $entryRepository,
         private TimeBalanceCalculator $timeBalance,
+        private HolidayRepositoryInterface $holidayRepository,
     ) {}
 
     public function print(
@@ -34,6 +36,12 @@ final readonly class PrettyPrinter
             $output->write($current->format('Y.m.d l'));
 
             $this->printHours($output, $workPerDay, $this->workTimeCalculator->expectedHours($current));
+
+            $holiday = $this->holidayRepository->getHoliday($current);
+            if ($holiday !== null) {
+                $output->write(" » {$holiday->name} ($holiday->factor)");
+            }
+
             $output->eol();
 
             foreach ($entries->entries as $dto) {
