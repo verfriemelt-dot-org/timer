@@ -67,7 +67,7 @@ class EntryRepositoryTest extends TestCase
                     }
                 ]
                 JSON,
-            file_get_contents(self::TEST_PATH)
+            \file_get_contents(self::TEST_PATH)
         );
     }
 
@@ -94,5 +94,36 @@ class EntryRepositoryTest extends TestCase
         static::assertCount(3, $this->repo->getByType(EntryType::Work)->entries);
         static::assertCount(2, $this->repo->getByType(EntryType::Vacation)->entries);
         static::assertCount(1, $this->repo->getByType(EntryType::Sick)->entries);
+    }
+
+    public function test_get_by_date_with_cache(): void
+    {
+        $this->repo->add(new EntryDto(new DateDto('2022-02-01'), type: EntryType::Work));
+        static::assertCount(1, $this->repo->getDay(new DateTimeImmutable('2022-02-01'))->entries, 'warm cache');
+
+        // update data
+        \file_put_contents(
+            self::TEST_PATH,
+            '[]'
+        );
+
+        static::assertCount(1, $this->repo->getDay(new DateTimeImmutable('2022-02-01'))->entries, 'second iteration');
+    }
+
+    public function test_reset_on_update(): void
+    {
+        $this->repo->add(new EntryDto(new DateDto('2022-02-01'), type: EntryType::Work));
+        static::assertCount(1, $this->repo->getDay(new DateTimeImmutable('2022-02-01'))->entries, 'warm cache');
+
+        // update data
+        \file_put_contents(
+            self::TEST_PATH,
+            '[]'
+        );
+
+        $this->repo->add(new EntryDto(new DateDto('2022-02-02'), type: EntryType::Work));
+
+        static::assertCount(1, $this->repo->getDay(new DateTimeImmutable('2022-02-01'))->entries, 'cache reset');
+        static::assertCount(1, $this->repo->getDay(new DateTimeImmutable('2022-02-02'))->entries, 'cache reset');
     }
 }
