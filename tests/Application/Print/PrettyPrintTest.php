@@ -7,6 +7,7 @@ namespace timer\tests;
 use DateTimeImmutable;
 use timer\Domain\Dto\DateDto;
 use timer\Domain\Dto\EntryDto;
+use timer\Domain\Dto\HolidayDto;
 use timer\Domain\Dto\WorkTimeDto;
 use timer\Domain\EntryType;
 use timer\Domain\Print\PrettyPrinter;
@@ -45,6 +46,8 @@ class PrettyPrintTest extends ApplicationTestCase
             )
         );
 
+        $this->holidayRepository->add(new HolidayDto(new DateDto('2023-01-02'), 'test-holiday'));
+
         $spy = new BufferedOutput();
 
         $printer->print(
@@ -55,12 +58,12 @@ class PrettyPrintTest extends ApplicationTestCase
 
         static::assertSame(
             <<<OUTPUT
-            2023.01.02 Monday » 20/8
+            2023.01.02 Monday » 20/0 » test-holiday (100)
                 vacation
                 sick
                 2023-01-02 08:00:00 - 2023-01-02 12:00:00
             
-            20 // 8
+            20 // 0
 
             OUTPUT,
             $spy->getBuffer()

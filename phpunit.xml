@@ -12,6 +12,8 @@
         displayDetailsOnTestsThatTriggerWarnings="true"
         displayDetailsOnTestsThatTriggerNotices="true"
         displayDetailsOnTestsThatTriggerDeprecations="true"
+        failOnNotice="true"
+        failOnDeprecation="true"
         bootstrap="tests/bootstrap.php"
 >
     <testsuites>

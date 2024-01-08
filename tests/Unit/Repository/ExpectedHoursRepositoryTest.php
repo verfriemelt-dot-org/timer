@@ -11,6 +11,7 @@ use RuntimeException;
 use timer\Domain\Clock;
 use timer\Repository\ExpectedHoursRepository;
 use verfriemelt\wrapped\_\Clock\MockClock;
+use verfriemelt\wrapped\_\Clock\SystemClock;
 
 class ExpectedHoursRepositoryTest extends TestCase
 {
@@ -84,6 +85,7 @@ class ExpectedHoursRepositoryTest extends TestCase
             new Clock(new MockClock(new DateTimeImmutable('2022-01-01')))
         );
         $hours = $repo->getActive();
+        $hours = $repo->getActive();
 
         static::assertSame([1 => 8.0, 2 => 8.0, 3 => 8.0, 4 => 8.0, 5 => 8.0, 6 => 0.0, 7 => 0.0], $hours->hours->toArray());
     }
@@ -98,5 +100,11 @@ class ExpectedHoursRepositoryTest extends TestCase
             new Clock(new MockClock(new DateTimeImmutable('2100-01-01')))
         );
         $repo->getActive();
+    }
+
+    public function test_illegal_file_as_storage(): void
+    {
+        static::expectException(RuntimeException::class);
+        (new ExpectedHoursRepository(\TEST_ROOT, new Clock(new SystemClock())))->all();
     }
 }

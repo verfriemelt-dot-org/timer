@@ -7,6 +7,7 @@ namespace timer\tests\Unit\Repository;
 use DateTimeImmutable;
 use Override;
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
 use timer\Domain\Dto\DateDto;
 use timer\Domain\Dto\HolidayDto;
 use timer\Repository\HolidayRepository;
@@ -69,6 +70,9 @@ class HolidayRepositoryTest extends TestCase
         $this->repo->add(new HolidayDto(new DateDto('2022-02-02'), 'test'));
         static::assertNotNull($this->repo->getHoliday(new DateTimeImmutable('2022-02-02')));
         static::assertNull($this->repo->getHoliday(new DateTimeImmutable('2022-02-01')));
+
+        static::assertNotNull($this->repo->getHoliday(new DateTimeImmutable('2022-02-02')), 'cache hit');
+        static::assertNull($this->repo->getHoliday(new DateTimeImmutable('2022-02-01')), 'cache hit');
     }
 
     public function test_filter_by_year(): void
@@ -76,5 +80,11 @@ class HolidayRepositoryTest extends TestCase
         $this->repo->add(new HolidayDto(new DateDto('2022-02-02'), 'test 1'));
         $this->repo->add(new HolidayDto(new DateDto('2023-02-02'), 'test 1'));
         static::assertCount(1, $this->repo->getByYear('2023')->holidays);
+    }
+
+    public function test_illegal_file_as_storage(): void
+    {
+        static::expectException(RuntimeException::class);
+        (new HolidayRepository(\TEST_ROOT))->all();
     }
 }

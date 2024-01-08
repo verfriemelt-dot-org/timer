@@ -70,8 +70,8 @@ final class HolidayRepository implements HolidayRepositoryInterface
             return '[]';
         }
 
-        /** @phpstan-ignore-next-line */
-        return \file_get_contents($this->path) ?: throw new RuntimeException("cant read {$this->path}");
+        /** @phpstan-ignore-next-line ignore short ternary */
+        return @\file_get_contents($this->path) ?: throw new RuntimeException("cant read {$this->path}");
     }
 
     private function write(HolidayListDto $dto): void

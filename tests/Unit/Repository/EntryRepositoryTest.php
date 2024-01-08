@@ -7,6 +7,7 @@ namespace timer\tests\Unit\Repository;
 use DateTimeImmutable;
 use Override;
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
 use timer\Domain\Dto\DateDto;
 use timer\Domain\Dto\EntryDto;
 use timer\Domain\EntryType;
@@ -69,6 +70,12 @@ class EntryRepositoryTest extends TestCase
                 JSON,
             \file_get_contents(self::TEST_PATH)
         );
+    }
+
+    public function test_illegal_file_as_storage(): void
+    {
+        static::expectException(RuntimeException::class);
+        (new EntryRepository(\TEST_ROOT))->all();
     }
 
     public function test_get_day(): void
