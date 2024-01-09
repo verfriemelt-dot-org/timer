@@ -8,11 +8,13 @@ use DateTimeImmutable;
 use RuntimeException;
 use timer\Domain\Dto\WorkTimeDto;
 use timer\Domain\Repository\CurrentWorkRepositoryInterface;
+use Override;
 
 final class MemoryCurrentWorkRepository implements CurrentWorkRepositoryInterface
 {
     private ?WorkTimeDto $current = null;
 
+    #[Override]
     public function toggle(DateTimeImmutable $time): WorkTimeDto
     {
         if (!$this->has()) {
@@ -25,6 +27,7 @@ final class MemoryCurrentWorkRepository implements CurrentWorkRepositoryInterfac
         return $dto->till($time->format('Y-m-d H:i:s'));
     }
 
+    #[Override]
     public function get(): WorkTimeDto
     {
         if ($this->current === null) {
@@ -34,11 +37,13 @@ final class MemoryCurrentWorkRepository implements CurrentWorkRepositoryInterfac
         return $this->current;
     }
 
+    #[Override]
     public function has(): bool
     {
         return $this->current !== null;
     }
 
+    #[Override]
     public function reset(): void
     {
         $this->current = null;

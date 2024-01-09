@@ -5,8 +5,8 @@
             "src"
         ],
         "excludes": [
-            "src/Commands",
-
+            "src/index.php",
+            "src/Kernel.php",
         ]
     },
     "mutators": {

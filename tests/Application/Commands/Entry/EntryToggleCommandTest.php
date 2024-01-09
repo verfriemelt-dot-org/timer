@@ -19,6 +19,19 @@ class EntryToggleCommandTest extends ApplicationTestCase
             $this->currentWorkRepository->get()->from,
             'current time as start'
         );
+
+        static::assertSame(
+            <<<OUTPUT
+            timer\Domain\Dto\WorkTimeDto Object
+            (
+                [from] => 2023-12-07 14:32:16
+                [till] => 
+            )
+            
+            
+            OUTPUT,
+            $this->consoleSpy->getBuffer()
+        );
     }
 
     public function test_start_with_date(): void
@@ -40,6 +53,34 @@ class EntryToggleCommandTest extends ApplicationTestCase
 
         $entryListDto = $this->entryRepository->getDay($this->clock->now());
         static::assertCount(1, $entryListDto->entries);
+
+        static::assertSame(
+            <<<OUTPUT
+            timer\Domain\Dto\EntryDto Object
+            (
+                [date] => timer\Domain\Dto\DateDto Object
+                    (
+                        [day] => 2023-12-07
+                    )
+            
+                [type] => timer\Domain\EntryType Enum:string
+                    (
+                        [name] => Work
+                        [value] => work
+                    )
+            
+                [workTime] => timer\Domain\Dto\WorkTimeDto Object
+                    (
+                        [from] => 2023-12-07 14:32:16
+                        [till] => 2023-12-07 14:32:16
+                    )
+            
+            )
+            
+            
+            OUTPUT,
+            $this->consoleSpy->getBuffer()
+        );
     }
 
     public function test_with_argument(): void

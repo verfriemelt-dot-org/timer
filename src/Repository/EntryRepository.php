@@ -11,6 +11,7 @@ use timer\Domain\EntryType;
 use timer\Domain\Repository\EntryRepositoryInterface;
 use verfriemelt\wrapped\_\Serializer\Encoder\JsonEncoder;
 use RuntimeException;
+use Override;
 
 final class EntryRepository implements EntryRepositoryInterface
 {
@@ -23,11 +24,13 @@ final class EntryRepository implements EntryRepositoryInterface
         private readonly string $path
     ) {}
 
+    #[Override]
     public function all(): EntryListDto
     {
         return $this->list ??= (new JsonEncoder())->deserialize($this->read(), EntryListDto::class);
     }
 
+    #[Override]
     public function add(EntryDto $entry): void
     {
         $this->list = new EntryListDto(
@@ -54,6 +57,7 @@ final class EntryRepository implements EntryRepositoryInterface
         $this->cache = [];
     }
 
+    #[Override]
     public function getDay(DateTimeImmutable $day): EntryListDto
     {
         $dayString = $day->format('Y-m-d');
@@ -66,6 +70,7 @@ final class EntryRepository implements EntryRepositoryInterface
         );
     }
 
+    #[Override]
     public function getByType(EntryType ... $types): EntryListDto
     {
         return new EntryListDto(

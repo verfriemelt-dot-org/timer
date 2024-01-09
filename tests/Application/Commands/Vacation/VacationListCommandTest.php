@@ -48,12 +48,8 @@ final class VacationListCommandTest extends ApplicationTestCase
 
     public function test_year_filter(): void
     {
-        $this->entryRepository->add(
-            new EntryDto(
-                new DateDto('2024-01-01'),
-                type: EntryType::Vacation
-            )
-        );
+        $this->entryRepository->add(new EntryDto(new DateDto('2024-01-01'), type: EntryType::Vacation));
+        $this->entryRepository->add(new EntryDto(new DateDto('2023-01-01'), type: EntryType::Vacation));
 
         static::assertSame(
             ExitCode::Success,

@@ -17,6 +17,14 @@ class EntryResetCommandTest extends ApplicationTestCase
     public function test_empty(): void
     {
         static::assertSame(ExitCode::Success, $this->executeCommand(EntryResetCommand::class));
+
+        static::assertSame(
+            <<<OUTPUT
+            not started
+            
+            OUTPUT,
+            $this->consoleSpy->getBuffer()
+        );
     }
 
     public function test_reset(): void
@@ -33,5 +41,13 @@ class EntryResetCommandTest extends ApplicationTestCase
 
         $entryListDto = $entryRepo->getDay(new DateTimeImmutable());
         static::assertCount(0, $entryListDto->entries);
+
+        static::assertSame(
+            <<<OUTPUT
+            deleted
+            
+            OUTPUT,
+            $this->consoleSpy->getBuffer()
+        );
     }
 }

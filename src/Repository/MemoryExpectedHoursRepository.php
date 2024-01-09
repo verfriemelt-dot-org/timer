@@ -9,9 +9,11 @@ use timer\Domain\Dto\ExpectedHoursDto;
 use timer\Domain\Dto\ExpectedHoursListDto;
 use timer\Domain\Dto\HoursDto;
 use timer\Domain\Repository\ExpectedHoursRepositoryInterface;
+use Override;
 
 final readonly class MemoryExpectedHoursRepository implements ExpectedHoursRepositoryInterface
 {
+    #[Override]
     public function getActive(): ExpectedHoursDto
     {
         return new ExpectedHoursDto(
@@ -21,6 +23,7 @@ final readonly class MemoryExpectedHoursRepository implements ExpectedHoursRepos
         );
     }
 
+    #[Override]
     public function all(): ExpectedHoursListDto
     {
         return new ExpectedHoursListDto($this->getActive());

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace timer\Commands\Export;
 
-use Psr\Clock\ClockInterface;
+use timer\Domain\Clock;
 use timer\Domain\Print\PrettyPrinter;
 use verfriemelt\wrapped\_\Cli\OutputInterface;
 use verfriemelt\wrapped\_\Command\AbstractCommand;
@@ -22,7 +22,7 @@ final class PrintYearCommand extends AbstractCommand
 
     public function __construct(
         private readonly PrettyPrinter $print,
-        private readonly ClockInterface $clock,
+        private readonly Clock $clock,
     ) {}
 
     #[Override]
@@ -35,12 +35,12 @@ final class PrintYearCommand extends AbstractCommand
     #[Override]
     public function execute(OutputInterface $output): ExitCode
     {
-        $year = (int) ($this->year->get() ?? throw new ArgumentMissingException());
-        $now = $this->clock->now()->setDate($year, 1, 1);
+        $year = $this->year->get() ?? throw new ArgumentMissingException();
+        $now = $this->clock->fromString("01-01-{$year}");
 
         $this->print->print(
             $output,
-            $now->modify('first day of january'),
+            $now,
             $now->modify('last day of december')
         );
         return ExitCode::Success;

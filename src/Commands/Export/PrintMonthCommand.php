@@ -38,14 +38,14 @@ final class PrintMonthCommand extends AbstractCommand
     #[Override]
     public function execute(OutputInterface $output): ExitCode
     {
-        $month = (int) ($this->month->get() ?? throw new ArgumentMissingException());
-        $year = (int) ($this->year->get() ?? throw new ArgumentMissingException());
+        $month = $this->month->get() ?? throw new ArgumentMissingException();
+        $year = $this->year->get() ?? throw new ArgumentMissingException();
 
         $today = $this->clock->today();
         $start = $this->clock->fromString("{$year}-{$month}-01");
         $end = $start->modify('last day of this month');
 
-        if (!$this->month->present() && $start < $today && $end > $today) {
+        if (!$this->month->present() && $end > $today) {
             $end = $this->clock->fromString('yesterday');
         }
 

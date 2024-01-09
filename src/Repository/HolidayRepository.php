@@ -10,6 +10,7 @@ use timer\Domain\Dto\HolidayListDto;
 use timer\Domain\Repository\HolidayRepositoryInterface;
 use verfriemelt\wrapped\_\Serializer\Encoder\JsonEncoder;
 use RuntimeException;
+use Override;
 
 final class HolidayRepository implements HolidayRepositoryInterface
 {
@@ -22,11 +23,13 @@ final class HolidayRepository implements HolidayRepositoryInterface
         private readonly string $path
     ) {}
 
+    #[Override]
     public function all(): HolidayListDto
     {
         return $this->list ??= (new JsonEncoder())->deserialize($this->read(), HolidayListDto::class);
     }
 
+    #[Override]
     public function add(HolidayDto $holiday): void
     {
         $this->list = new HolidayListDto(
@@ -37,6 +40,7 @@ final class HolidayRepository implements HolidayRepositoryInterface
         $this->write($this->list);
     }
 
+    #[Override]
     public function getHoliday(DateTimeImmutable $day): ?HolidayDto
     {
         $dayString = $day->format('Y-m-d');
@@ -54,6 +58,7 @@ final class HolidayRepository implements HolidayRepositoryInterface
         return $this->cache[__METHOD__][$dayString] = null;
     }
 
+    #[Override]
     public function getByYear(string $year): HolidayListDto
     {
         return new HolidayListDto(

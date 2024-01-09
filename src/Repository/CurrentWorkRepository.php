@@ -9,6 +9,7 @@ use timer\Domain\Dto\WorkTimeDto;
 use timer\Domain\Repository\CurrentWorkRepositoryInterface;
 use verfriemelt\wrapped\_\Serializer\Encoder\JsonEncoder;
 use RuntimeException;
+use Override;
 
 final readonly class CurrentWorkRepository implements CurrentWorkRepositoryInterface
 {
@@ -16,6 +17,7 @@ final readonly class CurrentWorkRepository implements CurrentWorkRepositoryInter
         private string $path
     ) {}
 
+    #[Override]
     public function toggle(DateTimeImmutable $time): WorkTimeDto
     {
         if (!$this->has()) {
@@ -31,6 +33,7 @@ final readonly class CurrentWorkRepository implements CurrentWorkRepositoryInter
         return $dto->till($time->format('Y-m-d H:i:s'));
     }
 
+    #[Override]
     public function get(): WorkTimeDto
     {
         if (!$this->has()) {
@@ -43,11 +46,13 @@ final readonly class CurrentWorkRepository implements CurrentWorkRepositoryInter
         return (new JsonEncoder())->deserialize($json, WorkTimeDto::class);
     }
 
+    #[Override]
     public function has(): bool
     {
         return \file_exists($this->path);
     }
 
+    #[Override]
     public function reset(): void
     {
         \unlink($this->path);

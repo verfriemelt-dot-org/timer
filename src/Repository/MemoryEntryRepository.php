@@ -9,6 +9,7 @@ use timer\Domain\Dto\EntryDto;
 use timer\Domain\Dto\EntryListDto;
 use timer\Domain\EntryType;
 use timer\Domain\Repository\EntryRepositoryInterface;
+use Override;
 
 final class MemoryEntryRepository implements EntryRepositoryInterface
 {
@@ -19,11 +20,13 @@ final class MemoryEntryRepository implements EntryRepositoryInterface
         $this->list = new EntryListDto();
     }
 
+    #[Override]
     public function all(): EntryListDto
     {
         return $this->list;
     }
 
+    #[Override]
     public function add(EntryDto $entry): void
     {
         $this->list = new EntryListDto(
@@ -32,6 +35,7 @@ final class MemoryEntryRepository implements EntryRepositoryInterface
         );
     }
 
+    #[Override]
     public function getDay(DateTimeImmutable $day): EntryListDto
     {
         return new EntryListDto(
@@ -42,6 +46,7 @@ final class MemoryEntryRepository implements EntryRepositoryInterface
         );
     }
 
+    #[Override]
     public function getByType(EntryType ... $types): EntryListDto
     {
         return new EntryListDto(

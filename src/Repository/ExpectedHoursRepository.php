@@ -10,6 +10,7 @@ use timer\Domain\Dto\ExpectedHoursListDto;
 use timer\Domain\Repository\ExpectedHoursRepositoryInterface;
 use verfriemelt\wrapped\_\Serializer\Encoder\JsonEncoder;
 use RuntimeException;
+use Override;
 
 final class ExpectedHoursRepository implements ExpectedHoursRepositoryInterface
 {
@@ -22,6 +23,7 @@ final class ExpectedHoursRepository implements ExpectedHoursRepositoryInterface
         private readonly Clock $clock,
     ) {}
 
+    #[Override]
     public function getActive(): ExpectedHoursDto
     {
         if (isset($this->active)) {
@@ -43,6 +45,7 @@ final class ExpectedHoursRepository implements ExpectedHoursRepositoryInterface
     /**
      * @infection-ignore-all
      */
+    #[Override]
     public function all(): ExpectedHoursListDto
     {
         return $this->list ??= (new JsonEncoder())->deserialize($this->read(), ExpectedHoursListDto::class);

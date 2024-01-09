@@ -8,6 +8,7 @@ use DateTimeImmutable;
 use timer\Domain\Dto\HolidayDto;
 use timer\Domain\Dto\HolidayListDto;
 use timer\Domain\Repository\HolidayRepositoryInterface;
+use Override;
 
 final class MemoryHolidayRepository implements HolidayRepositoryInterface
 {
@@ -18,11 +19,13 @@ final class MemoryHolidayRepository implements HolidayRepositoryInterface
         $this->list = new HolidayListDto();
     }
 
+    #[Override]
     public function all(): HolidayListDto
     {
         return $this->list;
     }
 
+    #[Override]
     public function add(HolidayDto $holiday): void
     {
         $this->list = new HolidayListDto(
@@ -31,6 +34,7 @@ final class MemoryHolidayRepository implements HolidayRepositoryInterface
         );
     }
 
+    #[Override]
     public function getHoliday(DateTimeImmutable $day): ?HolidayDto
     {
         $dayString = $day->format('Y-m-d');
@@ -44,6 +48,7 @@ final class MemoryHolidayRepository implements HolidayRepositoryInterface
         return null;
     }
 
+    #[Override]
     public function getByYear(string $year): HolidayListDto
     {
         return new HolidayListDto(
