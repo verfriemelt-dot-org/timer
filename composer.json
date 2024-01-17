@@ -17,7 +17,8 @@
         "phpstan/phpstan-deprecation-rules": "^1.1.4",
         "spaze/phpstan-disallowed-calls": "^3.0",
         "infection/infection": "^0.27.9",
-        "phpat/phpat": "^0.10.13"
+        "phpat/phpat": "^0.10.13",
+        "phpbench/phpbench": "^1.2.15"
     },
     "autoload": {
         "psr-4": {
