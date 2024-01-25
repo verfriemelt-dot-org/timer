@@ -23,7 +23,10 @@ class EntryRepositoryTest extends TestCase
     public function setUp(): void
     {
         $this->repo = new EntryRepository(self::getFilepath());
-        @unlink(self::getFilepath());
+
+        if (\file_exists(self::getFilepath())) {
+            unlink(self::getFilepath());
+        }
     }
 
     protected static function getFilepath(): string
@@ -38,7 +41,9 @@ class EntryRepositoryTest extends TestCase
     #[Override]
     public function tearDown(): void
     {
-        @unlink(self::getFilepath());
+        if (\file_exists(self::getFilepath())) {
+            unlink(self::getFilepath());
+        }
     }
 
     public function test_empty(): void

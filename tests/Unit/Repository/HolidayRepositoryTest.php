@@ -22,13 +22,17 @@ class HolidayRepositoryTest extends TestCase
     public function setUp(): void
     {
         $this->repo = new HolidayRepository(self::getFilepath());
-        @unlink(self::getFilepath());
+        if (\file_exists(self::getFilepath())) {
+            \unlink(self::getFilepath());
+        }
     }
 
     #[Override]
     public function tearDown(): void
     {
-        @unlink(self::getFilepath());
+        if (\file_exists(self::getFilepath())) {
+            \unlink(self::getFilepath());
+        }
     }
 
     protected static function getFilepath(): string

@@ -53,7 +53,11 @@ final class ExpectedHoursRepository implements ExpectedHoursRepositoryInterface
 
     private function read(): string
     {
+        if (!\file_exists($this->path) || !\is_file($this->path)) {
+            throw new RuntimeException("cant read {$this->path}");
+        }
+
         /** @phpstan-ignore-next-line ignore short ternary */
-        return @\file_get_contents($this->path) ?: throw new RuntimeException("cant read {$this->path}");
+        return \file_get_contents($this->path) ?: throw new RuntimeException("cant read {$this->path}");
     }
 }

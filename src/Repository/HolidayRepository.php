@@ -75,6 +75,10 @@ final class HolidayRepository implements HolidayRepositoryInterface
             return '[]';
         }
 
+        if (!\is_file($this->path)) {
+            throw new RuntimeException("cant read {$this->path}, its a directory");
+        }
+
         /** @phpstan-ignore-next-line ignore short ternary */
         return @\file_get_contents($this->path) ?: throw new RuntimeException("cant read {$this->path}");
     }

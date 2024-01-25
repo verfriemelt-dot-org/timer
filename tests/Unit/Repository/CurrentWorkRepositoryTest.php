@@ -20,7 +20,9 @@ class CurrentWorkRepositoryTest extends TestCase
     public function setUp(): void
     {
         $this->repo = new CurrentWorkRepository(self::getFilepath());
-        @unlink(self::getFilepath());
+        if (\file_exists(self::getFilepath())) {
+            \unlink(self::getFilepath());
+        }
     }
 
     protected static function getFilepath(): string
@@ -35,7 +37,9 @@ class CurrentWorkRepositoryTest extends TestCase
     #[Override]
     public function tearDown(): void
     {
-        @unlink(self::getFilepath());
+        if (\file_exists(self::getFilepath())) {
+            \unlink(self::getFilepath());
+        }
     }
 
     public function test_empty(): void
