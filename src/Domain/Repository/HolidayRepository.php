@@ -8,7 +8,7 @@ use DateTimeImmutable;
 use timer\Domain\Dto\HolidayDto;
 use timer\Domain\Dto\HolidayListDto;
 
-interface HolidayRepositoryInterface
+interface HolidayRepository
 {
     public function all(): HolidayListDto;
 

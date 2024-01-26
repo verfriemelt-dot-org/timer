@@ -7,7 +7,7 @@ namespace timer\Domain\Repository;
 use timer\Domain\Dto\ExpectedHoursDto;
 use timer\Domain\Dto\ExpectedHoursListDto;
 
-interface ExpectedHoursRepositoryInterface
+interface ExpectedHoursRepository
 {
     public function all(): ExpectedHoursListDto;
 

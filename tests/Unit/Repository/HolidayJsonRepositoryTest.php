@@ -10,18 +10,18 @@ use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use timer\Domain\Dto\DateDto;
 use timer\Domain\Dto\HolidayDto;
-use timer\Repository\HolidayRepository;
+use timer\Repository\HolidayJsonRepository;
 
-class HolidayRepositoryTest extends TestCase
+class HolidayJsonRepositoryTest extends TestCase
 {
     private const string TEST_PATH = \TEST_ROOT . '/_data/holidaytest.json';
 
-    private HolidayRepository $repo;
+    private HolidayJsonRepository $repo;
 
     #[Override]
     public function setUp(): void
     {
-        $this->repo = new HolidayRepository(self::getFilepath());
+        $this->repo = new HolidayJsonRepository(self::getFilepath());
         if (\file_exists(self::getFilepath())) {
             \unlink(self::getFilepath());
         }
@@ -89,6 +89,6 @@ class HolidayRepositoryTest extends TestCase
     public function test_illegal_file_as_storage(): void
     {
         static::expectException(RuntimeException::class);
-        (new HolidayRepository(\TEST_ROOT))->all();
+        (new HolidayJsonRepository(\TEST_ROOT))->all();
     }
 }

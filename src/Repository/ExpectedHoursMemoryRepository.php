@@ -8,10 +8,10 @@ use timer\Domain\Dto\DateDto;
 use timer\Domain\Dto\ExpectedHoursDto;
 use timer\Domain\Dto\ExpectedHoursListDto;
 use timer\Domain\Dto\HoursDto;
-use timer\Domain\Repository\ExpectedHoursRepositoryInterface;
+use timer\Domain\Repository\ExpectedHoursRepository;
 use Override;
 
-final readonly class MemoryExpectedHoursRepository implements ExpectedHoursRepositoryInterface
+final readonly class ExpectedHoursMemoryRepository implements ExpectedHoursRepository
 {
     #[Override]
     public function getActive(): ExpectedHoursDto

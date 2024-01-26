@@ -6,12 +6,12 @@ namespace timer\Repository;
 
 use DateTimeImmutable;
 use timer\Domain\Dto\WorkTimeDto;
-use timer\Domain\Repository\CurrentWorkRepositoryInterface;
+use timer\Domain\Repository\CurrentWorkRepository;
 use verfriemelt\wrapped\_\Serializer\Encoder\JsonEncoder;
 use RuntimeException;
 use Override;
 
-final readonly class CurrentWorkRepository implements CurrentWorkRepositoryInterface
+final readonly class CurrentWorkJsonRepository implements CurrentWorkRepository
 {
     public function __construct(
         private string $path

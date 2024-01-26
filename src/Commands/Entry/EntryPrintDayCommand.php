@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace timer\Commands\Entry;
 
 use Psr\Clock\ClockInterface;
-use timer\Domain\Repository\CurrentWorkRepositoryInterface;
-use timer\Domain\Repository\EntryRepositoryInterface;
+use timer\Domain\Repository\CurrentWorkRepository;
+use timer\Domain\Repository\EntryRepository;
 use timer\Domain\TimeDiffCalcalator;
 use timer\Domain\WorkTimeCalculator;
 use verfriemelt\wrapped\_\Cli\OutputInterface;
@@ -25,9 +25,9 @@ final class EntryPrintDayCommand extends AbstractCommand
     private Option $raw;
 
     public function __construct(
-        private readonly EntryRepositoryInterface $entryRepository,
+        private readonly EntryRepository $entryRepository,
         private readonly WorkTimeCalculator $workTimeCalculator,
-        private readonly CurrentWorkRepositoryInterface $currentWorkRepository,
+        private readonly CurrentWorkRepository $currentWorkRepository,
         private readonly TimeDiffCalcalator $timeDiff,
         private readonly ClockInterface $clock
     ) {}

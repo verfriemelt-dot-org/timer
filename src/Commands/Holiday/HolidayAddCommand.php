@@ -7,7 +7,7 @@ namespace timer\Commands\Holiday;
 use Override;
 use timer\Domain\Dto\DateDto;
 use timer\Domain\Dto\HolidayDto;
-use timer\Domain\Repository\HolidayRepositoryInterface;
+use timer\Domain\Repository\HolidayRepository;
 use verfriemelt\wrapped\_\Cli\OutputInterface;
 use verfriemelt\wrapped\_\Command\AbstractCommand;
 use verfriemelt\wrapped\_\Command\Attributes\Command;
@@ -25,7 +25,7 @@ final class HolidayAddCommand extends AbstractCommand
     private Option $factor;
 
     public function __construct(
-        private readonly HolidayRepositoryInterface $holidayRepository,
+        private readonly HolidayRepository $holidayRepository,
     ) {}
 
     #[Override]

@@ -8,10 +8,10 @@ use DateTimeImmutable;
 use timer\Domain\Dto\EntryDto;
 use timer\Domain\Dto\EntryListDto;
 use timer\Domain\EntryType;
-use timer\Domain\Repository\EntryRepositoryInterface;
+use timer\Domain\Repository\EntryRepository;
 use Override;
 
-final class MemoryEntryRepository implements EntryRepositoryInterface
+final class EntryMemoryRepository implements EntryRepository
 {
     private EntryListDto $list;
 

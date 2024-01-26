@@ -8,7 +8,7 @@ use timer\Domain\Clock;
 use timer\Domain\Dto\DateDto;
 use timer\Domain\Dto\EntryDto;
 use timer\Domain\EntryType;
-use timer\Domain\Repository\EntryRepositoryInterface;
+use timer\Domain\Repository\EntryRepository;
 use verfriemelt\wrapped\_\Cli\OutputInterface;
 use verfriemelt\wrapped\_\Command\AbstractCommand;
 use verfriemelt\wrapped\_\Command\Attributes\Command;
@@ -25,7 +25,7 @@ final class EntryAddCommand extends AbstractCommand
     private Argument $dateArgument;
 
     public function __construct(
-        private readonly EntryRepositoryInterface $entryRepository,
+        private readonly EntryRepository $entryRepository,
         private readonly Clock $clock,
     ) {}
 

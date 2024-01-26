@@ -6,8 +6,8 @@ namespace timer\Domain;
 
 use DateTimeImmutable;
 use timer\Domain\Dto\EntryListDto;
-use timer\Domain\Repository\ExpectedHoursRepositoryInterface;
-use timer\Domain\Repository\HolidayRepositoryInterface;
+use timer\Domain\Repository\ExpectedHoursRepository;
+use timer\Domain\Repository\HolidayRepository;
 use RuntimeException;
 
 final readonly class WorkTimeCalculator
@@ -15,9 +15,9 @@ final readonly class WorkTimeCalculator
     final public const float EXPECTED_HOURS = 8.0;
 
     public function __construct(
-        private HolidayRepositoryInterface $holidayRepository,
+        private HolidayRepository $holidayRepository,
         private TimeDiffCalcalator $timeDiff,
-        private ExpectedHoursRepositoryInterface $expectedHoursRepository,
+        private ExpectedHoursRepository $expectedHoursRepository,
     ) {}
 
     public function getHours(EntryListDto $entryListDto): float

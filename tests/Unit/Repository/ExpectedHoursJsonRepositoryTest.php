@@ -9,11 +9,11 @@ use Override;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use timer\Domain\Clock;
-use timer\Repository\ExpectedHoursRepository;
+use timer\Repository\ExpectedHoursJsonRepository;
 use verfriemelt\wrapped\_\Clock\MockClock;
 use verfriemelt\wrapped\_\Clock\SystemClock;
 
-class ExpectedHoursRepositoryTest extends TestCase
+class ExpectedHoursJsonRepositoryTest extends TestCase
 {
     private const string TEST_PATH = \TEST_ROOT . '/_data/hours.json';
 
@@ -80,7 +80,7 @@ class ExpectedHoursRepositoryTest extends TestCase
 
     public function test_get_active(): void
     {
-        $repo =  new ExpectedHoursRepository(
+        $repo =  new ExpectedHoursJsonRepository(
             self::getFilepath(),
             new Clock(new MockClock(new DateTimeImmutable('2022-01-01')))
         );
@@ -95,7 +95,7 @@ class ExpectedHoursRepositoryTest extends TestCase
         static::expectException(RuntimeException::class);
         static::expectExceptionMessage('no hours defined');
 
-        $repo =  new ExpectedHoursRepository(
+        $repo =  new ExpectedHoursJsonRepository(
             self::getFilepath(),
             new Clock(new MockClock(new DateTimeImmutable('2100-01-01')))
         );
@@ -105,6 +105,6 @@ class ExpectedHoursRepositoryTest extends TestCase
     public function test_illegal_file_as_storage(): void
     {
         static::expectException(RuntimeException::class);
-        (new ExpectedHoursRepository(\TEST_ROOT, new Clock(new SystemClock())))->all();
+        (new ExpectedHoursJsonRepository(\TEST_ROOT, new Clock(new SystemClock())))->all();
     }
 }

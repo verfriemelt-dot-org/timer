@@ -16,29 +16,29 @@ use timer\Domain\EntryType;
 use timer\Domain\TimeBalanceCalculator;
 use timer\Domain\TimeDiffCalcalator;
 use timer\Domain\WorkTimeCalculator;
-use timer\Repository\MemoryEntryRepository;
-use timer\Repository\MemoryExpectedHoursRepository;
-use timer\Repository\MemoryHolidayRepository;
+use timer\Repository\EntryMemoryRepository;
+use timer\Repository\ExpectedHoursMemoryRepository;
+use timer\Repository\HolidayMemoryRepository;
 use verfriemelt\wrapped\_\Clock\MockClock;
 
 class TimeBalanceCalculatorTest extends TestCase
 {
     private TimeBalanceCalculator $balanceCalculator;
-    private MemoryHolidayRepository $holidayRepository;
-    private MemoryEntryRepository $entryRepository;
+    private HolidayMemoryRepository $holidayRepository;
+    private EntryMemoryRepository $entryRepository;
 
     #[Override]
     public function setUp(): void
     {
-        $this->entryRepository = new MemoryEntryRepository();
-        $this->holidayRepository = new MemoryHolidayRepository();
+        $this->entryRepository = new EntryMemoryRepository();
+        $this->holidayRepository = new HolidayMemoryRepository();
 
         $this->balanceCalculator = new TimeBalanceCalculator(
             $this->entryRepository,
             new WorkTimeCalculator(
                 $this->holidayRepository,
                 new TimeDiffCalcalator(new Clock(new MockClock(new DateTimeImmutable('now')))),
-                new MemoryExpectedHoursRepository()
+                new ExpectedHoursMemoryRepository()
             )
         );
     }

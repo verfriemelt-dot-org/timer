@@ -9,17 +9,17 @@ use Override;
 use PHPUnit\Framework\TestCase;
 use timer\Domain\Dto\DateDto;
 use timer\Domain\Dto\HolidayDto;
-use timer\Domain\Repository\HolidayRepositoryInterface;
-use timer\Repository\MemoryHolidayRepository;
+use timer\Domain\Repository\HolidayRepository;
+use timer\Repository\HolidayMemoryRepository;
 
-class MemoryHolidayRepositoryTest extends TestCase
+class HolidayMemoryRepositoryTest extends TestCase
 {
-    private HolidayRepositoryInterface $repo;
+    private HolidayRepository $repo;
 
     #[Override]
     public function setUp(): void
     {
-        $this->repo = new MemoryHolidayRepository();
+        $this->repo = new HolidayMemoryRepository();
     }
 
     public function test_empty(): void

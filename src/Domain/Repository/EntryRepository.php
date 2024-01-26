@@ -9,7 +9,7 @@ use timer\Domain\Dto\EntryDto;
 use timer\Domain\Dto\EntryListDto;
 use timer\Domain\EntryType;
 
-interface EntryRepositoryInterface
+interface EntryRepository
 {
     public function all(): EntryListDto;
 

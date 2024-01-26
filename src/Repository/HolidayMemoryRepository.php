@@ -7,10 +7,10 @@ namespace timer\Repository;
 use DateTimeImmutable;
 use timer\Domain\Dto\HolidayDto;
 use timer\Domain\Dto\HolidayListDto;
-use timer\Domain\Repository\HolidayRepositoryInterface;
+use timer\Domain\Repository\HolidayRepository;
 use Override;
 
-final class MemoryHolidayRepository implements HolidayRepositoryInterface
+final class HolidayMemoryRepository implements HolidayRepository
 {
     private HolidayListDto $list;
 

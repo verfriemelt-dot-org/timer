@@ -8,18 +8,18 @@ use DateTimeImmutable;
 use Override;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
-use timer\Repository\CurrentWorkRepository;
+use timer\Repository\CurrentWorkJsonRepository;
 
-class CurrentWorkRepositoryTest extends TestCase
+class CurrentWorkJsonRepositoryTest extends TestCase
 {
     private const string TEST_PATH = \TEST_ROOT . '/_data/worktest.json';
 
-    private CurrentWorkRepository $repo;
+    private CurrentWorkJsonRepository $repo;
 
     #[Override]
     public function setUp(): void
     {
-        $this->repo = new CurrentWorkRepository(self::getFilepath());
+        $this->repo = new CurrentWorkJsonRepository(self::getFilepath());
         if (\file_exists(self::getFilepath())) {
             \unlink(self::getFilepath());
         }

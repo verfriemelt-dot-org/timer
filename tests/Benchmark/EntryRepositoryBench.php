@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 use PhpBench\Attributes\Revs;
 use timer\Domain\EntryType;
-use timer\Repository\EntryRepository;
+use timer\Repository\EntryJsonRepository;
 
 class EntryRepositoryBench
 {
-    private readonly EntryRepository $repo;
+    private readonly EntryJsonRepository $repo;
 
     public function __construct()
     {
-        $this->repo = new EntryRepository(TEST_ROOT . '/_data/entries.benchmark.json');
+        $this->repo = new EntryJsonRepository(TEST_ROOT . '/_data/entries.benchmark.json');
     }
 
     #[Revs(1000)]

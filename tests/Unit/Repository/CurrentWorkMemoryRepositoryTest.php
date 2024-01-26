@@ -8,17 +8,17 @@ use DateTimeImmutable;
 use Override;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
-use timer\Domain\Repository\CurrentWorkRepositoryInterface;
-use timer\Repository\MemoryCurrentWorkRepository;
+use timer\Domain\Repository\CurrentWorkRepository;
+use timer\Repository\CurrentWorkMemoryRepository;
 
-class MemoryCurrentWorkRepositoryTest extends TestCase
+class CurrentWorkMemoryRepositoryTest extends TestCase
 {
-    private CurrentWorkRepositoryInterface $repo;
+    private CurrentWorkRepository $repo;
 
     #[Override]
     public function setUp(): void
     {
-        $this->repo = new MemoryCurrentWorkRepository();
+        $this->repo = new CurrentWorkMemoryRepository();
     }
 
     public function test_empty(): void

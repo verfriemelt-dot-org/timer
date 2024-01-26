@@ -10,17 +10,17 @@ use PHPUnit\Framework\TestCase;
 use timer\Domain\Dto\DateDto;
 use timer\Domain\Dto\EntryDto;
 use timer\Domain\EntryType;
-use timer\Domain\Repository\EntryRepositoryInterface;
-use timer\Repository\MemoryEntryRepository;
+use timer\Domain\Repository\EntryRepository;
+use timer\Repository\EntryMemoryRepository;
 
-class MemoryEntryRepositoryTest extends TestCase
+class EntryMemoryRepositoryTest extends TestCase
 {
-    private EntryRepositoryInterface $repo;
+    private EntryRepository $repo;
 
     #[Override]
     public function setUp(): void
     {
-        $this->repo = new MemoryEntryRepository();
+        $this->repo = new EntryMemoryRepository();
     }
 
     public function test_empty(): void

@@ -6,7 +6,7 @@ namespace timer\Domain;
 
 use DateTimeImmutable;
 use timer\Domain\Dto\TimeBalanceDto;
-use timer\Domain\Repository\EntryRepositoryInterface;
+use timer\Domain\Repository\EntryRepository;
 
 /**
  * calculates the current for a given day from the repository
@@ -14,7 +14,7 @@ use timer\Domain\Repository\EntryRepositoryInterface;
 final readonly class TimeBalanceCalculator
 {
     public function __construct(
-        private EntryRepositoryInterface $entryRepository,
+        private EntryRepository $entryRepository,
         private WorkTimeCalculator $workTimeCalculator,
     ) {}
 

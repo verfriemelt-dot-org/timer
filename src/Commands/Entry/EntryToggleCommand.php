@@ -8,8 +8,8 @@ use timer\Domain\Clock;
 use timer\Domain\Dto\DateDto;
 use timer\Domain\Dto\EntryDto;
 use timer\Domain\EntryType;
-use timer\Domain\Repository\CurrentWorkRepositoryInterface;
-use timer\Domain\Repository\EntryRepositoryInterface;
+use timer\Domain\Repository\CurrentWorkRepository;
+use timer\Domain\Repository\EntryRepository;
 use verfriemelt\wrapped\_\Cli\OutputInterface;
 use verfriemelt\wrapped\_\Command\AbstractCommand;
 use verfriemelt\wrapped\_\Command\Attributes\Command;
@@ -25,8 +25,8 @@ final class EntryToggleCommand extends AbstractCommand
     private Argument $time;
 
     public function __construct(
-        private readonly CurrentWorkRepositoryInterface $currentWorkRepository,
-        private readonly EntryRepositoryInterface $entryRepository,
+        private readonly CurrentWorkRepository $currentWorkRepository,
+        private readonly EntryRepository $entryRepository,
         private readonly Clock $clock
     ) {}
 

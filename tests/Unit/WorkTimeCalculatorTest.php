@@ -17,8 +17,8 @@ use timer\Domain\Dto\WorkTimeDto;
 use timer\Domain\EntryType;
 use timer\Domain\TimeDiffCalcalator;
 use timer\Domain\WorkTimeCalculator;
-use timer\Repository\MemoryExpectedHoursRepository;
-use timer\Repository\MemoryHolidayRepository;
+use timer\Repository\ExpectedHoursMemoryRepository;
+use timer\Repository\HolidayMemoryRepository;
 use verfriemelt\wrapped\_\Clock\SystemClock;
 
 class WorkTimeCalculatorTest extends TestCase
@@ -28,7 +28,7 @@ class WorkTimeCalculatorTest extends TestCase
     #[Override]
     public function setUp(): void
     {
-        $repo = new MemoryHolidayRepository();
+        $repo = new HolidayMemoryRepository();
         $repo->add(new HolidayDto(new DateDto('2020-04-02'), 'test'));
         $repo->add(new HolidayDto(new DateDto('2020-04-03'), 'test-with-factor', 50));
 
@@ -37,7 +37,7 @@ class WorkTimeCalculatorTest extends TestCase
             new TimeDiffCalcalator(
                 new Clock(new SystemClock())
             ),
-            new MemoryExpectedHoursRepository()
+            new ExpectedHoursMemoryRepository()
         );
     }
 

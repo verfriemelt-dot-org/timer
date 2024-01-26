@@ -7,14 +7,14 @@ namespace timer\tests\Application;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 use Psr\Clock\ClockInterface;
-use timer\Domain\Repository\CurrentWorkRepositoryInterface;
-use timer\Domain\Repository\EntryRepositoryInterface;
-use timer\Domain\Repository\ExpectedHoursRepositoryInterface;
-use timer\Domain\Repository\HolidayRepositoryInterface;
-use timer\Repository\MemoryCurrentWorkRepository;
-use timer\Repository\MemoryEntryRepository;
-use timer\Repository\MemoryExpectedHoursRepository;
-use timer\Repository\MemoryHolidayRepository;
+use timer\Domain\Repository\CurrentWorkRepository;
+use timer\Domain\Repository\EntryRepository;
+use timer\Domain\Repository\ExpectedHoursRepository;
+use timer\Domain\Repository\HolidayRepository;
+use timer\Repository\CurrentWorkMemoryRepository;
+use timer\Repository\EntryMemoryRepository;
+use timer\Repository\ExpectedHoursMemoryRepository;
+use timer\Repository\HolidayMemoryRepository;
 use verfriemelt\wrapped\_\AbstractKernel;
 use verfriemelt\wrapped\_\Cli\BufferedOutput;
 use verfriemelt\wrapped\_\Cli\Console;
@@ -32,10 +32,10 @@ abstract class ApplicationTestCase extends TestCase
 
     protected BufferedOutput $consoleSpy;
 
-    protected MemoryHolidayRepository $holidayRepository;
-    protected MemoryEntryRepository $entryRepository;
-    protected MemoryCurrentWorkRepository $currentWorkRepository;
-    protected MemoryExpectedHoursRepository $expectedHoursRepository;
+    protected HolidayMemoryRepository $holidayRepository;
+    protected EntryMemoryRepository $entryRepository;
+    protected CurrentWorkMemoryRepository $currentWorkRepository;
+    protected ExpectedHoursMemoryRepository $expectedHoursRepository;
 
     /**
      * @param class-string<AbstractCommand> $command
@@ -67,16 +67,16 @@ abstract class ApplicationTestCase extends TestCase
         };
 
         $this->kernel->getContainer()->register(
-            HolidayRepositoryInterface::class,
-            $this->holidayRepository = new MemoryHolidayRepository()
+            HolidayRepository::class,
+            $this->holidayRepository = new HolidayMemoryRepository()
         );
         $this->kernel->getContainer()->register(
-            EntryRepositoryInterface::class,
-            $this->entryRepository = new MemoryEntryRepository()
+            EntryRepository::class,
+            $this->entryRepository = new EntryMemoryRepository()
         );
         $this->kernel->getContainer()->register(
-            CurrentWorkRepositoryInterface::class,
-            $this->currentWorkRepository = new MemoryCurrentWorkRepository()
+            CurrentWorkRepository::class,
+            $this->currentWorkRepository = new CurrentWorkMemoryRepository()
         );
         $this->kernel->getContainer()->register(
             ClockInterface::class,
@@ -84,8 +84,8 @@ abstract class ApplicationTestCase extends TestCase
         );
 
         $this->kernel->getContainer()->register(
-            ExpectedHoursRepositoryInterface::class,
-            $this->expectedHoursRepository = new MemoryExpectedHoursRepository()
+            ExpectedHoursRepository::class,
+            $this->expectedHoursRepository = new ExpectedHoursMemoryRepository()
         );
     }
 }

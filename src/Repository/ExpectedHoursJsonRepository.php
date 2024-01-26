@@ -7,12 +7,12 @@ namespace timer\Repository;
 use timer\Domain\Clock;
 use timer\Domain\Dto\ExpectedHoursDto;
 use timer\Domain\Dto\ExpectedHoursListDto;
-use timer\Domain\Repository\ExpectedHoursRepositoryInterface;
+use timer\Domain\Repository\ExpectedHoursRepository;
 use verfriemelt\wrapped\_\Serializer\Encoder\JsonEncoder;
 use RuntimeException;
 use Override;
 
-final class ExpectedHoursRepository implements ExpectedHoursRepositoryInterface
+final class ExpectedHoursJsonRepository implements ExpectedHoursRepository
 {
     private ExpectedHoursListDto $list;
 

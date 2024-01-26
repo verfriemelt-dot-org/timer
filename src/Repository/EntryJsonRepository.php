@@ -8,12 +8,12 @@ use DateTimeImmutable;
 use timer\Domain\Dto\EntryDto;
 use timer\Domain\Dto\EntryListDto;
 use timer\Domain\EntryType;
-use timer\Domain\Repository\EntryRepositoryInterface;
+use timer\Domain\Repository\EntryRepository;
 use verfriemelt\wrapped\_\Serializer\Encoder\JsonEncoder;
 use RuntimeException;
 use Override;
 
-final class EntryRepository implements EntryRepositoryInterface
+final class EntryJsonRepository implements EntryRepository
 {
     private EntryListDto $list;
 

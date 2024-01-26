@@ -7,10 +7,10 @@ namespace timer\Repository;
 use DateTimeImmutable;
 use RuntimeException;
 use timer\Domain\Dto\WorkTimeDto;
-use timer\Domain\Repository\CurrentWorkRepositoryInterface;
+use timer\Domain\Repository\CurrentWorkRepository;
 use Override;
 
-final class MemoryCurrentWorkRepository implements CurrentWorkRepositoryInterface
+final class CurrentWorkMemoryRepository implements CurrentWorkRepository
 {
     private ?WorkTimeDto $current = null;
 

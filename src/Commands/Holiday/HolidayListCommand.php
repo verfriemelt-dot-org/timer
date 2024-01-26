@@ -6,7 +6,7 @@ namespace timer\Commands\Holiday;
 
 use timer\Domain\Clock;
 use timer\Domain\Dto\HolidayDto;
-use timer\Domain\Repository\HolidayRepositoryInterface;
+use timer\Domain\Repository\HolidayRepository;
 use verfriemelt\wrapped\_\Cli\OutputInterface;
 use verfriemelt\wrapped\_\Command\AbstractCommand;
 use verfriemelt\wrapped\_\Command\Attributes\Command;
@@ -22,7 +22,7 @@ final class HolidayListCommand extends AbstractCommand
     private Argument $year;
 
     public function __construct(
-        private readonly HolidayRepositoryInterface $holidayRepository,
+        private readonly HolidayRepository $holidayRepository,
         private readonly Clock $clock
     ) {}
 

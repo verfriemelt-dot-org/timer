@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace timer\Domain\Print;
 
 use DateTimeImmutable;
-use timer\Domain\Repository\EntryRepositoryInterface;
+use timer\Domain\Repository\EntryRepository;
 use verfriemelt\wrapped\_\Cli\OutputInterface;
 
 final readonly class CsvPrinter
 {
     public function __construct(
-        private EntryRepositoryInterface $entryRepository,
+        private EntryRepository $entryRepository,
     ) {}
 
     public function print(

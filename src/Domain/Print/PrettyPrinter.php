@@ -6,8 +6,8 @@ namespace timer\Domain\Print;
 
 use DateTimeImmutable;
 use timer\Domain\EntryType;
-use timer\Domain\Repository\EntryRepositoryInterface;
-use timer\Domain\Repository\HolidayRepositoryInterface;
+use timer\Domain\Repository\EntryRepository;
+use timer\Domain\Repository\HolidayRepository;
 use timer\Domain\TimeBalanceCalculator;
 use timer\Domain\WorkTimeCalculator;
 use verfriemelt\wrapped\_\Cli\Console;
@@ -17,9 +17,9 @@ final readonly class PrettyPrinter
 {
     public function __construct(
         private WorkTimeCalculator $workTimeCalculator,
-        private EntryRepositoryInterface $entryRepository,
+        private EntryRepository $entryRepository,
         private TimeBalanceCalculator $timeBalance,
-        private HolidayRepositoryInterface $holidayRepository,
+        private HolidayRepository $holidayRepository,
     ) {}
 
     public function print(

@@ -11,18 +11,18 @@ use RuntimeException;
 use timer\Domain\Dto\DateDto;
 use timer\Domain\Dto\EntryDto;
 use timer\Domain\EntryType;
-use timer\Repository\EntryRepository;
+use timer\Repository\EntryJsonRepository;
 
-class EntryRepositoryTest extends TestCase
+class EntryJsonRepositoryTest extends TestCase
 {
     private const string TEST_PATH = \TEST_ROOT . '/_data/entrytest.json';
 
-    private EntryRepository $repo;
+    private EntryJsonRepository $repo;
 
     #[Override]
     public function setUp(): void
     {
-        $this->repo = new EntryRepository(self::getFilepath());
+        $this->repo = new EntryJsonRepository(self::getFilepath());
 
         if (\file_exists(self::getFilepath())) {
             unlink(self::getFilepath());
@@ -80,7 +80,7 @@ class EntryRepositoryTest extends TestCase
     public function test_illegal_file_as_storage(): void
     {
         static::expectException(RuntimeException::class);
-        (new EntryRepository(\TEST_ROOT))->all();
+        (new EntryJsonRepository(\TEST_ROOT))->all();
     }
 
     public function test_get_day(): void

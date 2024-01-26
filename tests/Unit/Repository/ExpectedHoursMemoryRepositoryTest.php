@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Unit\Repository;
 
 use PHPUnit\Framework\TestCase;
-use timer\Repository\MemoryExpectedHoursRepository;
+use timer\Repository\ExpectedHoursMemoryRepository;
 
-class MemoryExpectedHoursRepositoryTest extends TestCase
+class ExpectedHoursMemoryRepositoryTest extends TestCase
 {
     public function test_get_active(): void
     {
-        $repo =  new MemoryExpectedHoursRepository();
+        $repo =  new ExpectedHoursMemoryRepository();
         $hours = $repo->getActive();
 
         static::assertSame([1 => 8.0, 2 => 8.0, 3 => 8.0, 4 => 8.0, 5 => 8.0, 6 => 0.0, 7 => 0.0], $hours->hours->toArray());
@@ -19,7 +19,7 @@ class MemoryExpectedHoursRepositoryTest extends TestCase
 
     public function test_get_all(): void
     {
-        $repo =  new MemoryExpectedHoursRepository();
+        $repo =  new ExpectedHoursMemoryRepository();
         $hours = $repo->all()->hours;
 
         static::assertIsList($hours);

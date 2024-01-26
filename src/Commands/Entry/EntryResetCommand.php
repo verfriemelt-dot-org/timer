@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace timer\Commands\Entry;
 
-use timer\Domain\Repository\CurrentWorkRepositoryInterface;
+use timer\Domain\Repository\CurrentWorkRepository;
 use verfriemelt\wrapped\_\Cli\OutputInterface;
 use verfriemelt\wrapped\_\Command\AbstractCommand;
 use verfriemelt\wrapped\_\Command\Attributes\Command;
@@ -15,7 +15,7 @@ use Override;
 final class EntryResetCommand extends AbstractCommand
 {
     public function __construct(
-        private readonly CurrentWorkRepositoryInterface $currentWorkRepository,
+        private readonly CurrentWorkRepository $currentWorkRepository,
     ) {}
 
     #[Override]

@@ -7,12 +7,12 @@ namespace timer\Repository;
 use DateTimeImmutable;
 use timer\Domain\Dto\HolidayDto;
 use timer\Domain\Dto\HolidayListDto;
-use timer\Domain\Repository\HolidayRepositoryInterface;
+use timer\Domain\Repository\HolidayRepository;
 use verfriemelt\wrapped\_\Serializer\Encoder\JsonEncoder;
 use RuntimeException;
 use Override;
 
-final class HolidayRepository implements HolidayRepositoryInterface
+final class HolidayJsonRepository implements HolidayRepository
 {
     private HolidayListDto $list;
 

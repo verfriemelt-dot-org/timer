@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace timer\Commands\Hours;
 
-use timer\Domain\Repository\ExpectedHoursRepositoryInterface;
+use timer\Domain\Repository\ExpectedHoursRepository;
 use verfriemelt\wrapped\_\Cli\OutputInterface;
 use verfriemelt\wrapped\_\Command\AbstractCommand;
 use verfriemelt\wrapped\_\Command\Attributes\Command;
@@ -15,7 +15,7 @@ use Override;
 final class HoursShowCommand extends AbstractCommand
 {
     public function __construct(
-        private readonly ExpectedHoursRepositoryInterface $expectedHoursRepository,
+        private readonly ExpectedHoursRepository $expectedHoursRepository,
     ) {}
 
     #[Override]

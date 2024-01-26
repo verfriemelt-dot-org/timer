@@ -7,7 +7,7 @@ namespace timer\Domain\Repository;
 use DateTimeImmutable;
 use timer\Domain\Dto\WorkTimeDto;
 
-interface CurrentWorkRepositoryInterface
+interface CurrentWorkRepository
 {
     public function toggle(DateTimeImmutable $time): WorkTimeDto;
 
