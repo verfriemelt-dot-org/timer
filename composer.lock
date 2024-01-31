@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "530dd1cf15d02b81c8f495228110a264",
+    "content-hash": "3542d462063192a06dc3791fa615f30b",
     "packages": [
         {
             "name": "psr/clock",
@@ -60,12 +60,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/verfriemelt-dot-org/wrapped.git",
-                "reference": "d3cb6d220c36e4e6f175fb7128a09c4f4e1ea638"
+                "reference": "d07524bb8c377f14f3f0742f9ff1ad7e70fbdd1b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/verfriemelt-dot-org/wrapped/zipball/d3cb6d220c36e4e6f175fb7128a09c4f4e1ea638",
-                "reference": "d3cb6d220c36e4e6f175fb7128a09c4f4e1ea638",
+                "url": "https://api.github.com/repos/verfriemelt-dot-org/wrapped/zipball/d07524bb8c377f14f3f0742f9ff1ad7e70fbdd1b",
+                "reference": "d07524bb8c377f14f3f0742f9ff1ad7e70fbdd1b",
                 "shasum": ""
             },
             "require": {
@@ -106,7 +106,7 @@
                 "issues": "https://github.com/verfriemelt-dot-org/wrapped/issues",
                 "source": "https://github.com/verfriemelt-dot-org/wrapped/tree/master"
             },
-            "time": "2024-01-26T10:18:23+00:00"
+            "time": "2024-01-31T06:43:12+00:00"
         }
     ],
     "packages-dev": [
@@ -2587,16 +2587,16 @@
         },
         {
             "name": "rector/rector",
-            "version": "0.19.2",
+            "version": "0.19.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rectorphp/rector.git",
-                "reference": "bc96a99895bf47c6bfe70ea1b799f0081ed5a903"
+                "reference": "89c895d127b9d248d2af007068a824b5348ef81f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rectorphp/rector/zipball/bc96a99895bf47c6bfe70ea1b799f0081ed5a903",
-                "reference": "bc96a99895bf47c6bfe70ea1b799f0081ed5a903",
+                "url": "https://api.github.com/repos/rectorphp/rector/zipball/89c895d127b9d248d2af007068a824b5348ef81f",
+                "reference": "89c895d127b9d248d2af007068a824b5348ef81f",
                 "shasum": ""
             },
             "require": {
@@ -2631,7 +2631,7 @@
             ],
             "support": {
                 "issues": "https://github.com/rectorphp/rector/issues",
-                "source": "https://github.com/rectorphp/rector/tree/0.19.2"
+                "source": "https://github.com/rectorphp/rector/tree/0.19.5"
             },
             "funding": [
                 {
@@ -2639,7 +2639,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-01-19T10:58:30+00:00"
+            "time": "2024-01-29T23:53:47+00:00"
         },
         {
             "name": "sanmai/later",

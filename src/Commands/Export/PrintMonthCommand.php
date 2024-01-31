@@ -9,6 +9,7 @@ use timer\Domain\Print\PrettyPrinter;
 use verfriemelt\wrapped\_\Cli\OutputInterface;
 use verfriemelt\wrapped\_\Command\AbstractCommand;
 use verfriemelt\wrapped\_\Command\Attributes\Command;
+use verfriemelt\wrapped\_\Command\Attributes\Alias;
 use verfriemelt\wrapped\_\Command\CommandArguments\Argument;
 use verfriemelt\wrapped\_\Command\CommandArguments\ArgumentMissingException;
 use verfriemelt\wrapped\_\Command\CommandArguments\ArgvParser;
@@ -16,6 +17,7 @@ use verfriemelt\wrapped\_\Command\ExitCode;
 use Override;
 
 #[Command('export:text:month', 'prints the given month')]
+#[Alias('print')]
 final class PrintMonthCommand extends AbstractCommand
 {
     private Argument $year;
