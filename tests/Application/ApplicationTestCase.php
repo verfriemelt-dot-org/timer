@@ -11,11 +11,11 @@ use timer\Domain\Repository\CurrentWorkRepository;
 use timer\Domain\Repository\EntryRepository;
 use timer\Domain\Repository\ExpectedHoursRepository;
 use timer\Domain\Repository\HolidayRepository;
+use timer\Kernel;
 use timer\Repository\CurrentWorkMemoryRepository;
 use timer\Repository\EntryMemoryRepository;
 use timer\Repository\ExpectedHoursMemoryRepository;
 use timer\Repository\HolidayMemoryRepository;
-use verfriemelt\wrapped\_\AbstractKernel;
 use verfriemelt\wrapped\_\Cli\BufferedOutput;
 use verfriemelt\wrapped\_\Cli\Console;
 use verfriemelt\wrapped\_\Clock\MockClock;
@@ -59,13 +59,7 @@ abstract class ApplicationTestCase extends TestCase
     #[Override]
     public function setUp(): void
     {
-        $this->kernel = new class () extends AbstractKernel {
-            public function getProjectPath(): string
-            {
-                return \TEST_ROOT;
-            }
-        };
-
+        $this->kernel = new Kernel();
         $this->kernel->getContainer()->register(
             HolidayRepository::class,
             $this->holidayRepository = new HolidayMemoryRepository()

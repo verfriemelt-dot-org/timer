@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace timer;
 
-use verfriemelt\wrapped\_\AbstractKernel;
 use Override;
+use verfriemelt\wrapped\_\Kernel\AbstractKernel;
 
 class Kernel extends AbstractKernel
 {
