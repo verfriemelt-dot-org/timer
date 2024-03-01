@@ -64,4 +64,35 @@ class EntryBalanceCommandTest extends ApplicationTestCase
             $this->consoleSpy->getBuffer()
         );
     }
+
+    public function test_diff_zero(): void
+    {
+        $this->clock->set(new DateTimeImmutable('2023-01-03 00:00:00'));
+        $this->entryRepository->add(
+            new EntryDto(
+                new DateDto('2023-01-02'),
+                EntryType::Work,
+                new WorkTimeDto(
+                    '2023-01-02 08:00:00',
+                    '2023-01-02 16:00:00',
+                )
+            )
+        );
+
+        static::assertSame(
+            ExitCode::Success,
+            $this->executeCommand(
+                EntryBalanceCommand::class,
+                []
+            )
+        );
+
+        static::assertSame(
+            <<<OUTPUT
+            8 // 8 (0)
+            
+            OUTPUT,
+            $this->consoleSpy->getBuffer()
+        );
+    }
 }
