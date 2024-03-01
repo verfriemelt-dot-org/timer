@@ -28,7 +28,9 @@ final class EntryBalanceCommand extends AbstractCommand
             $this->clock->fromString('Yesterday')
         );
 
-        $output->writeLn("{$dto->actual} // {$dto->expected}");
+        $total = ($dto->actual - $dto->expected > 0 ? '+' : '') . ($dto->actual - $dto->expected);
+
+        $output->writeLn("{$dto->actual} // {$dto->expected} ({$total})");
 
         return ExitCode::Success;
     }
