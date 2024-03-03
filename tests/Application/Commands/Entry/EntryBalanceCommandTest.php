@@ -17,14 +17,7 @@ class EntryBalanceCommandTest extends ApplicationTestCase
 {
     public function test_default(): void
     {
-        static::assertSame(
-            ExitCode::Success,
-            $this->executeCommand(
-                EntryBalanceCommand::class,
-                []
-            )
-        );
-
+        static::assertSame(ExitCode::Success, $this->executeCommand(EntryBalanceCommand::class));
         static::assertSame(
             <<<OUTPUT
             0 // 1944 (-1944)
@@ -48,14 +41,7 @@ class EntryBalanceCommandTest extends ApplicationTestCase
             )
         );
 
-        static::assertSame(
-            ExitCode::Success,
-            $this->executeCommand(
-                EntryBalanceCommand::class,
-                []
-            )
-        );
-
+        static::assertSame(ExitCode::Success, $this->executeCommand(EntryBalanceCommand::class));
         static::assertSame(
             <<<OUTPUT
             12 // 8 (+4)
@@ -79,14 +65,7 @@ class EntryBalanceCommandTest extends ApplicationTestCase
             )
         );
 
-        static::assertSame(
-            ExitCode::Success,
-            $this->executeCommand(
-                EntryBalanceCommand::class,
-                []
-            )
-        );
-
+        static::assertSame(ExitCode::Success, $this->executeCommand(EntryBalanceCommand::class));
         static::assertSame(
             <<<OUTPUT
             8 // 8 (0)

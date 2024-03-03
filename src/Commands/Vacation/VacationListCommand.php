@@ -40,6 +40,7 @@ final class VacationListCommand extends AbstractCommand
 
         $vacations = $this->entryRepository->getByType(... EntryType::VACATION)->entries;
         $vacations = \array_filter($vacations, static fn (EntryDto $e): bool => \str_starts_with($e->date->day, $year));
+        usort($vacations, static fn (EntryDto $a, EntryDto $b): int => \strnatcmp($a->date->day, $b->date->day));
 
         foreach ($vacations as $dto) {
             $output->writeLn("{$dto->date->day} {$dto->type->value}");
