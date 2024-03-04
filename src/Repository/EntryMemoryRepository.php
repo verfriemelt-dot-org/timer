@@ -56,4 +56,30 @@ final class EntryMemoryRepository implements EntryRepository
             )
         );
     }
+
+    #[Override]
+    public function getByRange(DateTimeImmutable $from, DateTimeImmutable $till, EntryType ... $types): EntryListDto
+    {
+        $elements = [];
+
+        foreach ($this->all()->entries as $entry) {
+            if (\count($types) > 0 && !\in_array($entry->type, $types, true)) {
+                continue;
+            }
+
+            $date = new DateTimeImmutable($entry->date->day);
+
+            if ($date < $from) {
+                continue;
+            }
+
+            if ($date >= $till) {
+                continue;
+            }
+
+            $elements[] = $entry;
+        }
+
+        return new EntryListDto(... $elements);
+    }
 }

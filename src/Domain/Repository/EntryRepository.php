@@ -18,4 +18,6 @@ interface EntryRepository
     public function getDay(DateTimeImmutable $day): EntryListDto;
 
     public function getByType(EntryType ... $types): EntryListDto;
+
+    public function getByRange(DateTimeImmutable $from, DateTimeImmutable $till, EntryType ... $types): EntryListDto;
 }
