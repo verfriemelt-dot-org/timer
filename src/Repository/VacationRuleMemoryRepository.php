@@ -6,6 +6,7 @@ namespace timer\Repository;
 
 use DateTimeImmutable;
 use Override;
+use timer\Domain\Clock;
 use timer\Domain\Dto\VacationRuleDto;
 use timer\Domain\Dto\VacationRuleListDto;
 use timer\Domain\Repository\VacationRuleRepository;
@@ -15,6 +16,7 @@ final class VacationRuleMemoryRepository implements VacationRuleRepository
     private VacationRuleListDto $list;
 
     public function __construct(
+        private readonly Clock $clock
     ) {
         $this->list = new VacationRuleListDto();
     }
@@ -43,7 +45,7 @@ final class VacationRuleMemoryRepository implements VacationRuleRepository
         return new VacationRuleListDto(
             ...\array_filter(
                 $this->all()->rules,
-                static fn (VacationRuleDto $ruleDto): bool => $date >= new DateTimeImmutable($ruleDto->validFrom->day) && $date < new DateTimeImmutable($ruleDto->validTill->day)
+                fn (VacationRuleDto $ruleDto): bool => $date >= $this->clock->fromString($ruleDto->validFrom->day) && $date < $this->clock->fromString($ruleDto->validTill->day)
             )
         );
     }

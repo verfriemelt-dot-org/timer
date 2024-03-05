@@ -7,6 +7,7 @@ namespace timer\tests\Application;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 use Psr\Clock\ClockInterface;
+use timer\Domain\Clock;
 use timer\Domain\Repository\CurrentWorkRepository;
 use timer\Domain\Repository\EntryRepository;
 use timer\Domain\Repository\ExpectedHoursRepository;
@@ -61,22 +62,22 @@ abstract class ApplicationTestCase extends TestCase
     {
         $this->kernel = new Kernel();
         $this->kernel->getContainer()->register(
+            ClockInterface::class,
+            $this->clock = new MockClock(new DateTimeImmutable('2023-12-07 14:32:16'))
+        );
+
+        $this->kernel->getContainer()->register(
             HolidayRepository::class,
             $this->holidayRepository = new HolidayMemoryRepository()
         );
         $this->kernel->getContainer()->register(
             EntryRepository::class,
-            $this->entryRepository = new EntryMemoryRepository()
+            $this->entryRepository = new EntryMemoryRepository($this->kernel->getContainer()->get(Clock::class))
         );
         $this->kernel->getContainer()->register(
             CurrentWorkRepository::class,
             $this->currentWorkRepository = new CurrentWorkMemoryRepository()
         );
-        $this->kernel->getContainer()->register(
-            ClockInterface::class,
-            $this->clock = new MockClock(new DateTimeImmutable('2023-12-07 14:32:16'))
-        );
-
         $this->kernel->getContainer()->register(
             ExpectedHoursRepository::class,
             $this->expectedHoursRepository = new ExpectedHoursMemoryRepository()

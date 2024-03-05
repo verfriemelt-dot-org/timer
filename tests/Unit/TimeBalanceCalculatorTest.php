@@ -20,6 +20,7 @@ use timer\Repository\EntryMemoryRepository;
 use timer\Repository\ExpectedHoursMemoryRepository;
 use timer\Repository\HolidayMemoryRepository;
 use verfriemelt\wrapped\_\Clock\MockClock;
+use verfriemelt\wrapped\_\Clock\SystemClock;
 
 class TimeBalanceCalculatorTest extends TestCase
 {
@@ -30,7 +31,7 @@ class TimeBalanceCalculatorTest extends TestCase
     #[Override]
     public function setUp(): void
     {
-        $this->entryRepository = new EntryMemoryRepository();
+        $this->entryRepository = new EntryMemoryRepository(new Clock(new SystemClock()));
         $this->holidayRepository = new HolidayMemoryRepository();
 
         $this->balanceCalculator = new TimeBalanceCalculator(

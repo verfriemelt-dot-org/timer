@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace timer\Repository;
 
 use DateTimeImmutable;
+use timer\Domain\Clock;
 use timer\Domain\Dto\EntryDto;
 use timer\Domain\Dto\EntryListDto;
 use timer\Domain\EntryType;
@@ -16,6 +17,7 @@ final class EntryMemoryRepository implements EntryRepository
     private EntryListDto $list;
 
     public function __construct(
+        private readonly Clock $clock
     ) {
         $this->list = new EntryListDto();
     }
@@ -67,7 +69,7 @@ final class EntryMemoryRepository implements EntryRepository
                 continue;
             }
 
-            $date = new DateTimeImmutable($entry->date->day);
+            $date = $this->clock->fromString($entry->date->day);
 
             if ($date < $from) {
                 continue;

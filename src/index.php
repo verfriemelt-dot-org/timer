@@ -33,7 +33,7 @@ $path = $kernel->getProjectPath() . '/' . ($_ENV['DATA_PATH'] ?? throw new Runti
 
 $kernel->getContainer()->register(ClockInterface::class, new SystemClock());
 $kernel->getContainer()->register(HolidayRepository::class, new HolidayJsonRepository($path . '/holidays.json'));
-$kernel->getContainer()->register(EntryRepository::class, new EntryJsonRepository($path . '/entries.json'));
+$kernel->getContainer()->register(EntryRepository::class, new EntryJsonRepository($path . '/entries.json', $kernel->getContainer()->get(Clock::class)));
 $kernel->getContainer()->register(CurrentWorkRepository::class, new CurrentWorkJsonRepository($path . '/current.json'));
 $kernel->getContainer()->register(ExpectedHoursRepository::class, new ExpectedHoursJsonRepository($path . '/hours.json', $kernel->getContainer()->get(Clock::class)));
 

@@ -6,6 +6,7 @@ namespace timer\tests\Unit;
 
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
+use timer\Domain\Clock;
 use timer\Domain\Dto\DateDto;
 use timer\Domain\Dto\EntryDto;
 use timer\Domain\Dto\VacationRuleDto;
@@ -17,6 +18,7 @@ use timer\Domain\Vacation\VacationRuleType;
 use timer\Repository\EntryMemoryRepository;
 use timer\Repository\VacationRuleMemoryRepository;
 use Override;
+use verfriemelt\wrapped\_\Clock\SystemClock;
 
 class VacationClaimTest extends TestCase
 {
@@ -27,11 +29,14 @@ class VacationClaimTest extends TestCase
     #[Override]
     public function setUp(): void
     {
-        $this->ruleRepository = new VacationRuleMemoryRepository();
-        $this->entryRepository = new EntryMemoryRepository();
+        $clock =  new Clock(new SystemClock());
+
+        $this->ruleRepository = new VacationRuleMemoryRepository($clock);
+        $this->entryRepository = new EntryMemoryRepository($clock);
         $this->vacationClaim = new VacationClaim(
             $this->ruleRepository,
             $this->entryRepository,
+            $clock,
         );
     }
 

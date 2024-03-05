@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace timer\Domain\Vacation;
 
 use DateTimeImmutable;
+use timer\Domain\Clock;
 use timer\Domain\Dto\VacationRuleDto;
 use timer\Domain\EntryType;
 use timer\Domain\Repository\EntryRepository;
@@ -16,6 +17,7 @@ class VacationClaim
     public function __construct(
         private readonly VacationRuleRepository $ruleRepository,
         private readonly EntryRepository $entryRepository,
+        private readonly Clock $clock,
     ) {}
 
     public function getTotalVacationDays(DateTimeImmutable $date): float
@@ -37,13 +39,13 @@ class VacationClaim
 
         $from = array_reduce(
             $ruleList->rules,
-            static fn (DateTimeImmutable $carry, VacationRuleDto $rule): DateTimeImmutable => new DateTimeImmutable($rule->validFrom->day) < $carry ? new DateTimeImmutable($rule->validFrom->day) : $carry,
-            new DateTimeImmutable('3000-01-01')
+            fn (DateTimeImmutable $carry, VacationRuleDto $rule): DateTimeImmutable => $this->clock->fromString($rule->validFrom->day) < $carry ? $this->clock->fromString($rule->validFrom->day) : $carry,
+            $this->clock->fromString('3000-01-01')
         );
         $till = array_reduce(
             $ruleList->rules,
-            static fn (DateTimeImmutable $carry, VacationRuleDto $rule): DateTimeImmutable => new DateTimeImmutable($rule->validTill->day) > $carry ? new DateTimeImmutable($rule->validTill->day) : $carry,
-            new DateTimeImmutable('2000-01-01')
+            fn (DateTimeImmutable $carry, VacationRuleDto $rule): DateTimeImmutable => $this->clock->fromString($rule->validTill->day) > $carry ? $this->clock->fromString($rule->validTill->day) : $carry,
+            $this->clock->fromString('2000-01-01')
         );
 
         $entries = $this->entryRepository->getByRange($from, $till, EntryType::Vacation, EntryType::VacationHalf);

@@ -8,10 +8,12 @@ use DateTimeImmutable;
 use Override;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
+use timer\Domain\Clock;
 use timer\Domain\Dto\DateDto;
 use timer\Domain\Dto\EntryDto;
 use timer\Domain\EntryType;
 use timer\Repository\EntryJsonRepository;
+use verfriemelt\wrapped\_\Clock\SystemClock;
 
 class EntryJsonRepositoryTest extends TestCase
 {
@@ -22,7 +24,10 @@ class EntryJsonRepositoryTest extends TestCase
     #[Override]
     public function setUp(): void
     {
-        $this->repo = new EntryJsonRepository(self::getFilepath());
+        $this->repo = new EntryJsonRepository(
+            self::getFilepath(),
+            new Clock(new SystemClock())
+        );
 
         if (\file_exists(self::getFilepath())) {
             unlink(self::getFilepath());
@@ -80,7 +85,10 @@ class EntryJsonRepositoryTest extends TestCase
     public function test_illegal_file_as_storage(): void
     {
         static::expectException(RuntimeException::class);
-        (new EntryJsonRepository(\TEST_ROOT))->all();
+        (new EntryJsonRepository(
+            \TEST_ROOT,
+            new Clock(new SystemClock())
+        ))->all();
     }
 
     public function test_get_day(): void

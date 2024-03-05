@@ -7,11 +7,13 @@ namespace timer\tests\Unit\Repository;
 use DateTimeImmutable;
 use Override;
 use PHPUnit\Framework\TestCase;
+use timer\Domain\Clock;
 use timer\Domain\Dto\DateDto;
 use timer\Domain\Dto\EntryDto;
 use timer\Domain\EntryType;
 use timer\Domain\Repository\EntryRepository;
 use timer\Repository\EntryMemoryRepository;
+use verfriemelt\wrapped\_\Clock\SystemClock;
 
 class EntryMemoryRepositoryTest extends TestCase
 {
@@ -20,7 +22,7 @@ class EntryMemoryRepositoryTest extends TestCase
     #[Override]
     public function setUp(): void
     {
-        $this->repo = new EntryMemoryRepository();
+        $this->repo = new EntryMemoryRepository(new Clock(new SystemClock()));
     }
 
     public function test_empty(): void
