@@ -83,4 +83,10 @@ abstract class ApplicationTestCase extends TestCase
             $this->expectedHoursRepository = new ExpectedHoursMemoryRepository()
         );
     }
+
+    #[Override]
+    public function tearDown(): void
+    {
+        $this->kernel->shutdown();
+    }
 }
