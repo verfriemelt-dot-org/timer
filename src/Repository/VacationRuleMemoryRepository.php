@@ -10,13 +10,14 @@ use timer\Domain\Clock;
 use timer\Domain\Dto\VacationRuleDto;
 use timer\Domain\Dto\VacationRuleListDto;
 use timer\Domain\Repository\VacationRuleRepository;
+use verfriemelt\wrapped\_\Clock\SystemClock;
 
 final class VacationRuleMemoryRepository implements VacationRuleRepository
 {
     private VacationRuleListDto $list;
 
     public function __construct(
-        private readonly Clock $clock
+        private readonly Clock $clock = new Clock(new SystemClock())
     ) {
         $this->list = new VacationRuleListDto();
     }
@@ -39,9 +40,6 @@ final class VacationRuleMemoryRepository implements VacationRuleRepository
     #[Override]
     public function getByDate(DateTimeImmutable $date): VacationRuleListDto
     {
-        // drop time component
-        $date = $date->setTime(0, 0);
-
         return new VacationRuleListDto(
             ...\array_filter(
                 $this->all()->rules,

@@ -42,8 +42,8 @@ class HolidayMemoryRepositoryTest extends TestCase
 
     public function test_filter_by_year(): void
     {
-        $this->repo->add(new HolidayDto(new DateDto('2022-02-02'), 'test 1'));
-        $this->repo->add(new HolidayDto(new DateDto('2023-02-02'), 'test 1'));
+        $this->repo->add(new HolidayDto(new DateDto('2022-01-01'), 'test 1'));
+        $this->repo->add(new HolidayDto(new DateDto('2023-01-01'), 'test 1'));
         static::assertCount(1, $this->repo->getByYear('2023')->holidays);
     }
 }

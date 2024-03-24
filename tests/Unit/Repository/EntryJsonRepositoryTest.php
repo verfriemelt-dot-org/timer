@@ -116,6 +116,26 @@ class EntryJsonRepositoryTest extends TestCase
         static::assertCount(1, $this->repo->getByType(EntryType::Sick)->entries);
     }
 
+    public function test_get_by_range(): void
+    {
+        $this->repo->add(new EntryDto(new DateDto('2021-02-01'), type: EntryType::Work));
+        $this->repo->add(new EntryDto(new DateDto('2022-02-01'), type: EntryType::Work));
+
+        static::assertCount(1, $this->repo->getByRange(new DateTimeImmutable('2022-02-01'), new DateTimeImmutable('2022-02-02'))->entries);
+        static::assertCount(0, $this->repo->getByRange(new DateTimeImmutable('2022-02-02'), new DateTimeImmutable('2022-02-03'))->entries);
+        static::assertCount(0, $this->repo->getByRange(new DateTimeImmutable('2022-01-01'), new DateTimeImmutable('2022-02-01'))->entries);
+    }
+
+    public function test_get_by_range_with_type(): void
+    {
+        $this->repo->add(new EntryDto(new DateDto('2022-02-01'), type: EntryType::Vacation));
+        $this->repo->add(new EntryDto(new DateDto('2022-02-01'), type: EntryType::Work));
+
+        static::assertCount(2, $this->repo->getByRange(new DateTimeImmutable('2022-02-01'), new DateTimeImmutable('2022-02-02'))->entries);
+        static::assertCount(0, $this->repo->getByRange(new DateTimeImmutable('2022-02-01'), new DateTimeImmutable('2022-02-02'), EntryType::Sick)->entries);
+        static::assertCount(1, $this->repo->getByRange(new DateTimeImmutable('2022-02-01'), new DateTimeImmutable('2022-02-02'), EntryType::Work)->entries);
+    }
+
     public function test_get_by_date_with_cache(): void
     {
         $this->repo->add(new EntryDto(new DateDto('2022-02-01'), type: EntryType::Work));
