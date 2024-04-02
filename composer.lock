@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b961cbbd7bf368e0fce2d5c15e6a8cb1",
+    "content-hash": "fca5e69403a343566a493641de20ee97",
     "packages": [
         {
             "name": "psr/clock",
@@ -60,12 +60,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/verfriemelt-dot-org/wrapped.git",
-                "reference": "16dff8de32dbd79202756b86e9422fb813b1d8fb"
+                "reference": "0ec5ee28d4ff62d4e9ed55a0121e16bf2543ce37"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/verfriemelt-dot-org/wrapped/zipball/16dff8de32dbd79202756b86e9422fb813b1d8fb",
-                "reference": "16dff8de32dbd79202756b86e9422fb813b1d8fb",
+                "url": "https://api.github.com/repos/verfriemelt-dot-org/wrapped/zipball/0ec5ee28d4ff62d4e9ed55a0121e16bf2543ce37",
+                "reference": "0ec5ee28d4ff62d4e9ed55a0121e16bf2543ce37",
                 "shasum": ""
             },
             "require": {
@@ -78,11 +78,11 @@
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^3.52.1",
-                "infection/infection": "^0.28.0",
-                "phpstan/phpstan": "^1.10.65",
+                "infection/infection": "^0.28.1",
+                "phpstan/phpstan": "^1.10.66",
                 "phpstan/phpstan-phpunit": "^1.3.16",
                 "phpstan/phpstan-strict-rules": "^1.5.2",
-                "phpunit/phpunit": "^11.0.8",
+                "phpunit/phpunit": "^11.0.9",
                 "rector/rector": "^1.0.3",
                 "tomasvotruba/cognitive-complexity": "^0.2.3",
                 "tomasvotruba/type-coverage": "^0.2.5"
@@ -106,7 +106,7 @@
                 "issues": "https://github.com/verfriemelt-dot-org/wrapped/issues",
                 "source": "https://github.com/verfriemelt-dot-org/wrapped/tree/master"
             },
-            "time": "2024-03-23T22:02:30+00:00"
+            "time": "2024-03-31T18:15:07+00:00"
         }
     ],
     "packages-dev": [
@@ -355,16 +355,16 @@
         },
         {
             "name": "composer/xdebug-handler",
-            "version": "3.0.3",
+            "version": "3.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/xdebug-handler.git",
-                "reference": "ced299686f41dce890debac69273b47ffe98a40c"
+                "reference": "4f988f8fdf580d53bdb2d1278fe93d1ed5462255"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/xdebug-handler/zipball/ced299686f41dce890debac69273b47ffe98a40c",
-                "reference": "ced299686f41dce890debac69273b47ffe98a40c",
+                "url": "https://api.github.com/repos/composer/xdebug-handler/zipball/4f988f8fdf580d53bdb2d1278fe93d1ed5462255",
+                "reference": "4f988f8fdf580d53bdb2d1278fe93d1ed5462255",
                 "shasum": ""
             },
             "require": {
@@ -375,7 +375,7 @@
             "require-dev": {
                 "phpstan/phpstan": "^1.0",
                 "phpstan/phpstan-strict-rules": "^1.1",
-                "symfony/phpunit-bridge": "^6.0"
+                "phpunit/phpunit": "^8.5 || ^9.6 || ^10.5"
             },
             "type": "library",
             "autoload": {
@@ -399,9 +399,9 @@
                 "performance"
             ],
             "support": {
-                "irc": "irc://irc.freenode.org/composer",
+                "irc": "ircs://irc.libera.chat:6697/composer",
                 "issues": "https://github.com/composer/xdebug-handler/issues",
-                "source": "https://github.com/composer/xdebug-handler/tree/3.0.3"
+                "source": "https://github.com/composer/xdebug-handler/tree/3.0.4"
             },
             "funding": [
                 {
@@ -417,7 +417,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-02-25T21:32:43+00:00"
+            "time": "2024-03-26T18:29:49+00:00"
         },
         {
             "name": "doctrine/annotations",
@@ -904,16 +904,16 @@
         },
         {
             "name": "infection/infection",
-            "version": "0.28.0",
+            "version": "0.28.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/infection/infection.git",
-                "reference": "c7b185c8474992f443057e9867ca0dad519cd373"
+                "reference": "1ee4ffa1f971e74c285d2cfc344cead82055df6e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/infection/infection/zipball/c7b185c8474992f443057e9867ca0dad519cd373",
-                "reference": "c7b185c8474992f443057e9867ca0dad519cd373",
+                "url": "https://api.github.com/repos/infection/infection/zipball/1ee4ffa1f971e74c285d2cfc344cead82055df6e",
+                "reference": "1ee4ffa1f971e74c285d2cfc344cead82055df6e",
                 "shasum": ""
             },
             "require": {
@@ -1018,7 +1018,7 @@
             ],
             "support": {
                 "issues": "https://github.com/infection/infection/issues",
-                "source": "https://github.com/infection/infection/tree/0.28.0"
+                "source": "https://github.com/infection/infection/tree/0.28.1"
             },
             "funding": [
                 {
@@ -1030,7 +1030,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2024-03-23T18:46:25+00:00"
+            "time": "2024-03-25T09:50:25+00:00"
         },
         {
             "name": "justinrainbow/json-schema",
@@ -1760,16 +1760,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.10.65",
+            "version": "1.10.66",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "3c657d057a0b7ecae19cb12db446bbc99d8839c6"
+                "reference": "94779c987e4ebd620025d9e5fdd23323903950bd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/3c657d057a0b7ecae19cb12db446bbc99d8839c6",
-                "reference": "3c657d057a0b7ecae19cb12db446bbc99d8839c6",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/94779c987e4ebd620025d9e5fdd23323903950bd",
+                "reference": "94779c987e4ebd620025d9e5fdd23323903950bd",
                 "shasum": ""
             },
             "require": {
@@ -1818,7 +1818,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-03-23T10:30:26+00:00"
+            "time": "2024-03-28T16:17:31+00:00"
         },
         {
             "name": "phpstan/phpstan-deprecation-rules",
@@ -2294,16 +2294,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "11.0.8",
+            "version": "11.0.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "48ea58408879a9aad630022186398364051482fc"
+                "reference": "591bbfe416400385527d5086b346b92c06de404b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/48ea58408879a9aad630022186398364051482fc",
-                "reference": "48ea58408879a9aad630022186398364051482fc",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/591bbfe416400385527d5086b346b92c06de404b",
+                "reference": "591bbfe416400385527d5086b346b92c06de404b",
                 "shasum": ""
             },
             "require": {
@@ -2374,7 +2374,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/11.0.8"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/11.0.9"
             },
             "funding": [
                 {
@@ -2390,7 +2390,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-03-22T04:21:01+00:00"
+            "time": "2024-03-28T10:09:42+00:00"
         },
         {
             "name": "psr/cache",
