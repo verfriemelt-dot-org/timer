@@ -17,7 +17,7 @@ final class EntryMemoryRepository implements EntryRepository
     private EntryListDto $list;
 
     public function __construct(
-        private readonly Clock $clock
+        private readonly Clock $clock,
     ) {
         $this->list = new EntryListDto();
     }
@@ -43,8 +43,8 @@ final class EntryMemoryRepository implements EntryRepository
         return new EntryListDto(
             ...\array_filter(
                 $this->all()->entries,
-                static fn (EntryDto $dto): bool => $dto->date->day === $day->format('Y-m-d')
-            )
+                static fn (EntryDto $dto): bool => $dto->date->day === $day->format('Y-m-d'),
+            ),
         );
     }
 
@@ -54,8 +54,8 @@ final class EntryMemoryRepository implements EntryRepository
         return new EntryListDto(
             ...\array_filter(
                 $this->all()->entries,
-                static fn (EntryDto $dto): bool => \in_array($dto->type, $types, true)
-            )
+                static fn (EntryDto $dto): bool => \in_array($dto->type, $types, true),
+            ),
         );
     }
 

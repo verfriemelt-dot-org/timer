@@ -25,7 +25,7 @@ final readonly class PrettyPrinter
     public function print(
         OutputInterface $output,
         DateTimeImmutable $start,
-        DateTimeImmutable $end
+        DateTimeImmutable $end,
     ): void {
         $current = $start;
 
@@ -74,7 +74,7 @@ final readonly class PrettyPrinter
         $output->write(' » ');
         $output->write(
             "{$workPerDay}/{$expected}",
-            ($workPerDay >= $expected) ? Console::STYLE_GREEN : Console::STYLE_RED
+            ($workPerDay >= $expected) ? Console::STYLE_GREEN : Console::STYLE_RED,
         );
     }
 }

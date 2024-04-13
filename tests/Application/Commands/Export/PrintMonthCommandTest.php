@@ -17,8 +17,8 @@ class PrintMonthCommandTest extends ApplicationTestCase
             ExitCode::Success,
             $this->executeCommand(
                 PrintMonthCommand::class,
-                ['12', '2023']
-            )
+                ['12', '2023'],
+            ),
         );
 
         static::assertSame(
@@ -58,7 +58,7 @@ class PrintMonthCommandTest extends ApplicationTestCase
             0 // 168
             
             OUTPUT,
-            $this->consoleSpy->getBuffer()
+            $this->consoleSpy->getBuffer(),
         );
     }
 
@@ -68,8 +68,8 @@ class PrintMonthCommandTest extends ApplicationTestCase
             ExitCode::Success,
             $this->executeCommand(
                 PrintMonthCommand::class,
-                []
-            )
+                [],
+            ),
         );
 
         static::assertSame(
@@ -84,7 +84,7 @@ class PrintMonthCommandTest extends ApplicationTestCase
             0 // 32
             
             OUTPUT,
-            $this->consoleSpy->getBuffer()
+            $this->consoleSpy->getBuffer(),
         );
     }
 
@@ -96,8 +96,8 @@ class PrintMonthCommandTest extends ApplicationTestCase
             ExitCode::Success,
             $this->executeCommand(
                 PrintMonthCommand::class,
-                []
-            )
+                [],
+            ),
         );
 
         static::assertSame(
@@ -137,7 +137,7 @@ class PrintMonthCommandTest extends ApplicationTestCase
             0 // 168
             
             OUTPUT,
-            $this->consoleSpy->getBuffer()
+            $this->consoleSpy->getBuffer(),
         );
     }
 }

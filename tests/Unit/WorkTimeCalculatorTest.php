@@ -35,9 +35,9 @@ class WorkTimeCalculatorTest extends TestCase
         $this->calc = new WorkTimeCalculator(
             $repo,
             new TimeDiffCalcalator(
-                new Clock(new SystemClock())
+                new Clock(new SystemClock()),
             ),
-            new ExpectedHoursMemoryRepository()
+            new ExpectedHoursMemoryRepository(),
         );
     }
 
@@ -84,7 +84,7 @@ class WorkTimeCalculatorTest extends TestCase
             new EntryDto(
                 new DateDto('2023-01-01'),
                 type: $type,
-            )
+            ),
         );
 
         static::assertSame($expected, $this->calc->getHours($dto));
@@ -99,8 +99,8 @@ class WorkTimeCalculatorTest extends TestCase
                 new WorkTimeDto(
                     '2023-01-01 08:00:00',
                     '2023-01-01 16:00:00',
-                )
-            )
+                ),
+            ),
         );
 
         static::assertSame((float) 8, $this->calc->getHours($dto));
@@ -119,7 +119,7 @@ class WorkTimeCalculatorTest extends TestCase
                 new WorkTimeDto(
                     '2023-01-01 08:00:00',
                     '2023-01-01 09:00:00',
-                )
+                ),
             ),
             new EntryDto(
                 new DateDto('2023-01-01'),
@@ -127,7 +127,7 @@ class WorkTimeCalculatorTest extends TestCase
                 new WorkTimeDto(
                     '2023-01-01 10:00:00',
                     '2023-01-01 11:00:00',
-                )
+                ),
             ),
         );
 

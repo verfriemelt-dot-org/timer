@@ -17,7 +17,7 @@ final readonly class CsvPrinter
     public function print(
         OutputInterface $console,
         DateTimeImmutable $start,
-        DateTimeImmutable $end
+        DateTimeImmutable $end,
     ): void {
         $current = $start;
 

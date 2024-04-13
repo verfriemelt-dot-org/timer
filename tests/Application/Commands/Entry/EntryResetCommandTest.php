@@ -21,7 +21,7 @@ class EntryResetCommandTest extends ApplicationTestCase
             not started
             
             OUTPUT,
-            $this->consoleSpy->getBuffer()
+            $this->consoleSpy->getBuffer(),
         );
     }
 
@@ -39,7 +39,7 @@ class EntryResetCommandTest extends ApplicationTestCase
             deleted
             
             OUTPUT,
-            $this->consoleSpy->getBuffer()
+            $this->consoleSpy->getBuffer(),
         );
     }
 }

@@ -10,7 +10,7 @@ final readonly class HolidayListDto
     public array $holidays;
 
     public function __construct(
-        HolidayDto ...$holidays
+        HolidayDto ...$holidays,
     ) {
         $this->holidays = $holidays;
     }

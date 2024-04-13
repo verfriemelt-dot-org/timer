@@ -41,7 +41,7 @@ final class PrintYearCommand extends AbstractCommand
         $this->print->print(
             $output,
             $now,
-            $now->modify('last day of december')
+            $now->modify('last day of december'),
         );
         return ExitCode::Success;
     }

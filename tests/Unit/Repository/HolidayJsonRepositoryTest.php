@@ -65,7 +65,7 @@ class HolidayJsonRepositoryTest extends TestCase
                     }
                 ]
                 JSON,
-            file_get_contents(self::TEST_PATH)
+            file_get_contents(self::TEST_PATH),
         );
     }
 

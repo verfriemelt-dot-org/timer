@@ -14,7 +14,7 @@ use Override;
 final readonly class CurrentWorkJsonRepository implements CurrentWorkRepository
 {
     public function __construct(
-        private string $path
+        private string $path,
     ) {}
 
     #[Override]

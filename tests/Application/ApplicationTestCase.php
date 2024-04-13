@@ -63,24 +63,24 @@ abstract class ApplicationTestCase extends TestCase
         $this->kernel = new Kernel();
         $this->kernel->getContainer()->register(
             ClockInterface::class,
-            $this->clock = new MockClock(new DateTimeImmutable('2023-12-07 14:32:16'))
+            $this->clock = new MockClock(new DateTimeImmutable('2023-12-07 14:32:16')),
         );
 
         $this->kernel->getContainer()->register(
             HolidayRepository::class,
-            $this->holidayRepository = new HolidayMemoryRepository()
+            $this->holidayRepository = new HolidayMemoryRepository(),
         );
         $this->kernel->getContainer()->register(
             EntryRepository::class,
-            $this->entryRepository = new EntryMemoryRepository($this->kernel->getContainer()->get(Clock::class))
+            $this->entryRepository = new EntryMemoryRepository($this->kernel->getContainer()->get(Clock::class)),
         );
         $this->kernel->getContainer()->register(
             CurrentWorkRepository::class,
-            $this->currentWorkRepository = new CurrentWorkMemoryRepository()
+            $this->currentWorkRepository = new CurrentWorkMemoryRepository(),
         );
         $this->kernel->getContainer()->register(
             ExpectedHoursRepository::class,
-            $this->expectedHoursRepository = new ExpectedHoursMemoryRepository()
+            $this->expectedHoursRepository = new ExpectedHoursMemoryRepository(),
         );
     }
 

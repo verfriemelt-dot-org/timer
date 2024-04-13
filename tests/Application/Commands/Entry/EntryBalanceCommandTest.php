@@ -23,7 +23,7 @@ class EntryBalanceCommandTest extends ApplicationTestCase
             0 // 1944 (-1944)
             
             OUTPUT,
-            $this->consoleSpy->getBuffer()
+            $this->consoleSpy->getBuffer(),
         );
     }
 
@@ -37,8 +37,8 @@ class EntryBalanceCommandTest extends ApplicationTestCase
                 new WorkTimeDto(
                     '2023-01-02 08:00:00',
                     '2023-01-02 20:00:00',
-                )
-            )
+                ),
+            ),
         );
 
         static::assertSame(ExitCode::Success, $this->executeCommand(EntryBalanceCommand::class));
@@ -47,7 +47,7 @@ class EntryBalanceCommandTest extends ApplicationTestCase
             12 // 8 (+4)
             
             OUTPUT,
-            $this->consoleSpy->getBuffer()
+            $this->consoleSpy->getBuffer(),
         );
     }
 
@@ -61,8 +61,8 @@ class EntryBalanceCommandTest extends ApplicationTestCase
                 new WorkTimeDto(
                     '2023-01-02 08:00:00',
                     '2023-01-02 16:00:00',
-                )
-            )
+                ),
+            ),
         );
 
         static::assertSame(ExitCode::Success, $this->executeCommand(EntryBalanceCommand::class));
@@ -71,7 +71,7 @@ class EntryBalanceCommandTest extends ApplicationTestCase
             8 // 8 (0)
             
             OUTPUT,
-            $this->consoleSpy->getBuffer()
+            $this->consoleSpy->getBuffer(),
         );
     }
 }

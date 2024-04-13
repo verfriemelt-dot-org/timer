@@ -10,7 +10,7 @@ use Psr\Clock\ClockInterface;
 final readonly class Clock
 {
     public function __construct(
-        private ClockInterface $clock
+        private ClockInterface $clock,
     ) {}
 
     public function now(): DateTimeImmutable

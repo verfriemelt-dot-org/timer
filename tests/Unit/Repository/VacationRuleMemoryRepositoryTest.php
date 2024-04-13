@@ -33,7 +33,7 @@ class VacationRuleMemoryRepositoryTest extends TestCase
             new DateDto('2022-02-02'),
             new DateDto('2022-03-03'),
             VacationRuleType::SingleGrant,
-            5
+            5,
         );
 
         $this->repo->add($rule);
@@ -49,8 +49,8 @@ class VacationRuleMemoryRepositoryTest extends TestCase
                 new DateDto('2022-02-01'),
                 new DateDto('2022-02-02'),
                 VacationRuleType::SingleGrant,
-                5
-            )
+                5,
+            ),
         );
 
         static::assertCount(1, $this->repo->getByDate(new DateTimeImmutable('2022-02-01'))->rules);

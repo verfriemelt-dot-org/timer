@@ -10,7 +10,7 @@ final readonly class ExpectedHoursListDto
     public array $hours;
 
     public function __construct(
-        ExpectedHoursDto ...$hours
+        ExpectedHoursDto ...$hours,
     ) {
         $this->hours = $hours;
     }

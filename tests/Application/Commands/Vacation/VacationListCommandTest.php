@@ -22,15 +22,15 @@ final class VacationListCommandTest extends ApplicationTestCase
             $this->entryRepository->add(
                 new EntryDto(
                     new DateDto($date->format('Y-m-d')),
-                    type: $vacationType
-                )
+                    type: $vacationType,
+                ),
             );
             $date = $date->modify('+1 day');
         }
 
         static::assertSame(
             ExitCode::Success,
-            $this->executeCommand(VacationListCommand::class, [])
+            $this->executeCommand(VacationListCommand::class, []),
         );
 
         static::assertSame(
@@ -42,7 +42,7 @@ final class VacationListCommandTest extends ApplicationTestCase
             2023-03-05 educational-vacation
             
             OUTPUT,
-            $this->consoleSpy->getBuffer()
+            $this->consoleSpy->getBuffer(),
         );
     }
 
@@ -53,7 +53,7 @@ final class VacationListCommandTest extends ApplicationTestCase
 
         static::assertSame(
             ExitCode::Success,
-            $this->executeCommand(VacationListCommand::class, ['2024'])
+            $this->executeCommand(VacationListCommand::class, ['2024']),
         );
 
         static::assertSame(
@@ -61,7 +61,7 @@ final class VacationListCommandTest extends ApplicationTestCase
             2024-01-01 vacation
             
             OUTPUT,
-            $this->consoleSpy->getBuffer()
+            $this->consoleSpy->getBuffer(),
         );
     }
 }

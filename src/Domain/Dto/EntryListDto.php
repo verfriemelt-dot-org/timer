@@ -10,7 +10,7 @@ final readonly class EntryListDto
     public array $entries;
 
     public function __construct(
-        EntryDto ...$entries
+        EntryDto ...$entries,
     ) {
         $this->entries = $entries;
     }

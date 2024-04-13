@@ -54,8 +54,8 @@ final class HolidayMemoryRepository implements HolidayRepository
         return new HolidayListDto(
             ...\array_filter(
                 $this->all()->holidays,
-                static fn (HolidayDto $dto): bool => str_starts_with($dto->date->day, $year)
-            )
+                static fn (HolidayDto $dto): bool => str_starts_with($dto->date->day, $year),
+            ),
         );
     }
 }

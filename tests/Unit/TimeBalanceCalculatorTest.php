@@ -39,8 +39,8 @@ class TimeBalanceCalculatorTest extends TestCase
             new WorkTimeCalculator(
                 $this->holidayRepository,
                 new TimeDiffCalcalator(new Clock(new MockClock(new DateTimeImmutable('now')))),
-                new ExpectedHoursMemoryRepository()
-            )
+                new ExpectedHoursMemoryRepository(),
+            ),
         );
     }
 
@@ -49,22 +49,22 @@ class TimeBalanceCalculatorTest extends TestCase
         $this->holidayRepository->add(
             new HolidayDto(
                 new DateDto('2024-01-01'),
-                'Neujahr'
-            )
+                'Neujahr',
+            ),
         );
 
         $this->entryRepository->add(
             new EntryDto(
                 new DateDto('2024-01-02'),
                 type: EntryType::Sick,
-            )
+            ),
         );
 
         $this->entryRepository->add(
             new EntryDto(
                 new DateDto('2024-01-03'),
                 type: EntryType::Vacation,
-            )
+            ),
         );
 
         $this->entryRepository->add(
@@ -74,8 +74,8 @@ class TimeBalanceCalculatorTest extends TestCase
                 workTime: new WorkTimeDto(
                     '2024-01-04 08:00:00',
                     '2024-01-04 15:00:00',
-                )
-            )
+                ),
+            ),
         );
 
         $result = $this->balanceCalculator->get(

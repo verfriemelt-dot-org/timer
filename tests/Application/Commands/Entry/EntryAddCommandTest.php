@@ -17,8 +17,8 @@ class EntryAddCommandTest extends ApplicationTestCase
             ExitCode::Success,
             $this->executeCommand(
                 EntryAddCommand::class,
-                ['sick']
-            )
+                ['sick'],
+            ),
         );
 
         $dto = $this->entryRepository->getDay($this->clock->now());
@@ -35,8 +35,8 @@ class EntryAddCommandTest extends ApplicationTestCase
             ExitCode::Success,
             $this->executeCommand(
                 EntryAddCommand::class,
-                ['vacation']
-            )
+                ['vacation'],
+            ),
         );
 
         $dto = $this->entryRepository->getDay($this->clock->now());

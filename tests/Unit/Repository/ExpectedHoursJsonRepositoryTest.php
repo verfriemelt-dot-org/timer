@@ -59,7 +59,7 @@ class ExpectedHoursJsonRepositoryTest extends TestCase
                     }
                 }
             ]
-            JSON
+            JSON,
         );
     }
 
@@ -82,7 +82,7 @@ class ExpectedHoursJsonRepositoryTest extends TestCase
     {
         $repo =  new ExpectedHoursJsonRepository(
             self::getFilepath(),
-            new Clock(new MockClock(new DateTimeImmutable('2022-01-01')))
+            new Clock(new MockClock(new DateTimeImmutable('2022-01-01'))),
         );
         $hours = $repo->getActive();
         $hours = $repo->getActive();
@@ -97,7 +97,7 @@ class ExpectedHoursJsonRepositoryTest extends TestCase
 
         $repo =  new ExpectedHoursJsonRepository(
             self::getFilepath(),
-            new Clock(new MockClock(new DateTimeImmutable('2100-01-01')))
+            new Clock(new MockClock(new DateTimeImmutable('2100-01-01'))),
         );
         $repo->getActive();
     }

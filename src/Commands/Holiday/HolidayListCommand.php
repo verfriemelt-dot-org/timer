@@ -23,7 +23,7 @@ final class HolidayListCommand extends AbstractCommand
 
     public function __construct(
         private readonly HolidayRepository $holidayRepository,
-        private readonly Clock $clock
+        private readonly Clock $clock,
     ) {}
 
     #[Override]
@@ -40,7 +40,7 @@ final class HolidayListCommand extends AbstractCommand
         $holidays = $this->holidayRepository->getByYear($year)->holidays;
         \usort(
             $holidays,
-            fn (HolidayDto $a, HolidayDto $b): int => $this->clock->fromString($a->date->day) <=> $this->clock->fromString($b->date->day)
+            fn (HolidayDto $a, HolidayDto $b): int => $this->clock->fromString($a->date->day) <=> $this->clock->fromString($b->date->day),
         );
 
         foreach ($holidays as $holiday) {

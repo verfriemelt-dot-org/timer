@@ -18,8 +18,8 @@ class EntryPrintDayCommandTest extends ApplicationTestCase
             ExitCode::Success,
             $this->executeCommand(
                 EntryPrintDayCommand::class,
-                []
-            )
+                [],
+            ),
         );
 
         static::assertSame(
@@ -27,7 +27,7 @@ class EntryPrintDayCommandTest extends ApplicationTestCase
             [1.00 :: 8]
             
             OUTPUT,
-            $this->consoleSpy->getBuffer()
+            $this->consoleSpy->getBuffer(),
         );
     }
 
@@ -39,8 +39,8 @@ class EntryPrintDayCommandTest extends ApplicationTestCase
             ExitCode::Success,
             $this->executeCommand(
                 EntryPrintDayCommand::class,
-                ['--raw']
-            )
+                ['--raw'],
+            ),
         );
 
         static::assertSame(
@@ -52,7 +52,7 @@ class EntryPrintDayCommandTest extends ApplicationTestCase
             )
             
             OUTPUT,
-            $this->consoleSpy->getBuffer()
+            $this->consoleSpy->getBuffer(),
         );
     }
 
@@ -62,8 +62,8 @@ class EntryPrintDayCommandTest extends ApplicationTestCase
             ExitCode::Success,
             $this->executeCommand(
                 EntryPrintDayCommand::class,
-                ['--raw']
-            )
+                ['--raw'],
+            ),
         );
 
         static::assertSame(
@@ -71,7 +71,7 @@ class EntryPrintDayCommandTest extends ApplicationTestCase
             not started
             
             OUTPUT,
-            $this->consoleSpy->getBuffer()
+            $this->consoleSpy->getBuffer(),
         );
     }
 }

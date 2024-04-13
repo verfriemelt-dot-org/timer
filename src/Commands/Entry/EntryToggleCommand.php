@@ -27,7 +27,7 @@ final class EntryToggleCommand extends AbstractCommand
     public function __construct(
         private readonly CurrentWorkRepository $currentWorkRepository,
         private readonly EntryRepository $entryRepository,
-        private readonly Clock $clock
+        private readonly Clock $clock,
     ) {}
 
     #[Override]
@@ -52,7 +52,7 @@ final class EntryToggleCommand extends AbstractCommand
         $work = new EntryDto(
             new DateDto($time->format('Y-m-d')),
             EntryType::Work,
-            $workTimeDto
+            $workTimeDto,
         );
 
         $this->entryRepository->add($work);

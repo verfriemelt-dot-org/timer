@@ -29,7 +29,7 @@ final class EntryPrintDayCommand extends AbstractCommand
         private readonly WorkTimeCalculator $workTimeCalculator,
         private readonly CurrentWorkRepository $currentWorkRepository,
         private readonly TimeDiffCalcalator $timeDiff,
-        private readonly ClockInterface $clock
+        private readonly ClockInterface $clock,
     ) {}
 
     #[Override]

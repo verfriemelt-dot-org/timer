@@ -10,7 +10,7 @@ final readonly class VacationRuleListDto
     public array $rules;
 
     public function __construct(
-        VacationRuleDto ...$rules
+        VacationRuleDto ...$rules,
     ) {
         $this->rules = $rules;
     }

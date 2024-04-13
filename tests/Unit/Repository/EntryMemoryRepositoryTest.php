@@ -35,8 +35,8 @@ class EntryMemoryRepositoryTest extends TestCase
         $this->repo->add(
             new EntryDto(
                 new DateDto('2022-02-02'),
-                type: EntryType::Sick
-            )
+                type: EntryType::Sick,
+            ),
         );
 
         static::assertCount(1, $this->repo->all()->entries);

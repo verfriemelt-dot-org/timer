@@ -38,7 +38,7 @@ final class HolidayAddCommand extends AbstractCommand
             Option::EXPECTS_VALUE,
             description: 'used for half holidays provided by the company',
             short: 'f',
-            default: '100'
+            default: '100',
         );
 
         $argv->addArguments($this->date, $this->name);

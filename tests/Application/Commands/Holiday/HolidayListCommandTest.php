@@ -27,7 +27,7 @@ final class HolidayListCommandTest extends ApplicationTestCase
             2023-12-24 weihnachten
             
             OUTPUT,
-            $this->consoleSpy->getBuffer()
+            $this->consoleSpy->getBuffer(),
         );
     }
 }

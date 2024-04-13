@@ -17,7 +17,7 @@ final class VacationRuleMemoryRepository implements VacationRuleRepository
     private VacationRuleListDto $list;
 
     public function __construct(
-        private readonly Clock $clock = new Clock(new SystemClock())
+        private readonly Clock $clock = new Clock(new SystemClock()),
     ) {
         $this->list = new VacationRuleListDto();
     }
@@ -43,8 +43,8 @@ final class VacationRuleMemoryRepository implements VacationRuleRepository
         return new VacationRuleListDto(
             ...\array_filter(
                 $this->all()->rules,
-                fn (VacationRuleDto $ruleDto): bool => $date >= $this->clock->fromString($ruleDto->validFrom->day) && $date < $this->clock->fromString($ruleDto->validTill->day)
-            )
+                fn (VacationRuleDto $ruleDto): bool => $date >= $this->clock->fromString($ruleDto->validFrom->day) && $date < $this->clock->fromString($ruleDto->validTill->day),
+            ),
         );
     }
 }

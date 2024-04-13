@@ -26,7 +26,7 @@ class EntryJsonRepositoryTest extends TestCase
     {
         $this->repo = new EntryJsonRepository(
             self::getFilepath(),
-            new Clock(new SystemClock())
+            new Clock(new SystemClock()),
         );
 
         if (\file_exists(self::getFilepath())) {
@@ -61,8 +61,8 @@ class EntryJsonRepositoryTest extends TestCase
         $this->repo->add(
             new EntryDto(
                 new DateDto('2022-02-02'),
-                type: EntryType::Sick
-            )
+                type: EntryType::Sick,
+            ),
         );
 
         static::assertCount(1, $this->repo->all()->entries);
@@ -78,7 +78,7 @@ class EntryJsonRepositoryTest extends TestCase
                     }
                 ]
                 JSON,
-            \file_get_contents(self::TEST_PATH)
+            \file_get_contents(self::TEST_PATH),
         );
     }
 
@@ -87,7 +87,7 @@ class EntryJsonRepositoryTest extends TestCase
         static::expectException(RuntimeException::class);
         (new EntryJsonRepository(
             \TEST_ROOT,
-            new Clock(new SystemClock())
+            new Clock(new SystemClock()),
         ))->all();
     }
 
@@ -144,7 +144,7 @@ class EntryJsonRepositoryTest extends TestCase
         // update data
         \file_put_contents(
             self::TEST_PATH,
-            '[]'
+            '[]',
         );
 
         static::assertCount(1, $this->repo->getDay(new DateTimeImmutable('2022-02-01'))->entries, 'second iteration');
@@ -158,7 +158,7 @@ class EntryJsonRepositoryTest extends TestCase
         // update data
         \file_put_contents(
             self::TEST_PATH,
-            '[]'
+            '[]',
         );
 
         $this->repo->add(new EntryDto(new DateDto('2022-02-02'), type: EntryType::Work));

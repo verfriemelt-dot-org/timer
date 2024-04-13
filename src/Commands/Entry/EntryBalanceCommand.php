@@ -25,7 +25,7 @@ final class EntryBalanceCommand extends AbstractCommand
     {
         $dto = $this->timeBalance->get(
             $this->clock->fromString('2023-01-01'),
-            $this->clock->fromString('Yesterday')
+            $this->clock->fromString('Yesterday'),
         );
 
         $total = ($dto->actual - $dto->expected > 0 ? '+' : '') . ($dto->actual - $dto->expected);

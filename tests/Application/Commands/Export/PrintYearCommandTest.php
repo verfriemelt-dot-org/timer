@@ -29,8 +29,8 @@ class PrintYearCommandTest extends ApplicationTestCase
                 new WorkTimeDto(
                     '2023-01-02 08:00:00',
                     '2023-01-02 12:00:00',
-                )
-            )
+                ),
+            ),
         );
 
         $this->entryRepository->add(
@@ -40,8 +40,8 @@ class PrintYearCommandTest extends ApplicationTestCase
                 new WorkTimeDto(
                     '2023-01-02 14:00:00',
                     '2023-01-02 16:00:00',
-                )
-            )
+                ),
+            ),
         );
     }
 
@@ -51,8 +51,8 @@ class PrintYearCommandTest extends ApplicationTestCase
             ExitCode::Success,
             $this->executeCommand(
                 PrintYearCommand::class,
-                []
-            )
+                [],
+            ),
         );
 
         static::assertSame(
@@ -429,7 +429,7 @@ class PrintYearCommandTest extends ApplicationTestCase
             14 // 2080
             
             OUTPUT,
-            $this->consoleSpy->getBuffer()
+            $this->consoleSpy->getBuffer(),
         );
     }
 
@@ -439,8 +439,8 @@ class PrintYearCommandTest extends ApplicationTestCase
             ExitCode::Success,
             $this->executeCommand(
                 PrintYearCommand::class,
-                ['2022']
-            )
+                ['2022'],
+            ),
         );
 
         static::assertSame(
@@ -814,7 +814,7 @@ class PrintYearCommandTest extends ApplicationTestCase
             0 // 2080
             
             OUTPUT,
-            $this->consoleSpy->getBuffer()
+            $this->consoleSpy->getBuffer(),
         );
     }
 }

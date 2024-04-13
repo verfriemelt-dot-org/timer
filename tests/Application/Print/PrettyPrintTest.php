@@ -24,15 +24,15 @@ class PrettyPrintTest extends ApplicationTestCase
         $this->entryRepository->add(
             new EntryDto(
                 new DateDto('2023-01-02'),
-                type: EntryType::Vacation
-            )
+                type: EntryType::Vacation,
+            ),
         );
 
         $this->entryRepository->add(
             new EntryDto(
                 new DateDto('2023-01-02'),
-                type: EntryType::Sick
-            )
+                type: EntryType::Sick,
+            ),
         );
 
         $this->entryRepository->add(
@@ -42,8 +42,8 @@ class PrettyPrintTest extends ApplicationTestCase
                 new WorkTimeDto(
                     '2023-01-02 08:00:00',
                     '2023-01-02 12:00:00',
-                )
-            )
+                ),
+            ),
         );
 
         $this->holidayRepository->add(new HolidayDto(new DateDto('2023-01-02'), 'test-holiday'));
@@ -66,7 +66,7 @@ class PrettyPrintTest extends ApplicationTestCase
             20 // 0
 
             OUTPUT,
-            $spy->getBuffer()
+            $spy->getBuffer(),
         );
     }
 }

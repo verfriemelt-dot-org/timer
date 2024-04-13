@@ -40,12 +40,12 @@ class VacationClaim
         $from = array_reduce(
             $ruleList->rules,
             fn (DateTimeImmutable $carry, VacationRuleDto $rule): DateTimeImmutable => $this->clock->fromString($rule->validFrom->day) < $carry ? $this->clock->fromString($rule->validFrom->day) : $carry,
-            $this->clock->fromString('3000-01-01')
+            $this->clock->fromString('3000-01-01'),
         );
         $till = array_reduce(
             $ruleList->rules,
             fn (DateTimeImmutable $carry, VacationRuleDto $rule): DateTimeImmutable => $this->clock->fromString($rule->validTill->day) > $carry ? $this->clock->fromString($rule->validTill->day) : $carry,
-            $this->clock->fromString('2000-01-01')
+            $this->clock->fromString('2000-01-01'),
         );
 
         $entries = $this->entryRepository->getByRange($from, $till, EntryType::Vacation, EntryType::VacationHalf);

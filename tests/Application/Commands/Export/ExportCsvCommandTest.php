@@ -23,25 +23,25 @@ final class ExportCsvCommandTest extends ApplicationTestCase
                 new WorkTimeDto(
                     '2023-04-01 08:00:00',
                     '2023-04-01 16:00:00',
-                )
+                ),
             ),
         );
         $this->entryRepository->add(
             new EntryDto(
                 new DateDto('2023-04-02'),
-                type: EntryType::Sick
-            )
+                type: EntryType::Sick,
+            ),
         );
         $this->entryRepository->add(
             new EntryDto(
                 new DateDto($this->clock->now()->format('Y-m-d')),
-                type: EntryType::Vacation
-            )
+                type: EntryType::Vacation,
+            ),
         );
 
         static::assertSame(
             ExitCode::Success,
-            $this->executeCommand(ExportCsvCommand::class, [])
+            $this->executeCommand(ExportCsvCommand::class, []),
         );
 
         static::assertSame(
@@ -51,7 +51,7 @@ final class ExportCsvCommandTest extends ApplicationTestCase
             vacation;2023-12-07;;
             
             OUT,
-            $this->consoleSpy->getBuffer()
+            $this->consoleSpy->getBuffer(),
         );
     }
 }

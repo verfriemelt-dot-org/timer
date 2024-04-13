@@ -16,8 +16,8 @@ class HoursShowCommandTest extends ApplicationTestCase
             ExitCode::Success,
             $this->executeCommand(
                 HoursShowCommand::class,
-                []
-            )
+                [],
+            ),
         );
 
         static::assertSame(
@@ -48,7 +48,7 @@ class HoursShowCommandTest extends ApplicationTestCase
             )
 
             OUTPUT,
-            $this->consoleSpy->getBuffer()
+            $this->consoleSpy->getBuffer(),
         );
     }
 }

@@ -26,7 +26,7 @@ final class ExportCsvCommand extends AbstractCommand
         $this->print->print(
             $output,
             $this->clock->today()->modify('first day of january'),
-            $this->clock->today()
+            $this->clock->today(),
         );
 
         return ExitCode::Success;

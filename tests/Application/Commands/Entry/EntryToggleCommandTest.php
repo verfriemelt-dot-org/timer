@@ -17,7 +17,7 @@ class EntryToggleCommandTest extends ApplicationTestCase
         static::assertSame(
             $this->clock->now()->format('Y-m-d H:i:s'),
             $this->currentWorkRepository->get()->from,
-            'current time as start'
+            'current time as start',
         );
 
         static::assertSame(
@@ -30,7 +30,7 @@ class EntryToggleCommandTest extends ApplicationTestCase
             
             
             OUTPUT,
-            $this->consoleSpy->getBuffer()
+            $this->consoleSpy->getBuffer(),
         );
     }
 
@@ -38,7 +38,7 @@ class EntryToggleCommandTest extends ApplicationTestCase
     {
         static::assertSame(
             ExitCode::Success,
-            $this->executeCommand(EntryToggleCommand::class, ['2000-01-01', '08:00:00'])
+            $this->executeCommand(EntryToggleCommand::class, ['2000-01-01', '08:00:00']),
         );
 
         static::assertSame('2000-01-01 08:00:00', $this->currentWorkRepository->get()->from);
@@ -79,7 +79,7 @@ class EntryToggleCommandTest extends ApplicationTestCase
             
             
             OUTPUT,
-            $this->consoleSpy->getBuffer()
+            $this->consoleSpy->getBuffer(),
         );
     }
 
@@ -89,14 +89,14 @@ class EntryToggleCommandTest extends ApplicationTestCase
             ExitCode::Success,
             $this->executeCommand(
                 EntryToggleCommand::class,
-                ['--', '-30min']
-            )
+                ['--', '-30min'],
+            ),
         );
 
         static::assertSame(
             $this->clock->now()->modify('-30mins')->format('Y-m-d H:i:s'),
             $this->currentWorkRepository->get()->from,
-            'should be relative to current time'
+            'should be relative to current time',
         );
     }
 }

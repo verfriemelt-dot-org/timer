@@ -71,8 +71,8 @@ final class EntryJsonRepository implements EntryRepository
         return $this->cache[__METHOD__][$dayString] ??= new EntryListDto(
             ...\array_filter(
                 $this->all()->entries,
-                static fn (EntryDto $dto): bool => $dto->date->day === $dayString
-            )
+                static fn (EntryDto $dto): bool => $dto->date->day === $dayString,
+            ),
         );
     }
 
@@ -82,8 +82,8 @@ final class EntryJsonRepository implements EntryRepository
         return new EntryListDto(
             ...\array_filter(
                 $this->all()->entries,
-                static fn (EntryDto $dto): bool => in_array($dto->type, $types, true)
-            )
+                static fn (EntryDto $dto): bool => in_array($dto->type, $types, true),
+            ),
         );
     }
 

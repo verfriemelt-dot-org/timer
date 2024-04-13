@@ -49,7 +49,7 @@ final class EntryAddCommand extends AbstractCommand
             new EntryDto(
                 new DateDto($time->format('Y-m-d')),
                 type: $type,
-            )
+            ),
         );
 
         return ExitCode::Success;

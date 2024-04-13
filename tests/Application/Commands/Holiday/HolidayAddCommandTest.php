@@ -27,7 +27,7 @@ class HolidayAddCommandTest extends ApplicationTestCase
     {
         static::assertSame(
             ExitCode::Success,
-            $this->executeCommand(HolidayAddCommand::class, ['-f', '50', '2024-01-01', 'Neujahr'])
+            $this->executeCommand(HolidayAddCommand::class, ['-f', '50', '2024-01-01', 'Neujahr']),
         );
 
         $holiday = $this->holidayRepository->getHoliday(new DateTimeImmutable('2024-01-01'));

@@ -46,14 +46,14 @@ class VacationClaimTest extends TestCase
             new DateDto('2022-01-01'),
             new DateDto('2023-01-01'),
             VacationRuleType::SingleGrant,
-            5
+            5,
         ));
 
         $this->ruleRepository->add(new VacationRuleDto(
             new DateDto('2032-01-01'),
             new DateDto('2033-01-01'),
             VacationRuleType::SingleGrant,
-            5
+            5,
         ));
 
         static::assertSame(5.0, $this->vacationClaim->getTotalVacationDays(new DateTimeImmutable('2022-04-01')));
@@ -66,14 +66,14 @@ class VacationClaimTest extends TestCase
             new DateDto('2022-01-01'),
             new DateDto('2023-01-01'),
             VacationRuleType::SingleGrant,
-            5
+            5,
         ));
 
         $this->ruleRepository->add(new VacationRuleDto(
             new DateDto('2022-01-01'),
             new DateDto('2023-01-01'),
             VacationRuleType::SingleGrant,
-            2
+            2,
         ));
 
         static::assertSame(7.0, $this->vacationClaim->getTotalVacationDays(new DateTimeImmutable('2022-04-01')));
@@ -85,14 +85,14 @@ class VacationClaimTest extends TestCase
             new DateDto('2022-01-01'),
             new DateDto('2023-04-01'),
             VacationRuleType::SingleGrant,
-            5
+            5,
         ));
 
         $this->ruleRepository->add(new VacationRuleDto(
             new DateDto('2022-01-01'),
             new DateDto('2023-01-01'),
             VacationRuleType::SingleGrant,
-            30
+            30,
         ));
 
         $this->entryRepository->add(new EntryDto(new DateDto('2022-04-01'), EntryType::Vacation));
