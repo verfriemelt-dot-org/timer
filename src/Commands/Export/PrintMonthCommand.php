@@ -48,7 +48,7 @@ final class PrintMonthCommand extends AbstractCommand
         $end = $start->modify('last day of this month');
 
         if (!$this->month->present() && $end > $today) {
-            $end = $this->clock->fromString('yesterday');
+            $end = $this->clock->fromString('today');
         }
 
         $this->print->print(

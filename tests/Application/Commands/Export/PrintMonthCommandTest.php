@@ -80,8 +80,9 @@ class PrintMonthCommandTest extends ApplicationTestCase
             2023.12.04 Monday » 0/8
             2023.12.05 Tuesday » 0/8
             2023.12.06 Wednesday » 0/8
+            2023.12.07 Thursday » 0/8
 
-            0 // 32
+            0 // 40
             
             OUTPUT,
             $this->consoleSpy->getBuffer(),
