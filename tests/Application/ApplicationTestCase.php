@@ -8,6 +8,9 @@ use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 use Psr\Clock\ClockInterface;
 use timer\Domain\Clock;
+use timer\Domain\Dto\DateDto;
+use timer\Domain\Dto\ExpectedHoursDto;
+use timer\Domain\Dto\WorkHoursDto;
 use timer\Domain\Repository\CurrentWorkRepository;
 use timer\Domain\Repository\EntryRepository;
 use timer\Domain\Repository\ExpectedHoursRepository;
@@ -20,6 +23,7 @@ use timer\Repository\HolidayMemoryRepository;
 use verfriemelt\wrapped\_\Cli\BufferedOutput;
 use verfriemelt\wrapped\_\Cli\Console;
 use verfriemelt\wrapped\_\Clock\MockClock;
+use verfriemelt\wrapped\_\Clock\SystemClock;
 use verfriemelt\wrapped\_\Command\AbstractCommand;
 use verfriemelt\wrapped\_\Command\CommandArguments\ArgvParser;
 use verfriemelt\wrapped\_\Command\ExitCode;
@@ -80,7 +84,15 @@ abstract class ApplicationTestCase extends TestCase
         );
         $this->kernel->getContainer()->register(
             ExpectedHoursRepository::class,
-            $this->expectedHoursRepository = new ExpectedHoursMemoryRepository(),
+            $this->expectedHoursRepository = new ExpectedHoursMemoryRepository(new Clock(new SystemClock())),
+        );
+
+        $this->expectedHoursRepository->add(
+            new ExpectedHoursDto(
+                new DateDto('1999-01-01'),
+                new DateDto('2099-01-01'),
+                new WorkHoursDto(8, 8, 8, 8, 8, 0, 0),
+            ),
         );
     }
 

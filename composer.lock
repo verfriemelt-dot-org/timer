@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "48030759b65aa9389774748c970d0b70",
+    "content-hash": "0bb8c2a556dd7aed240f5e45824294f5",
     "packages": [
         {
             "name": "psr/clock",
@@ -1504,16 +1504,16 @@
         },
         {
             "name": "phpat/phpat",
-            "version": "0.10.15",
+            "version": "0.10.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/carlosas/phpat.git",
-                "reference": "1bd0e36fca427abdc238c3b6c3eee6dca54bce85"
+                "reference": "0b83b4697d606f0a8432600dee226dae26cfa125"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/carlosas/phpat/zipball/1bd0e36fca427abdc238c3b6c3eee6dca54bce85",
-                "reference": "1bd0e36fca427abdc238c3b6c3eee6dca54bce85",
+                "url": "https://api.github.com/repos/carlosas/phpat/zipball/0b83b4697d606f0a8432600dee226dae26cfa125",
+                "reference": "0b83b4697d606f0a8432600dee226dae26cfa125",
                 "shasum": ""
             },
             "require": {
@@ -1555,9 +1555,9 @@
             "description": "PHP Architecture Tester",
             "support": {
                 "issues": "https://github.com/carlosas/phpat/issues",
-                "source": "https://github.com/carlosas/phpat/tree/0.10.15"
+                "source": "https://github.com/carlosas/phpat/tree/0.10.16"
             },
-            "time": "2024-03-03T17:48:43+00:00"
+            "time": "2024-04-27T11:20:05+00:00"
         },
         {
             "name": "phpbench/container",
@@ -5350,16 +5350,16 @@
         },
         {
             "name": "tomasvotruba/type-coverage",
-            "version": "0.2.7",
+            "version": "0.2.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/TomasVotruba/type-coverage.git",
-                "reference": "b2144df489f8ae95cc4ac750a6cc10459da2b18e"
+                "reference": "ab4f0506f8df8c6418ec877e356c0efd2c50ed6b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/TomasVotruba/type-coverage/zipball/b2144df489f8ae95cc4ac750a6cc10459da2b18e",
-                "reference": "b2144df489f8ae95cc4ac750a6cc10459da2b18e",
+                "url": "https://api.github.com/repos/TomasVotruba/type-coverage/zipball/ab4f0506f8df8c6418ec877e356c0efd2c50ed6b",
+                "reference": "ab4f0506f8df8c6418ec877e356c0efd2c50ed6b",
                 "shasum": ""
             },
             "require": {
@@ -5391,7 +5391,7 @@
             ],
             "support": {
                 "issues": "https://github.com/TomasVotruba/type-coverage/issues",
-                "source": "https://github.com/TomasVotruba/type-coverage/tree/0.2.7"
+                "source": "https://github.com/TomasVotruba/type-coverage/tree/0.2.8"
             },
             "funding": [
                 {
@@ -5403,7 +5403,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-04-16T13:08:26+00:00"
+            "time": "2024-04-26T13:56:40+00:00"
         },
         {
             "name": "webmozart/assert",

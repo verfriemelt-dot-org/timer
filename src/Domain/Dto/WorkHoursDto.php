@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace timer\Domain\Dto;
 
-final readonly class HoursDto
+final readonly class WorkHoursDto
 {
     public function __construct(
         public float $monday,

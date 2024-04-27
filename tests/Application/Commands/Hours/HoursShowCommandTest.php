@@ -26,7 +26,7 @@ class HoursShowCommandTest extends ApplicationTestCase
             (
                 [from] => timer\Domain\Dto\DateDto Object
                     (
-                        [day] => 2022-01-01
+                        [day] => 1999-01-01
                     )
             
                 [till] => timer\Domain\Dto\DateDto Object
@@ -34,7 +34,7 @@ class HoursShowCommandTest extends ApplicationTestCase
                         [day] => 2099-01-01
                     )
             
-                [hours] => timer\Domain\Dto\HoursDto Object
+                [hours] => timer\Domain\Dto\WorkHoursDto Object
                     (
                         [monday] => 8
                         [tuesday] => 8

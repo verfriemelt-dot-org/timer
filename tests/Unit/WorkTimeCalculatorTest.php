@@ -12,7 +12,9 @@ use timer\Domain\Clock;
 use timer\Domain\Dto\DateDto;
 use timer\Domain\Dto\EntryDto;
 use timer\Domain\Dto\EntryListDto;
+use timer\Domain\Dto\ExpectedHoursDto;
 use timer\Domain\Dto\HolidayDto;
+use timer\Domain\Dto\WorkHoursDto;
 use timer\Domain\Dto\WorkTimeDto;
 use timer\Domain\EntryType;
 use timer\Domain\TimeDiffCalcalator;
@@ -37,7 +39,15 @@ class WorkTimeCalculatorTest extends TestCase
             new TimeDiffCalcalator(
                 new Clock(new SystemClock()),
             ),
-            new ExpectedHoursMemoryRepository(),
+            $expectedHours = new ExpectedHoursMemoryRepository(new Clock(new SystemClock())),
+        );
+
+        $expectedHours->add(
+            new ExpectedHoursDto(
+                new DateDto('1999-01-01'),
+                new DateDto('2099-01-01'),
+                new WorkHoursDto(8, 8, 8, 8, 8, 0, 0),
+            ),
         );
     }
 

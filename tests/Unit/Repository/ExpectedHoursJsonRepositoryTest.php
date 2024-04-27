@@ -82,12 +82,22 @@ class ExpectedHoursJsonRepositoryTest extends TestCase
     {
         $repo =  new ExpectedHoursJsonRepository(
             self::getFilepath(),
-            new Clock(new MockClock(new DateTimeImmutable('2022-01-01'))),
+            $clock = new Clock(new MockClock(new DateTimeImmutable('2022-01-01'))),
         );
-        $hours = $repo->getActive();
-        $hours = $repo->getActive();
+        $hours = $repo->getActive($clock->today());
 
         static::assertSame([1 => 8.0, 2 => 8.0, 3 => 8.0, 4 => 8.0, 5 => 8.0, 6 => 0.0, 7 => 0.0], $hours->hours->toArray());
+    }
+
+    public function test_get_old_dataset(): void
+    {
+        $repo =  new ExpectedHoursJsonRepository(
+            self::getFilepath(),
+            $clock = new Clock(new MockClock(new DateTimeImmutable('1999-01-01'))),
+        );
+        $hours = $repo->getActive($clock->today());
+
+        static::assertSame([1 => 5.0, 2 => 5.0, 3 => 5.0, 4 => 5.0, 5 => 5.0, 6 => 0.0, 7 => 0.0], $hours->hours->toArray());
     }
 
     public function test_get_active_undefined(): void
@@ -97,9 +107,9 @@ class ExpectedHoursJsonRepositoryTest extends TestCase
 
         $repo =  new ExpectedHoursJsonRepository(
             self::getFilepath(),
-            new Clock(new MockClock(new DateTimeImmutable('2100-01-01'))),
+            $clock = new Clock(new MockClock(new DateTimeImmutable('2100-01-01'))),
         );
-        $repo->getActive();
+        $repo->getActive($clock->today());
     }
 
     public function test_illegal_file_as_storage(): void

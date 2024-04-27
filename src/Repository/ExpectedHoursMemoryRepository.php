@@ -4,28 +4,53 @@ declare(strict_types=1);
 
 namespace timer\Repository;
 
-use timer\Domain\Dto\DateDto;
+use DateTimeImmutable;
+use timer\Domain\Clock;
 use timer\Domain\Dto\ExpectedHoursDto;
 use timer\Domain\Dto\ExpectedHoursListDto;
-use timer\Domain\Dto\HoursDto;
 use timer\Domain\Repository\ExpectedHoursRepository;
 use Override;
+use RuntimeException;
 
-final readonly class ExpectedHoursMemoryRepository implements ExpectedHoursRepository
+final class ExpectedHoursMemoryRepository implements ExpectedHoursRepository
 {
+    private ExpectedHoursListDto $list;
+
+    public function __construct(
+        private readonly Clock $clock,
+    ) {
+        $this->list = new ExpectedHoursListDto();
+    }
+
     #[Override]
-    public function getActive(): ExpectedHoursDto
+    public function getActive(DateTimeImmutable $at): ExpectedHoursDto
     {
-        return new ExpectedHoursDto(
-            new DateDto('2022-01-01'),
-            new DateDto('2099-01-01'),
-            new HoursDto(8, 8, 8, 8, 8, 0, 0),
-        );
+        $day = $at->setTime(0, 0, 0, 0);
+
+        foreach ($this->list->hours as $hours) {
+            if (
+                $day >= $this->clock->fromString($hours->from->day)->setTime(0, 0, 0, 0)
+                && $day < $this->clock->fromString($hours->till->day)->setTime(0, 0, 0, 0)
+            ) {
+                return $hours;
+            }
+        }
+
+        throw new RuntimeException('no hours defined');
     }
 
     #[Override]
     public function all(): ExpectedHoursListDto
     {
-        return new ExpectedHoursListDto($this->getActive());
+        return $this->list;
+    }
+
+    #[Override]
+    public function add(ExpectedHoursDto $expectedHoursDto): void
+    {
+        $this->list = new ExpectedHoursListDto(
+            ... $this->list->hours,
+            ... [$expectedHoursDto],
+        );
     }
 }

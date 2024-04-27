@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace timer\Commands\Hours;
 
+use timer\Domain\Clock;
 use timer\Domain\Repository\ExpectedHoursRepository;
 use verfriemelt\wrapped\_\Cli\OutputInterface;
 use verfriemelt\wrapped\_\Command\AbstractCommand;
@@ -16,12 +17,13 @@ final class HoursShowCommand extends AbstractCommand
 {
     public function __construct(
         private readonly ExpectedHoursRepository $expectedHoursRepository,
+        private readonly Clock $clock,
     ) {}
 
     #[Override]
     public function execute(OutputInterface $output): ExitCode
     {
-        $output->write(print_r($this->expectedHoursRepository->getActive(), true));
+        $output->write(print_r($this->expectedHoursRepository->getActive($this->clock->today()), true));
 
         return ExitCode::Success;
     }

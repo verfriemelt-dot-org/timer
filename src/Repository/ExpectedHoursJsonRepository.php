@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace timer\Repository;
 
+use DateTimeImmutable;
 use timer\Domain\Clock;
 use timer\Domain\Dto\ExpectedHoursDto;
 use timer\Domain\Dto\ExpectedHoursListDto;
@@ -24,16 +25,18 @@ final class ExpectedHoursJsonRepository implements ExpectedHoursRepository
     ) {}
 
     #[Override]
-    public function getActive(): ExpectedHoursDto
+    public function getActive(DateTimeImmutable $at): ExpectedHoursDto
     {
+        $at = $at->setTime(0, 0, 0, 0);
+
         if (isset($this->active)) {
             return $this->active;
         }
 
         foreach ($this->all()->hours as $hours) {
             if (
-                $this->clock->now() >= $this->clock->fromString($hours->from->day)
-                && $this->clock->now() < $this->clock->fromString($hours->till->day)
+                $at >= $this->clock->fromString($hours->from->day)->setTime(0, 0, 0, 0)
+                && $at < $this->clock->fromString($hours->till->day)->setTime(0, 0, 0, 0)
             ) {
                 return $this->active = $hours;
             }
@@ -59,5 +62,11 @@ final class ExpectedHoursJsonRepository implements ExpectedHoursRepository
 
         /** @phpstan-ignore-next-line ignore short ternary */
         return \file_get_contents($this->path) ?: throw new RuntimeException("cant read {$this->path}");
+    }
+
+    #[Override]
+    public function add(ExpectedHoursDto $expectedHoursDto): void
+    {
+        throw new RuntimeException('not implemented');
     }
 }

@@ -9,6 +9,6 @@ final readonly class ExpectedHoursDto
     public function __construct(
         public DateDto $from,
         public DateDto $till,
-        public HoursDto $hours,
+        public WorkHoursDto $hours,
     ) {}
 }

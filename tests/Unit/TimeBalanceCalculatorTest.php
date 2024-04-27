@@ -7,20 +7,20 @@ namespace timer\tests\Unit;
 use DateTimeImmutable;
 use Override;
 use PHPUnit\Framework\TestCase;
-use timer\Domain\Clock;
+use Psr\Clock\ClockInterface;
 use timer\Domain\Dto\DateDto;
 use timer\Domain\Dto\EntryDto;
+use timer\Domain\Dto\ExpectedHoursDto;
 use timer\Domain\Dto\HolidayDto;
+use timer\Domain\Dto\WorkHoursDto;
 use timer\Domain\Dto\WorkTimeDto;
 use timer\Domain\EntryType;
 use timer\Domain\TimeBalanceCalculator;
-use timer\Domain\TimeDiffCalcalator;
-use timer\Domain\WorkTimeCalculator;
 use timer\Repository\EntryMemoryRepository;
 use timer\Repository\ExpectedHoursMemoryRepository;
 use timer\Repository\HolidayMemoryRepository;
 use verfriemelt\wrapped\_\Clock\MockClock;
-use verfriemelt\wrapped\_\Clock\SystemClock;
+use verfriemelt\wrapped\_\DI\Container;
 
 class TimeBalanceCalculatorTest extends TestCase
 {
@@ -31,15 +31,27 @@ class TimeBalanceCalculatorTest extends TestCase
     #[Override]
     public function setUp(): void
     {
-        $this->entryRepository = new EntryMemoryRepository(new Clock(new SystemClock()));
-        $this->holidayRepository = new HolidayMemoryRepository();
+        $container = new Container();
+        $container->register(ClockInterface::class, new MockClock(new DateTimeImmutable('now')));
 
-        $this->balanceCalculator = new TimeBalanceCalculator(
-            $this->entryRepository,
-            new WorkTimeCalculator(
-                $this->holidayRepository,
-                new TimeDiffCalcalator(new Clock(new MockClock(new DateTimeImmutable('now')))),
-                new ExpectedHoursMemoryRepository(),
+        $hours = $container->get(ExpectedHoursMemoryRepository::class);
+        $this->entryRepository = $container->get(EntryMemoryRepository::class);
+        $this->holidayRepository = $container->get(HolidayMemoryRepository::class);
+        $this->balanceCalculator = $container->get(TimeBalanceCalculator::class);
+
+        $hours->add(
+            new ExpectedHoursDto(
+                new DateDto('1999-01-01'),
+                new DateDto('2999-01-01'),
+                new WorkHoursDto(
+                    8.0,
+                    8.0,
+                    8.0,
+                    8.0,
+                    8.0,
+                    0,
+                    0,
+                ),
             ),
         );
     }
