@@ -29,7 +29,10 @@ $kernel = new Kernel();
 
 (new DotEnv())->load('.env');
 
-$path = $kernel->getProjectPath() . '/' . ($_ENV['DATA_PATH'] ?? throw new RuntimeException('DATA_PATH is not set'));
+$dataPath = $_ENV['DATA_PATH'] ?? throw new RuntimeException('DATA_PATH is not set');
+assert(is_string($dataPath));
+
+$path = "{$kernel->getProjectPath()}/{$dataPath}";
 
 $kernel->getContainer()->register(ClockInterface::class, new SystemClock());
 $kernel->getContainer()->register(HolidayRepository::class, new HolidayJsonRepository($path . '/holidays.json'));
