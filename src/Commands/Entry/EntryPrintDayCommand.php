@@ -9,11 +9,11 @@ use timer\Domain\Repository\CurrentWorkRepository;
 use timer\Domain\Repository\EntryRepository;
 use timer\Domain\TimeDiffCalcalator;
 use timer\Domain\WorkTimeCalculator;
+use verfriemelt\wrapped\_\Cli\InputInterface;
 use verfriemelt\wrapped\_\Cli\OutputInterface;
 use verfriemelt\wrapped\_\Command\AbstractCommand;
 use verfriemelt\wrapped\_\Command\Attributes\Command;
 use verfriemelt\wrapped\_\Command\Attributes\DefaultCommand;
-use verfriemelt\wrapped\_\Command\CommandArguments\ArgvParser;
 use verfriemelt\wrapped\_\Command\CommandArguments\Option;
 use verfriemelt\wrapped\_\Command\ExitCode;
 use Override;
@@ -22,8 +22,6 @@ use Override;
 #[Command('print:day', 'the default action; prints the time balance of the current day')]
 final class EntryPrintDayCommand extends AbstractCommand
 {
-    private Option $raw;
-
     public function __construct(
         private readonly EntryRepository $entryRepository,
         private readonly WorkTimeCalculator $workTimeCalculator,
@@ -33,21 +31,20 @@ final class EntryPrintDayCommand extends AbstractCommand
     ) {}
 
     #[Override]
-    public function configure(ArgvParser $argv): void
+    public function configure(): void
     {
-        $this->raw = new Option('raw', short: 'r', description: 'just dumpts out the dto');
-        $argv->addOptions($this->raw);
+        $this->addOption(new Option('raw', short: 'r', description: 'just dumpts out the dto'));
     }
 
     /**
      * @infection-ignore-all
      */
     #[Override]
-    public function execute(OutputInterface $output): ExitCode
+    public function execute(InputInterface $input, OutputInterface $output): ExitCode
     {
         $today = $this->clock->now();
 
-        if ($this->raw->present()) {
+        if ($input->getOption('raw')->present()) {
             $this->dumpRaw($output);
             return ExitCode::Success;
         }

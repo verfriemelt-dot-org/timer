@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace timer\Commands\Vacation;
 
+use verfriemelt\wrapped\_\Cli\InputInterface;
 use verfriemelt\wrapped\_\Cli\OutputInterface;
 use verfriemelt\wrapped\_\Command\AbstractCommand;
 use verfriemelt\wrapped\_\Command\Attributes\Command;
@@ -14,7 +15,7 @@ use Override;
 final class VacationRuleCommand extends AbstractCommand
 {
     #[Override]
-    public function execute(OutputInterface $output): ExitCode
+    public function execute(InputInterface $input, OutputInterface $output): ExitCode
     {
         echo 'hi';
 

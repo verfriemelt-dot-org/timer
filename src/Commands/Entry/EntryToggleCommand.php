@@ -10,20 +10,18 @@ use timer\Domain\Dto\EntryDto;
 use timer\Domain\EntryType;
 use timer\Domain\Repository\CurrentWorkRepository;
 use timer\Domain\Repository\EntryRepository;
+use verfriemelt\wrapped\_\Cli\InputInterface;
 use verfriemelt\wrapped\_\Cli\OutputInterface;
 use verfriemelt\wrapped\_\Command\AbstractCommand;
 use verfriemelt\wrapped\_\Command\Attributes\Command;
 use verfriemelt\wrapped\_\Command\CommandArguments\Argument;
 use verfriemelt\wrapped\_\Command\CommandArguments\ArgumentMissingException;
-use verfriemelt\wrapped\_\Command\CommandArguments\ArgvParser;
 use verfriemelt\wrapped\_\Command\ExitCode;
 use Override;
 
 #[Command('toggle', 'start and stops new entries and adds them to the repository')]
 final class EntryToggleCommand extends AbstractCommand
 {
-    private Argument $time;
-
     public function __construct(
         private readonly CurrentWorkRepository $currentWorkRepository,
         private readonly EntryRepository $entryRepository,
@@ -31,16 +29,15 @@ final class EntryToggleCommand extends AbstractCommand
     ) {}
 
     #[Override]
-    public function configure(ArgvParser $argv): void
+    public function configure(): void
     {
-        $this->time = new Argument('time', Argument::VARIADIC, default: 'now');
-        $argv->addArguments($this->time);
+        $this->addArgument(new Argument('time', Argument::VARIADIC, default: 'now'));
     }
 
     #[Override]
-    public function execute(OutputInterface $output): ExitCode
+    public function execute(InputInterface $input, OutputInterface $output): ExitCode
     {
-        $time = $this->clock->now()->modify($this->time->get() ?? throw new ArgumentMissingException());
+        $time = $this->clock->now()->modify($input->getArgument('time')->get() ?? throw new ArgumentMissingException());
 
         if (!$this->currentWorkRepository->has()) {
             $output->writeLn(\print_r($this->currentWorkRepository->toggle($time), true));

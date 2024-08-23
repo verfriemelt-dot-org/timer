@@ -9,39 +9,35 @@ use timer\Domain\Dto\DateDto;
 use timer\Domain\Dto\EntryDto;
 use timer\Domain\EntryType;
 use timer\Domain\Repository\EntryRepository;
+use verfriemelt\wrapped\_\Cli\InputInterface;
 use verfriemelt\wrapped\_\Cli\OutputInterface;
 use verfriemelt\wrapped\_\Command\AbstractCommand;
 use verfriemelt\wrapped\_\Command\Attributes\Command;
 use verfriemelt\wrapped\_\Command\CommandArguments\Argument;
 use verfriemelt\wrapped\_\Command\CommandArguments\ArgumentMissingException;
-use verfriemelt\wrapped\_\Command\CommandArguments\ArgvParser;
 use verfriemelt\wrapped\_\Command\ExitCode;
 use Override;
 
 #[Command('add', 'used to add non-work entries')]
 final class EntryAddCommand extends AbstractCommand
 {
-    private Argument $typeArgument;
-    private Argument $dateArgument;
-
     public function __construct(
         private readonly EntryRepository $entryRepository,
         private readonly Clock $clock,
     ) {}
 
     #[Override]
-    public function configure(ArgvParser $argv): void
+    public function configure(): void
     {
-        $this->typeArgument = new Argument('type');
-        $this->dateArgument = new Argument('date', Argument::OPTIONAL, default: 'now');
-        $argv->addArguments($this->typeArgument, $this->dateArgument);
+        $this->addArgument(new Argument('type'));
+        $this->addArgument(new Argument('date', Argument::OPTIONAL, default: 'now'));
     }
 
     #[Override]
-    public function execute(OutputInterface $output): ExitCode
+    public function execute(InputInterface $input, OutputInterface $output): ExitCode
     {
-        $time = $this->clock->fromString($this->dateArgument->get() ?? throw new ArgumentMissingException());
-        $type = EntryType::from($this->typeArgument->get() ?? '');
+        $time = $this->clock->fromString($input->getArgument('date')->get() ?? throw new ArgumentMissingException());
+        $type = EntryType::from($input->getArgument('type')->get() ?? '');
 
         assert($type !== EntryType::Work);
 

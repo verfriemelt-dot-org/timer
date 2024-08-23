@@ -6,6 +6,7 @@ namespace timer\Commands\Entry;
 
 use timer\Domain\Clock;
 use timer\Domain\TimeBalanceCalculator;
+use verfriemelt\wrapped\_\Cli\InputInterface;
 use verfriemelt\wrapped\_\Cli\OutputInterface;
 use verfriemelt\wrapped\_\Command\AbstractCommand;
 use verfriemelt\wrapped\_\Command\Attributes\Command;
@@ -21,7 +22,7 @@ final class EntryBalanceCommand extends AbstractCommand
     ) {}
 
     #[Override]
-    public function execute(OutputInterface $output): ExitCode
+    public function execute(InputInterface $input, OutputInterface $output): ExitCode
     {
         $dto = $this->timeBalance->get(
             $this->clock->fromString('2023-01-01'),

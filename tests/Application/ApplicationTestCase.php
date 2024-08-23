@@ -21,7 +21,7 @@ use timer\Repository\EntryMemoryRepository;
 use timer\Repository\ExpectedHoursMemoryRepository;
 use timer\Repository\HolidayMemoryRepository;
 use verfriemelt\wrapped\_\Cli\BufferedOutput;
-use verfriemelt\wrapped\_\Cli\Console;
+use verfriemelt\wrapped\_\Cli\ConsoleInput;
 use verfriemelt\wrapped\_\Clock\MockClock;
 use verfriemelt\wrapped\_\Clock\SystemClock;
 use verfriemelt\wrapped\_\Command\AbstractCommand;
@@ -46,19 +46,24 @@ abstract class ApplicationTestCase extends TestCase
      * @param class-string<AbstractCommand> $command
      * @param string[]                      $argv
      */
-    protected function executeCommand(string $command, array $argv = [], ?Console $cli = null): ExitCode
+    protected function executeCommand(string $command, array $argv = []): ExitCode
     {
-        $argvParser = new ArgvParser();
-
+        $this->kernel->getContainer()->register($command)->share(false);
         $instance = $this->kernel->getContainer()->get($command);
-        $instance->configure($argvParser);
-        static::assertInstanceOf($command, $instance);
+        $instance->configure();
 
-        $argvParser->parse($argv);
+        $argvInstance = new ArgvParser();
+        $argvInstance->addArguments(... $instance->getArguments());
+        $argvInstance->addOptions(... $instance->getOptions());
+        $argvInstance->parse($argv);
+
+        $input = new ConsoleInput($argvInstance);
+
+        static::assertInstanceOf($command, $instance);
 
         $this->consoleSpy = new BufferedOutput();
 
-        return $instance->execute($cli ?? $this->consoleSpy);
+        return $instance->execute($input, $this->consoleSpy);
     }
 
     #[Override]
