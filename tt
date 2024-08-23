@@ -6,7 +6,9 @@ EXIT_CODE=$?
 
 if [[ $1 =~ 'toggle' ]]
 then
-    skip=. git commit -m 'entry' data/entries.json >/dev/null
+    cd data
+    skip=. git commit -m 'entry' entries.json >/dev/null
+    git push
 fi
 
 exit $EXIT_CODE
