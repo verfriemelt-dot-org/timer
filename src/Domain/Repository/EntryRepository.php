@@ -22,4 +22,6 @@ interface EntryRepository
     public function getByRange(DateTimeImmutable $from, DateTimeImmutable $till, EntryType ... $types): EntryListDto;
 
     public function initialized(): bool;
+
+    public function initialize(): void;
 }

@@ -118,4 +118,15 @@ final class EntryJsonRepository implements EntryRepository
     {
         return \file_exists($this->path);
     }
+
+    #[Override]
+    public function initialize(): void
+    {
+        $folder = \dirname($this->path);
+        if (!\file_exists($folder)) {
+            mkdir($folder);
+        }
+
+        \file_put_contents($this->path, '[]');
+    }
 }

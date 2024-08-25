@@ -90,4 +90,7 @@ final class EntryMemoryRepository implements EntryRepository
     {
         return true;
     }
+
+    #[Override]
+    public function initialize(): void {}
 }

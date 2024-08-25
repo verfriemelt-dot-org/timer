@@ -68,9 +68,14 @@ final class ExpectedHoursJsonRepository implements ExpectedHoursRepository
     #[Override]
     public function add(ExpectedHoursDto $expectedHoursDto): void
     {
-        // readonly + end() does not mix
-        $list = $this->all()->hours;
-        $last = end($list);
+        if ($this->initialized()) {
+            // readonly + end() does not mix
+            $list = $this->all()->hours;
+            $last = end($list);
+        } else {
+            $last = false;
+            $this->list = new ExpectedHoursListDto();
+        }
 
         if ($last !== false && $this->clock->fromString($last->from->day) > $this->clock->fromString($expectedHoursDto->from->day)) {
             throw new RuntimeException('cannot add hours before the last entry to list');
@@ -80,11 +85,18 @@ final class ExpectedHoursJsonRepository implements ExpectedHoursRepository
             ... $this->list->hours,
             ... [$expectedHoursDto],
         );
+
+        $this->write($this->list);
     }
 
     #[Override]
     public function initialized(): bool
     {
         return \file_exists($this->path);
+    }
+
+    private function write(ExpectedHoursListDto $dto): void
+    {
+        \file_put_contents($this->path, (new JsonEncoder())->serialize($dto->hours, true));
     }
 }
