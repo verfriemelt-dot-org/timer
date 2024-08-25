@@ -30,11 +30,11 @@ final class CheckForInitListener implements EventSubscriberInterface
 
     protected function isInitialized(KernelPreCommandEvent $event): KernelPreCommandEvent
     {
-        if ($this->hoursRepository->initialized()) {
+        if (!$this->hoursRepository->initialized()) {
             $event->output->writeLn('hours repo initialized');
         }
 
-        if ($this->entryRepository->initialized()) {
+        if (!$this->entryRepository->initialized()) {
             $event->output->writeLn('entry repo initialized');
         }
 
