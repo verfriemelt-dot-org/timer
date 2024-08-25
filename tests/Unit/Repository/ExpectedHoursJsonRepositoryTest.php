@@ -9,6 +9,9 @@ use Override;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use timer\Domain\Clock;
+use timer\Domain\Dto\DateDto;
+use timer\Domain\Dto\ExpectedHoursDto;
+use timer\Domain\Dto\WorkHoursDto;
 use timer\Repository\ExpectedHoursJsonRepository;
 use verfriemelt\wrapped\_\Clock\MockClock;
 use verfriemelt\wrapped\_\Clock\SystemClock;
@@ -24,29 +27,9 @@ class ExpectedHoursJsonRepositoryTest extends TestCase
             self::getFilepath(),
             <<<JSON
             [
-                {
-                    "from": {
-                        "day": "2022-01-01"
-                    },
-                    "till": {
-                        "day": "2100-01-01"
-                    },
-                    "hours": {
-                        "monday": 8,
-                        "tuesday": 8,
-                        "wednesday": 8,
-                        "thursday": 8,
-                        "friday": 8,
-                        "saturday": 0,
-                        "sunday": 0
-                    }
-                },
-                {
+               {
                     "from": {
                         "day": "1999-01-01"
-                    },
-                    "till": {
-                        "day": "2022-01-01"
                     },
                     "hours": {
                         "monday": 5,
@@ -54,6 +37,20 @@ class ExpectedHoursJsonRepositoryTest extends TestCase
                         "wednesday": 5,
                         "thursday": 5,
                         "friday": 5,
+                        "saturday": 0,
+                        "sunday": 0
+                    }
+                },
+                {
+                    "from": {
+                        "day": "2022-01-01"
+                    },
+                    "hours": {
+                        "monday": 8,
+                        "tuesday": 8,
+                        "wednesday": 8,
+                        "thursday": 8,
+                        "friday": 8,
                         "saturday": 0,
                         "sunday": 0
                     }
@@ -107,7 +104,7 @@ class ExpectedHoursJsonRepositoryTest extends TestCase
 
         $repo =  new ExpectedHoursJsonRepository(
             self::getFilepath(),
-            $clock = new Clock(new MockClock(new DateTimeImmutable('2100-01-01'))),
+            $clock = new Clock(new MockClock(new DateTimeImmutable('1900-01-01'))),
         );
         $repo->getActive($clock->today());
     }
@@ -116,5 +113,23 @@ class ExpectedHoursJsonRepositoryTest extends TestCase
     {
         static::expectException(RuntimeException::class);
         (new ExpectedHoursJsonRepository(\TEST_ROOT, new Clock(new SystemClock())))->all();
+    }
+
+    public function test_add_older_entry(): void
+    {
+        static::expectException(RuntimeException::class);
+        static::expectExceptionMessage('before');
+
+        $repo =  new ExpectedHoursJsonRepository(
+            self::getFilepath(),
+            new Clock(new SystemClock()),
+        );
+
+        $repo->add(
+            new ExpectedHoursDto(
+                new DateDto('2000-01-01'),
+                new WorkHoursDto(.5, .5, .5, .5, .5, .5, .5),
+            ),
+        );
     }
 }

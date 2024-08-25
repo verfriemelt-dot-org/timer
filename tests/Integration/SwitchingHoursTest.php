@@ -34,7 +34,6 @@ class SwitchingHoursTest extends TestCase
         $this->expectedHoursRepository->add(
             new ExpectedHoursDto(
                 new DateDto('2024-04-01'),
-                new DateDto('2024-04-02'),
                 new WorkHoursDto(
                     8.0,
                     8.0,
@@ -50,7 +49,6 @@ class SwitchingHoursTest extends TestCase
         $this->expectedHoursRepository->add(
             new ExpectedHoursDto(
                 new DateDto('2024-04-02'),
-                new DateDto('2024-04-03'),
                 new WorkHoursDto(
                     5.0,
                     5.0,

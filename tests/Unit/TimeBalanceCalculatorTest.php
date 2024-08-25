@@ -42,7 +42,6 @@ class TimeBalanceCalculatorTest extends TestCase
         $hours->add(
             new ExpectedHoursDto(
                 new DateDto('1999-01-01'),
-                new DateDto('2999-01-01'),
                 new WorkHoursDto(
                     8.0,
                     8.0,

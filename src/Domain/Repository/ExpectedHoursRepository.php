@@ -15,4 +15,6 @@ interface ExpectedHoursRepository
     public function getActive(DateTimeImmutable $at): ExpectedHoursDto;
 
     public function add(ExpectedHoursDto $expectedHoursDto): void;
+
+    public function initialized(): bool;
 }

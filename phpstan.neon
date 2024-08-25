@@ -7,6 +7,7 @@ includes:
     - vendor/phpat/phpat/extension.neon
     - vendor/phpstan/phpstan-deprecation-rules/rules.neon
     - vendor/spaze/phpstan-disallowed-calls/extension.neon
+    - phpstan.baseline.neon
 
 parameters:
 

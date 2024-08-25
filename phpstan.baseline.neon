@@ -1,0 +1,11 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Method timer\\\\Domain\\\\EventSubscriber\\\\CheckForInitListener\\:\\:on\\(\\) should return \\(Closure\\(T\\)\\: T\\)\\|null but returns \\(Closure\\(verfriemelt\\\\wrapped\\\\_\\\\Command\\\\Event\\\\KernelPreCommandEvent\\)\\: verfriemelt\\\\wrapped\\\\_\\\\Command\\\\Event\\\\KernelPreCommandEvent\\)\\|null\\.$#"
+			count: 1
+			path: src/Domain/EventSubscriber/CheckForInitListener.php
+
+		-
+			message: "#^Property timer\\\\Domain\\\\EventSubscriber\\\\CheckForInitListener\\:\\:\\$container is never read, only written\\.$#"
+			count: 1
+			path: src/Domain/EventSubscriber/CheckForInitListener.php

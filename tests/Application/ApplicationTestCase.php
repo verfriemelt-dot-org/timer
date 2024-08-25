@@ -95,7 +95,6 @@ abstract class ApplicationTestCase extends TestCase
         $this->expectedHoursRepository->add(
             new ExpectedHoursDto(
                 new DateDto('1999-01-01'),
-                new DateDto('2099-01-01'),
                 new WorkHoursDto(8, 8, 8, 8, 8, 0, 0),
             ),
         );

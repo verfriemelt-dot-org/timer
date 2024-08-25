@@ -112,4 +112,10 @@ final class EntryJsonRepository implements EntryRepository
 
         return new EntryListDto(... $elements);
     }
+
+    #[Override]
+    public function initialized(): bool
+    {
+        return \file_exists($this->path);
+    }
 }

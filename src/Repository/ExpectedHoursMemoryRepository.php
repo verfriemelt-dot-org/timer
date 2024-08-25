@@ -12,6 +12,8 @@ use timer\Domain\Repository\ExpectedHoursRepository;
 use Override;
 use RuntimeException;
 
+use function end;
+
 final class ExpectedHoursMemoryRepository implements ExpectedHoursRepository
 {
     private ExpectedHoursListDto $list;
@@ -25,18 +27,25 @@ final class ExpectedHoursMemoryRepository implements ExpectedHoursRepository
     #[Override]
     public function getActive(DateTimeImmutable $at): ExpectedHoursDto
     {
-        $day = $at->setTime(0, 0, 0, 0);
+        $at = $at->setTime(0, 0, 0, 0);
 
-        foreach ($this->list->hours as $hours) {
-            if (
-                $day >= $this->clock->fromString($hours->from->day)->setTime(0, 0, 0, 0)
-                && $day < $this->clock->fromString($hours->till->day)->setTime(0, 0, 0, 0)
-            ) {
-                return $hours;
+        $current = null;
+        $lastStart = null;
+
+        foreach ($this->all()->hours as $hours) {
+            $start = $this->clock->fromString($hours->from->day)->setTime(0, 0, 0, 0);
+
+            if ($lastStart !== null) {
+                \assert($start > $lastStart, 'list must be sorted');
+            }
+
+            if ($at >= $start) {
+                $current = $hours;
+                $lastStart = $start;
             }
         }
 
-        throw new RuntimeException('no hours defined');
+        return $current ?? throw new RuntimeException('no hours defined');
     }
 
     #[Override]
@@ -48,9 +57,23 @@ final class ExpectedHoursMemoryRepository implements ExpectedHoursRepository
     #[Override]
     public function add(ExpectedHoursDto $expectedHoursDto): void
     {
+        // readonly + end() does not mix
+        $list = $this->all()->hours;
+        $last = \end($list);
+
+        if ($last !== false && $this->clock->fromString($last->from->day) > $this->clock->fromString($expectedHoursDto->from->day)) {
+            throw new RuntimeException('cannot add hours before the last entry to list');
+        }
+
         $this->list = new ExpectedHoursListDto(
             ... $this->list->hours,
             ... [$expectedHoursDto],
         );
+    }
+
+    #[Override]
+    public function initialized(): bool
+    {
+        return true;
     }
 }

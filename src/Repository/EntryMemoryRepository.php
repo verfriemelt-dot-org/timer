@@ -84,4 +84,10 @@ final class EntryMemoryRepository implements EntryRepository
 
         return new EntryListDto(... $elements);
     }
+
+    #[Override]
+    public function initialized(): bool
+    {
+        return true;
+    }
 }

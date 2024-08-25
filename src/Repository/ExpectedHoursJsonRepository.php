@@ -17,8 +17,6 @@ final class ExpectedHoursJsonRepository implements ExpectedHoursRepository
 {
     private ExpectedHoursListDto $list;
 
-    private ExpectedHoursDto $active;
-
     public function __construct(
         private readonly string $path,
         private readonly Clock $clock,
@@ -29,20 +27,23 @@ final class ExpectedHoursJsonRepository implements ExpectedHoursRepository
     {
         $at = $at->setTime(0, 0, 0, 0);
 
-        if (isset($this->active)) {
-            return $this->active;
-        }
+        $current = null;
+        $lastStart = null;
 
         foreach ($this->all()->hours as $hours) {
-            if (
-                $at >= $this->clock->fromString($hours->from->day)->setTime(0, 0, 0, 0)
-                && $at < $this->clock->fromString($hours->till->day)->setTime(0, 0, 0, 0)
-            ) {
-                return $this->active = $hours;
+            $start = $this->clock->fromString($hours->from->day)->setTime(0, 0, 0, 0);
+
+            if ($lastStart !== null) {
+                assert($start > $lastStart, 'list must be sorted');
+            }
+
+            if ($at >= $start) {
+                $current = $hours;
+                $lastStart = $start;
             }
         }
 
-        throw new RuntimeException('no hours defined');
+        return $current ?? throw new RuntimeException('no hours defined');
     }
 
     /**
@@ -67,6 +68,23 @@ final class ExpectedHoursJsonRepository implements ExpectedHoursRepository
     #[Override]
     public function add(ExpectedHoursDto $expectedHoursDto): void
     {
-        throw new RuntimeException('not implemented');
+        // readonly + end() does not mix
+        $list = $this->all()->hours;
+        $last = end($list);
+
+        if ($last !== false && $this->clock->fromString($last->from->day) > $this->clock->fromString($expectedHoursDto->from->day)) {
+            throw new RuntimeException('cannot add hours before the last entry to list');
+        }
+
+        $this->list = new ExpectedHoursListDto(
+            ... $this->list->hours,
+            ... [$expectedHoursDto],
+        );
+    }
+
+    #[Override]
+    public function initialized(): bool
+    {
+        return \file_exists($this->path);
     }
 }
