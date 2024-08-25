@@ -132,4 +132,41 @@ class ExpectedHoursJsonRepositoryTest extends TestCase
             ),
         );
     }
+
+    public function test_entry(): void
+    {
+        $repo =  new ExpectedHoursJsonRepository(
+            self::getFilepath(),
+            new Clock(new SystemClock()),
+        );
+
+        $repo->add(
+            new ExpectedHoursDto(
+                new DateDto('2100-01-01'),
+                new WorkHoursDto(.5, .5, .5, .5, .5, .5, .5),
+            ),
+        );
+
+        static::assertCount(3, $repo->all()->hours);
+    }
+
+    public function test_initialized(): void
+    {
+        $repo =  new ExpectedHoursJsonRepository(
+            self::getFilepath(),
+            new Clock(new SystemClock()),
+        );
+
+        static::assertTrue($repo->initialized());
+    }
+
+    public function test_not_initialized(): void
+    {
+        $repo =  new ExpectedHoursJsonRepository(
+            '/foo/path',
+            new Clock(new SystemClock()),
+        );
+
+        static::assertFalse($repo->initialized());
+    }
 }

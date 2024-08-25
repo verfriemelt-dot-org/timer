@@ -30,7 +30,7 @@ class EntryJsonRepositoryTest extends TestCase
         );
 
         if (\file_exists(self::getFilepath())) {
-            unlink(self::getFilepath());
+            \unlink(self::getFilepath());
         }
     }
 
@@ -47,7 +47,7 @@ class EntryJsonRepositoryTest extends TestCase
     public function tearDown(): void
     {
         if (\file_exists(self::getFilepath())) {
-            unlink(self::getFilepath());
+            \unlink(self::getFilepath());
         }
     }
 
@@ -165,5 +165,17 @@ class EntryJsonRepositoryTest extends TestCase
 
         static::assertCount(1, $this->repo->getDay(new DateTimeImmutable('2022-02-01'))->entries, 'cache reset');
         static::assertCount(1, $this->repo->getDay(new DateTimeImmutable('2022-02-02'))->entries, 'cache reset');
+    }
+
+    public function test_initialized(): void
+    {
+        \touch(self::TEST_PATH);
+
+        static::assertTrue($this->repo->initialized());
+    }
+
+    public function test_not_initialized(): void
+    {
+        static::assertFalse($this->repo->initialized());
     }
 }
