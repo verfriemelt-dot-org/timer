@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-cd "$(dirname "$(realpath $0)")"
+cd "$(dirname "$(realpath $0)")"/..
 
 php src/index.php "$@"
 EXIT_CODE=$?
@@ -15,8 +15,6 @@ then
         skip=. git commit -m 'entry' entries.json
         git push
     fi
-
-
 fi
 
 exit $EXIT_CODE
