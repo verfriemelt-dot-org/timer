@@ -6,9 +6,17 @@ EXIT_CODE=$?
 
 if [[ $1 =~ 'toggle' ]]
 then
-    cd data
-    skip=. git commit -m 'entry' entries.json >/dev/null
-    git push >/dev/null
+    source .env
+
+    # push if git folder
+    if [[ -d "$DATA_PATH/.git" ]]
+    then
+        cd $DATA_PATH
+        skip=. git commit -m 'entry' entries.json
+        git push
+    fi
+
+
 fi
 
 exit $EXIT_CODE
