@@ -92,7 +92,14 @@ final class ExpectedHoursJsonRepository implements ExpectedHoursRepository
     #[Override]
     public function initialized(): bool
     {
-        return \file_exists($this->path);
+        try {
+            \file_exists($this->path) || throw new RuntimeException();
+            $this->getActive($this->clock->now());
+        } catch (RuntimeException) {
+            return false;
+        }
+
+        return true;
     }
 
     private function write(ExpectedHoursListDto $dto): void

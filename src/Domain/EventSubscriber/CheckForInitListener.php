@@ -12,7 +12,6 @@ use timer\Domain\Repository\EntryRepository;
 use timer\Domain\Repository\ExpectedHoursRepository;
 use verfriemelt\wrapped\_\Cli\Console;
 use verfriemelt\wrapped\_\Command\Event\KernelPreCommandEvent;
-use verfriemelt\wrapped\_\DI\ContainerInterface;
 use verfriemelt\wrapped\_\Events\EventInterface;
 use verfriemelt\wrapped\_\Events\EventSubscriberInterface;
 
@@ -21,7 +20,6 @@ final class CheckForInitListener implements EventSubscriberInterface
     public function __construct(
         private readonly ExpectedHoursRepository $hoursRepository,
         private readonly EntryRepository $entryRepository,
-        private readonly ContainerInterface $container,
     ) {}
 
     public function on(EventInterface $event): ?Closure

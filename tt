@@ -8,7 +8,7 @@ if [[ $1 =~ 'toggle' ]]
 then
     cd data
     skip=. git commit -m 'entry' entries.json >/dev/null
-    git push
+    git push >/dev/null
 fi
 
 exit $EXIT_CODE
