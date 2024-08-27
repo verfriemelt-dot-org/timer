@@ -16,7 +16,7 @@ class HoursAddCommandTest extends ApplicationTestCase
             ExitCode::Success,
             $this->executeCommand(
                 HoursAddCommand::class,
-                ['2022-04-01', '1', '2', '3', '4', '5', '6', '7'],
+                ['2023-04-01', '1', '2', '3', '4', '5', '6', '7'],
             ),
         );
 
@@ -26,7 +26,7 @@ class HoursAddCommandTest extends ApplicationTestCase
             (
                 [from] => timer\Domain\Dto\DateDto Object
                     (
-                        [day] => 2022-04-01
+                        [day] => 2023-04-01
                     )
             
                 [hours] => timer\Domain\Dto\WorkHoursDto Object
@@ -53,7 +53,7 @@ class HoursAddCommandTest extends ApplicationTestCase
             ExitCode::Success,
             $this->executeCommand(
                 HoursAddCommand::class,
-                ['2022-04-01', '1', '2', '3', '4', '5', '6', '7'],
+                ['2023-04-01', '1', '2', '3', '4', '5', '6', '7'],
             ),
         );
 
@@ -61,7 +61,7 @@ class HoursAddCommandTest extends ApplicationTestCase
             ExitCode::Success,
             $this->executeCommand(
                 HoursAddCommand::class,
-                ['2023-04-01', '11', '12', '13', '14', '15', '16', '17'],
+                ['2023-12-01', '11', '12', '13', '14', '15', '16', '17'],
             ),
         );
 
@@ -71,7 +71,7 @@ class HoursAddCommandTest extends ApplicationTestCase
             (
                 [from] => timer\Domain\Dto\DateDto Object
                     (
-                        [day] => 2023-04-01
+                        [day] => 2023-12-01
                     )
             
                 [hours] => timer\Domain\Dto\WorkHoursDto Object

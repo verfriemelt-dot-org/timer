@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace timer\Commands\Entry;
 
 use timer\Domain\Clock;
+use timer\Domain\Repository\ExpectedHoursRepository;
 use timer\Domain\TimeBalanceCalculator;
 use verfriemelt\wrapped\_\Cli\InputInterface;
 use verfriemelt\wrapped\_\Cli\OutputInterface;
@@ -18,6 +19,7 @@ final class EntryBalanceCommand extends AbstractCommand
 {
     public function __construct(
         private readonly TimeBalanceCalculator $timeBalance,
+        private readonly ExpectedHoursRepository $expectedHoursRepository,
         private readonly Clock $clock,
     ) {}
 
@@ -25,7 +27,7 @@ final class EntryBalanceCommand extends AbstractCommand
     public function execute(InputInterface $input, OutputInterface $output): ExitCode
     {
         $dto = $this->timeBalance->get(
-            $this->clock->fromString('2023-01-01'),
+            $this->clock->fromString($this->expectedHoursRepository->all()->hours[0]->from->day),
             $this->clock->fromString('Yesterday'),
         );
 
