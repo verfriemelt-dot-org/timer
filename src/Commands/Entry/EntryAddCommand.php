@@ -12,13 +12,15 @@ use timer\Domain\Repository\EntryRepository;
 use verfriemelt\wrapped\_\Cli\InputInterface;
 use verfriemelt\wrapped\_\Cli\OutputInterface;
 use verfriemelt\wrapped\_\Command\AbstractCommand;
+use verfriemelt\wrapped\_\Command\Attributes\Alias;
 use verfriemelt\wrapped\_\Command\Attributes\Command;
 use verfriemelt\wrapped\_\Command\CommandArguments\Argument;
 use verfriemelt\wrapped\_\Command\CommandArguments\ArgumentMissingException;
 use verfriemelt\wrapped\_\Command\ExitCode;
 use Override;
 
-#[Command('add', 'used to add non-work entries')]
+#[Command('entry:add', 'used to add non-work entries')]
+#[Alias('add')]
 final class EntryAddCommand extends AbstractCommand
 {
     public function __construct(
