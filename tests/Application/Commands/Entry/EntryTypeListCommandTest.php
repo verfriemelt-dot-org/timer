@@ -18,15 +18,15 @@ class EntryTypeListCommandTest extends ApplicationTestCase
 
               type                     factor
               ===============================
-              Work                     0
-              Sick                     100
-              SickHalf                 50
-              Vacation                 100
-              VacationHalf             50
-              SpecialVacation          100
-              MourningLeave            100
-              EducationalVacation      100
-              OvertimeReduction        0
+              work                     0
+              sick                     100
+              sick-half                50
+              vacation                 100
+              vacation-half            50
+              special-vacation         100
+              mourning-leave           100
+              educational-vacation     100
+              overtime-reduction       0
             
             
             OUTPUT,

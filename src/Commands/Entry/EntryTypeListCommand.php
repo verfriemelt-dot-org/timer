@@ -31,8 +31,8 @@ final class EntryTypeListCommand extends AbstractCommand
         $output->writeLn(\str_repeat('=', 25 + 4 + 2));
 
         foreach (EntryType::cases() as $type) {
-            $output->write("  {$type->name}");
-            $output->write(\str_repeat(' ', 25 - \mb_strlen($type->name)));
+            $output->write("  {$type->value}");
+            $output->write(\str_repeat(' ', 25 - \mb_strlen($type->value)));
             $output->write((string) $type->getFactor());
             $output->eol();
         }
