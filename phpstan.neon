@@ -19,9 +19,11 @@ parameters:
   checkMissingCallableSignature: true
 
   type_coverage:
-      param_type: 100
       return_type: 100
+      param_type: 100
       property_type: 100
+      constant: 100
+      declare: 100
       print_suggestions: true
 
   cognitive_complexity:
