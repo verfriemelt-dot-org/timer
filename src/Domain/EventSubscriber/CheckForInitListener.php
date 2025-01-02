@@ -47,10 +47,12 @@ final class CheckForInitListener implements EventSubscriberInterface
             $cli->writeLn('working hours starting from monday (like "8 8 8 5.5 5.5 0 0" - needs to be 7 values)?');
 
             $hours = $cli->read();
+            assert(\is_string($hours));
             $hours = array_map(static fn (string $i): float => (float) $i, explode(' ', $hours));
 
             $cli->writeLn('since when? like 2022-01-31?');
             $since = $cli->read();
+            assert(\is_string($since));
 
             $hours = new ExpectedHoursDto(
                 new DateDto($since),

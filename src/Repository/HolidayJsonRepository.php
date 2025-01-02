@@ -16,7 +16,7 @@ final class HolidayJsonRepository implements HolidayRepository
 {
     private HolidayListDto $list;
 
-    /** @var array{isHoliday?: HolidayDto[] } */
+    /** @var array<string, array<HolidayDto|null>> */
     private array $cache = [];
 
     public function __construct(
