@@ -27,6 +27,7 @@ class EntryTypeListCommandTest extends ApplicationTestCase
               mourning-leave           100
               educational-vacation     100
               overtime-reduction       0
+              maternity-leave          100
             
             
             OUTPUT,

@@ -15,6 +15,7 @@ enum EntryType: string
     case MourningLeave = 'mourning-leave';
     case EducationalVacation = 'educational-vacation';
     case OvertimeReduction = 'overtime-reduction';
+    case MaternityLeave = 'maternity-leave';
 
     /** @var EntryType[] */
     final public const array VACATION = [
@@ -32,6 +33,7 @@ enum EntryType: string
             EntryType::Work => 0,
             EntryType::VacationHalf,
             EntryType::SickHalf => 50,
+            EntryType::MaternityLeave,
             EntryType::Sick,
             EntryType::Vacation,
             EntryType::SpecialVacation,
