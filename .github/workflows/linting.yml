@@ -37,7 +37,7 @@ jobs:
         run: composer install
 
       - name: run csfixer
-        run: vendor/bin/php-cs-fixer fix --diff --dry-run -v
+        run: PHP_CS_FIXER_IGNORE_ENV=1 vendor/bin/php-cs-fixer fix --diff --dry-run -v
 
   rector:
     runs-on: ubuntu-latest
