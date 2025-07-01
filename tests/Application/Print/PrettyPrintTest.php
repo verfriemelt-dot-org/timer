@@ -58,7 +58,7 @@ class PrettyPrintTest extends ApplicationTestCase
 
         static::assertSame(
             <<<OUTPUT
-            2023.01.02 Monday » 20/0 » test-holiday (100)
+            2023-01-02 Monday » 20/0 » test-holiday (100)
                 vacation
                 sick
                 2023-01-02 08:00:00 - 2023-01-02 12:00:00

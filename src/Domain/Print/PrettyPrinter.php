@@ -33,7 +33,7 @@ final readonly class PrettyPrinter
             $entries = $this->entryRepository->getDay($current);
             $workPerDay = $this->workTimeCalculator->getHours($entries);
 
-            $output->write($current->format('Y.m.d l'));
+            $output->write($current->format('Y-m-d l'));
 
             $this->printHours($output, $workPerDay, $this->workTimeCalculator->expectedHours($current));
 
