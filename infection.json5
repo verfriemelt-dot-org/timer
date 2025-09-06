@@ -17,5 +17,6 @@
                 "timer\\Repository\\EntryRepository::all"
             ],
         }
-    }
+    },
+    "staticAnalysisTool":"phpstan",
 }
