@@ -14,7 +14,7 @@ final readonly class TimeDiffCalcalator
 
     public function getInSeconds(WorkTimeDto $workTimeDto): float
     {
-        \assert(isset($workTimeDto->from, $workTimeDto->till));
+        \assert($workTimeDto->till !== null);
 
         $from = $this->clock->fromString($workTimeDto->from);
         $to = $this->clock->fromString($workTimeDto->till);

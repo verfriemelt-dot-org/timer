@@ -17,7 +17,7 @@ class DisallowDateTime
         return PHPat::rule()
             ->classes(Selector::inNamespace('\\timer'))
             ->excluding(Selector::inNamespace('\\timer\\tests'))
-            ->shouldNotDependOn()
+            ->shouldNot()->construct()
             ->classes(
                 Selector::classname(DateTime::class),
             )
@@ -30,7 +30,7 @@ class DisallowDateTime
         return PHPat::rule()
             ->classes(Selector::inNamespace('\\timer'))
             ->excluding(Selector::inNamespace('\\timer\\tests'))
-            ->shouldNotConstruct()
+            ->shouldNot()->construct()
             ->classes(
                 Selector::classname(DateTime::class),
                 Selector::classname(DateTimeImmutable::class),
