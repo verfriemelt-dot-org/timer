@@ -30,7 +30,7 @@ final class CheckForInitListener implements EventSubscriberInterface
         };
     }
 
-    protected function isInitialized(KernelPreCommandEvent $event): KernelPreCommandEvent
+    private function isInitialized(KernelPreCommandEvent $event): KernelPreCommandEvent
     {
         $doSomething = false;
 
