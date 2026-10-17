@@ -99,10 +99,4 @@ abstract class ApplicationTestCase extends TestCase
             ),
         );
     }
-
-    #[Override]
-    public function tearDown(): void
-    {
-        $this->kernel->shutdown();
-    }
 }

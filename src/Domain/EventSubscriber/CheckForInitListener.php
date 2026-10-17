@@ -32,8 +32,6 @@ final class CheckForInitListener implements EventSubscriberInterface
 
     private function isInitialized(KernelPreCommandEvent $event): KernelPreCommandEvent
     {
-        $doSomething = false;
-
         if (!$this->entryRepository->initialized()) {
             $event->output->write('entry repo not initialized ... ');
             $this->entryRepository->initialize();

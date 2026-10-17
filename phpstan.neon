@@ -21,8 +21,6 @@ parameters:
       param_type: 100
       property_type: 100
       constant: 100
-      declare: 100
-      print_suggestions: true
 
   paths:
     - src
